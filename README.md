@@ -127,13 +127,13 @@ sudo apt-get install libpq-dev
 ##### Create the database
 
 ```
-$ python manage.py recreate_db
+$ python3 manage.py recreate_db
 ```
 
 ##### Other setup (e.g. creating roles in database)
 
 ```
-$ python manage.py setup_dev
+$ python3 manage.py setup_dev
 ```
 
 Note that this will create an admin user with email and password specified by the `ADMIN_EMAIL` and `ADMIN_PASSWORD` config variables. If not specified, they are both `flask-base-admin@example.com` and `password` respectively.
@@ -141,14 +141,14 @@ Note that this will create an admin user with email and password specified by th
 ##### [Optional] Add fake data to the database
 
 ```
-$ python manage.py add_fake_data
+$ python3 manage.py add_fake_data
 ```
 
 ## Running the app
 
 ```
 $ source env/bin/activate
-$ python manage.py runserver
+$ python3 manage.py runserver
 ```
 
 For Windows users having issues with binding to a redis port locally, refer to [this issue](https://github.com/hack4impact/flask-base/issues/132).
