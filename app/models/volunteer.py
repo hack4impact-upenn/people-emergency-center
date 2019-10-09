@@ -67,37 +67,34 @@ class Volunteer(db.Model):
       return self.__repr__()
 
     @staticmethod
-    def generate_fake(count=100, **kwargs):
+    def generate_fake(count=10, **kwargs):
+        from sqlalchemy.exc import IntegrityError
+
         fake = Faker()
-        seed()
-        status = [Status.NOT_SUBMITTED, Status.SUBMITTED, Status.PENDING_PEC_REVIEW,
-                  Status.PENDING_STATE_REVIEW, Status.CLEARED, Status.RESUBMISSION,
-                  Status.DECLINED, Status.EXPIRED]
 
         for i in range(count):
-            volunteer = Volunteer(
+            v = Volunteer(
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
                 email=fake.email(),
                 phone_number=fake.phone_number(),
-                address_number=1234,
-                address_street='Iving St.',
-                address_city='Philadelphia',
-                address_state='PA',
+                address_number=fake.building_number(),
+                address_street=fake.street_address(),
+                address_city=fake.city(),
+                address_state=fake.state_abbr(include_territories=True),
                 organization=fake.company(),
-                year_pa=randint(0, 100),
-                status1=choice(status),
-                comment1="Insert comment.",
-                link1='https://hack4impact.org/',
-                status2=choice(status),
-                comment2="Insert comment.",
-                link2='https://hack4impact.org/',
-                status3=choice(status),
-                comment3="Insert comment.",
-                link3='https://hack4impact.org/',
-                **kwargs
-            )
-            db.session.add(volunteer)
+                year_pa=fake.year(),
+                status1=random.choice(list(Status)),
+                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                link1=fake.uri(),
+                status2=random.choice(list(Status)),
+                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                link2=fake.uri(),
+                status3=random.choice(list(Status)),
+                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                link3=fake.uri(),
+                **kwargs)
+            db.session.add(v)
             try:
                 db.session.commit()
             except IntegrityError:
