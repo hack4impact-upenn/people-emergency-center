@@ -9,6 +9,7 @@ from .. import db, login_manager
 
 class Permission:
     GENERAL = 0x01
+    STAFFER = 0x80
     ADMINISTER = 0xff
 
 
@@ -20,11 +21,12 @@ class Role(db.Model):
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
-
+    
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.GENERAL, 'main', True),
+            'Volunteer': (Permission.GENERAL, 'main', True),
+            'Staff': (Permission.STAFFER, 'staff', True),
             'Administrator': (
                 Permission.ADMINISTER,
                 'admin',
