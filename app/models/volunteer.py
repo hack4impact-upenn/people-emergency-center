@@ -1,9 +1,10 @@
 from .. import db
 import enum
 from sqlalchemy.exc import IntegrityError
+import random
 from random import seed, choice, randint
 from faker import Faker
-from sqlalchemy import String, ForeignKey
+from sqlalchemy import String
 
 
 class Status(enum.Enum):
@@ -20,9 +21,9 @@ class Status(enum.Enum):
 class Volunteer(db.Model):
     __tablename__ = 'volunteers'
     id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(String(64), ForeignKey('users.first_name'))
-    last_name = db.Column(String(64), ForeignKey('users.last_name'))
-    email = db.Column(String(64), ForeignKey('users.email'))
+    first_name = db.Column(String(64))
+    last_name = db.Column(String(64))
+    email = db.Column(String(64))
     phone_number = db.Column(db.String(16))
     address_number = db.Column(db.Integer())
     address_street = db.Column(db.String(64))
@@ -79,7 +80,7 @@ class Volunteer(db.Model):
                 email=fake.email(),
                 phone_number=fake.phone_number(),
                 address_number=fake.building_number(),
-                address_street=fake.street_address(),
+                address_street=fake.street_address().partition(' ')[2],
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
                 organization=fake.company(),

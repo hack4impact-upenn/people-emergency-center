@@ -20,13 +20,13 @@ class Role(db.Model):
     index = db.Column(db.String(64))
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
-    volunteers = db.relationship('Volunteer', backref='role', lazy='dynamic')
-
+    users = db.relationship('User', backref='role', lazy='dynamic')
+    
     @staticmethod
     def insert_roles():
         roles = {
             'Volunteer': (Permission.GENERAL, 'main', True),
-            'Staff': (Permission.STAFFER, 'staff', True)
+            'Staff': (Permission.STAFFER, 'staff', True),
             'Administrator': (
                 Permission.ADMINISTER,
                 'admin',
