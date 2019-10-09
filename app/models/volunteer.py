@@ -1,17 +1,20 @@
 from .. import db
 import enum
-import random
+from sqlalchemy.exc import IntegrityError
+from random import seed, choice, randint
 from faker import Faker
-from . import User
-from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy import String, ForeignKey
 
 
 class Status(enum.Enum):
-    NOT_SUBMITTED = 'Not Submitted'
-    PENDING = 'Pending'
+    NOT_SUBMITTED = 'Not Submitted'  # not finished
+    SUBMITTED = 'Submitted'  # finished
+    PENDING_STATE_REVIEW = 'Pending (state review)'  # this is something admin needs to update
+    PENDING_PEC_REVIEW = 'Pending (pec review)'
     CLEARED = 'Cleared'
     RESUBMISSION = 'Resubmission requested'
-    DENIED = 'Denied'
+    DECLINED = 'Declined'
+    EXPIRED = 'Expired'
 
 
 class Volunteer(db.Model):
@@ -28,7 +31,6 @@ class Volunteer(db.Model):
     organization = db.Column(db.String(128))
     year_pa = db.Column(db.Integer())
 
-
     # link, comment, status
     status1 = db.Column(db.Enum(Status), default=0)
     comment1 = db.Column(db.String(512))
@@ -43,7 +45,7 @@ class Volunteer(db.Model):
     link3 = db.Column(db.String(128))
 
     def __repr__(self):
-      return ('<Voucher \n'
+       return ('<Voucher \n'
              f'First Name: {self.first_name}\n'
              f'Last Name: {self.last_name}\n'
              f'Email Address: {self.email}\n'
@@ -64,3 +66,39 @@ class Volunteer(db.Model):
     def __str__(self):
       return self.__repr__()
 
+    @staticmethod
+    def generate_fake(count=100, **kwargs):
+        fake = Faker()
+        seed()
+        status = [Status.NOT_SUBMITTED, Status.SUBMITTED, Status.PENDING_PEC_REVIEW,
+                  Status.PENDING_STATE_REVIEW, Status.CLEARED, Status.RESUBMISSION,
+                  Status.DECLINED, Status.EXPIRED]
+
+        for i in range(count):
+            volunteer = Volunteer(
+                first_name=fake.first_name(),
+                last_name=fake.last_name(),
+                email=fake.email(),
+                phone_number=fake.phone_number(),
+                address_number=1234,
+                address_street='Iving St.',
+                address_city='Philadelphia',
+                address_state='PA',
+                organization=fake.company(),
+                year_pa=randint(0, 100),
+                status1=choice(status),
+                comment1="Insert comment.",
+                link1='https://hack4impact.org/',
+                status2=choice(status),
+                comment2="Insert comment.",
+                link2='https://hack4impact.org/',
+                status3=choice(status),
+                comment3="Insert comment.",
+                link3='https://hack4impact.org/',
+                **kwargs
+            )
+            db.session.add(volunteer)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
