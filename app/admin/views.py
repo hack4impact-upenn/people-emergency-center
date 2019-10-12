@@ -31,7 +31,6 @@ def index():
     """Admin dashboard page."""
     return render_template('admin/index.html')
 
-
 @admin.route('/new-user', methods=['GET', 'POST'])
 @login_required
 @admin_required
@@ -196,3 +195,10 @@ def update_editor_contents():
     db.session.commit()
 
     return 'OK', 200
+
+@admin.route('/view_clearances')
+@login_required
+@admin_required
+def view_clearances():
+    """Admin dashboard page."""
+    return render_template('admin/view_clearances.html')
