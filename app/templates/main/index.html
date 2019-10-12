@@ -2,16 +2,18 @@
 
 {% block content %}
     <div class="ui text container">
-      <h1>Hello {% if not (current_user.is_authenticated) %} world {% else %} {{ current_user.full_name() }} {% endif %},</h1>
+      <h1>Hello {% if not (current_user.is_authenticated) %}{% else %} {{ current_user.full_name() }} {% endif %},</h1>
 
-        <p>This is <a href="http://hack4impact.org">Hack4Impact</a>'s web application template. We'll use this as a
-        foundation for each of our <a href="http://flask.pocoo.org">Flask</a> projects. The goal is to reduce the work
-        necessary to get a new project off the ground, by providing boilerplate code (such as account management
-        facilities), as well as uncontroversial and extensible defaults. We have integrated an
-        <a href="http://sass-lang.com">SCSS</a>-based asset pipeline based around a (fantastic!) framework
-        called <a href="http://semantic-ui.com">Semantic UI</a>. Much of this code is appropriated from the examples
-        in Miguel Grinberg's book, <a href="http://flaskbook.com"><em>Flask Web Development</em></a>.</p>
+        <p>Pennsylvania law requires individuals interested in volunteering at the People's Emergency Center (PEC) to have up to three clearances, depending on recidency. PEC requires clearances must be completed before the volunteer's start at PEC, and not be more than 30 days old.</p>
 
-        <p>{{ lipsum(6) }}</p>
+        <p>This application will guide individuals interested in volunteering with PEC through the clearance process by: 
+        <br/>(1) Specifying which clearances need to be obtained based on information provided during registration
+        <br/>(2) Providing instructions on how to obtain each needed clearance
+        <br/> (3) Providing a place to upload clearances as they are received
+        </p>
+
+        <p>PEC will review all uploaded clearances and notify volunteers regarding the status of their clearances. Once all three clearances have been reviewed and approved by PEC, staff will reach out with volunteering opportunities. </p>
+
+        <p>Questions about the law can be directed to the State of PA by calling 1-888-783-2972. Questions about the clearance process can be directed to Trish Downey (Email: tdowney@pec-cares.org, Phone Number: 267-777-5811).</p>   
     </div>
 {% endblock %}

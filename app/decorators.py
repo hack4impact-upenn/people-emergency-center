@@ -23,3 +23,9 @@ def permission_required(permission):
 
 def admin_required(f):
     return permission_required(Permission.ADMINISTER)(f)
+
+def volunteer_required(f):
+    return permission_required(Permission.VOLUNTEER)(f)
+
+def staff_required(f):
+    return permission_required(Permission.STAFFER)(f)

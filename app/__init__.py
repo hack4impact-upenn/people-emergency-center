@@ -77,4 +77,10 @@ def create_app(config):
     from .admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
+    from .volunteer import volunteer as volunteer_blueprint
+    app.register_blueprint(volunteer_blueprint, url_prefix='/volunteer')
+
+    from .staff import staff as staff_blueprint
+    app.register_blueprint(staff_blueprint, url_prefix='/staff')
+
     return app
