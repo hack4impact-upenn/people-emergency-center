@@ -19,7 +19,7 @@ from app.admin.forms import (
 )
 from app.decorators import admin_required
 from app.email import send_email
-from app.models import EditableHTML, Role, User
+from app.models import EditableHTML, Role, User, Volunteer
 
 admin = Blueprint('admin', __name__)
 
@@ -200,5 +200,5 @@ def update_editor_contents():
 @login_required
 @admin_required
 def view_clearances():
-    """Admin dashboard page."""
+    """View all rows in the  volunteer table."""
     return render_template('admin/view_clearances.html')

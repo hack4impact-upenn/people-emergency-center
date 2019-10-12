@@ -28,3 +28,9 @@ def index():
 @volunteer_required
 def upload_clearances():
     return render_template('volunteer/upload_clearances.html')
+
+@volunteer.route('/view_status')
+@login_required
+@volunteer_required
+def view_status():
+    return render_template('volunteer/view_status.html')
