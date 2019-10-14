@@ -34,6 +34,21 @@ class RegistrationForm(FlaskForm):
         'Email', validators=[InputRequired(),
                              Length(1, 64),
                              Email()])
+    organization_corporation = StringField(
+        'Organization/Corporation', validators=[InputRequired(),
+                                              Length(1, 64)])
+    street = StringField(
+        'Street', validators=[InputRequired(),
+                              Length(1, 64)])
+    city = StringField(
+        'City', validators=[InputRequired(),
+                            Length(1, 64)])
+    state = StringField(
+        'State', validators=[InputRequired(),
+                             Length(1, 64)])                        
+    phone_number = StringField(
+        'Phone Number', validators=[InputRequired(),
+                                    Length(1, 16)])
     password = PasswordField(
         'Password',
         validators=[
