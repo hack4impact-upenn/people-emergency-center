@@ -50,12 +50,18 @@ def login():
 def register():
     """Register a new user, and send them a confirmation email."""
     form = RegistrationForm()
+    states = ["PA"]
     if form.validate_on_submit():
         user = User(
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
-            password=form.password.data)
+            password=form.password.data,
+            phone_number=form.phone_number.data,
+            street=form.street.data,
+            city=form.city.data,
+            state=form.state.data,
+            organization_corporation=form.organization_corporation.data)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()
@@ -70,7 +76,7 @@ def register():
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))
-    return render_template('account/register.html', form=form)
+    return render_template('account/register.html', form=form, states=states)
 
 
 @account.route('/logout')
