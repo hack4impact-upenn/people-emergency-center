@@ -21,7 +21,7 @@ class Role(db.Model):
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
     users = db.relationship('User', backref='role', lazy='dynamic')
-    
+
     @staticmethod
     def insert_roles():
         roles = {
@@ -168,6 +168,11 @@ class User(UserMixin, db.Model):
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
                 email=fake.email(),
+                phone_number=fake,phone_number(),
+                street=fake.street_address(),
+                city=fake.city(),
+                state=fake.state(),
+                organization_corporation=fake.company(),
                 password='password',
                 confirmed=True,
                 role=choice(roles),
