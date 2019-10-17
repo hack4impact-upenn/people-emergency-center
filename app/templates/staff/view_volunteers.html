@@ -31,7 +31,14 @@
 
 
     <div class="ui stackable centered grid container">
+
         <div class="twelve wide column">
+          <div class="ui right search item">
+                    <div class="ui transparent icon input">
+                        <input id="search-volunteers" type="text" placeholder="Search Volunteers…">
+                        <i class="search icon"></i>
+                    </div>
+          </div>
             <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
                  <thead>
                    <tr>
@@ -42,7 +49,8 @@
                 </thead>
                 <tbody>
                    {% for volunteer in volunteers %}
-                       <tr><td>{{ '%s %s' % (volunteer.first_name, volunteer.last_name) }}</td>
+                      <tr onclick="window.location.href = '{{ url_for('staff.view_one', id=volunteer.id) }}';">
+                       <td>{{ '%s %s' % (volunteer.first_name, volunteer.last_name) }}</td>
                        <td>{{ volunteer.email }}</td>
                        <td>{{ volunteer.phone_number }}</td></tr>
                    {% endfor %}
@@ -50,4 +58,20 @@
             </table>
         </div>
     </div>
+    <script>
+      $(document).ready(function () {
+        $('#search-volunteers').keyup(function () {
+                var searchText = $(this).val();
+                if (searchText.length > 0) {
+                    $('tbody td:icontains(' + searchText + ')').addClass('positive');
+                    $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
+                    $('tbody td').not(':icontains(' + searchText + ')').closest('tr').addClass('hidden').hide();
+                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden').show();
+                } else {
+                    $('td.positive').removeClass('positive');
+                    $('tr.hidden').removeClass('hidden').show();
+                }
+        });
+      });
+    </script>
 {% endblock %}
