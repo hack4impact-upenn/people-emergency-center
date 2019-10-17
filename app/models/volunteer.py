@@ -73,6 +73,34 @@ class Volunteer(db.Model):
 
         fake = Faker()
 
+        for i in range(5):
+            v = Volunteer(
+                first_name=fake.first_name(),
+                last_name=fake.last_name(),
+                email=fake.email(),
+                phone_number=fake.phone_number(),
+                address_number=fake.building_number(),
+                address_street=fake.street_address().partition(' ')[2],
+                address_city=fake.city(),
+                address_state=fake.state_abbr(include_territories=True),
+                organization=fake.company(),
+                year_pa=fake.year(),
+                status1=Status.CLEARED,
+                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                link1=fake.uri(),
+                status2=Status.CLEARED,
+                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                link2=fake.uri(),
+                status3=Status.CLEARED,
+                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                link3=fake.uri(),
+                **kwargs)
+            db.session.add(v)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+
         for i in range(count):
             v = Volunteer(
                 first_name=fake.first_name(),
