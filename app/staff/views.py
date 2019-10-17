@@ -12,7 +12,7 @@ from flask_rq import get_queue
 
 from app import db
 from app.decorators import staff_required
-from app.models import EditableHTML, Role, User
+from app.models import EditableHTML, Role, User, Volunteer
 
 staff = Blueprint('staff', __name__)
 
@@ -27,4 +27,6 @@ def index():
 @login_required
 @staff_required
 def view_volunteers():
-    return render_template('staff/view_volunteers.html')
+    """View all volunteers."""
+    volunteers = Volunteer.query.all()
+    return render_template('staff/view_volunteers.html', volunteers=volunteers)

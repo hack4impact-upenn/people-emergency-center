@@ -28,4 +28,26 @@
             </h2>
         </div>
     </div>
+
+
+    <div class="ui stackable centered grid container">
+        <div class="twelve wide column">
+            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                 <thead>
+                   <tr>
+                       <th>Full Name</th>
+                       <th>Email</th>
+                       <th>Phone Number</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   {% for volunteer in volunteers %}
+                       <tr><td>{{ '%s %s' % (volunteer.first_name, volunteer.last_name) }}</td>
+                       <td>{{ volunteer.email }}</td>
+                       <td>{{ volunteer.phone_number }}</td></tr>
+                   {% endfor %}
+               </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
