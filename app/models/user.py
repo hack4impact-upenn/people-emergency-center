@@ -176,11 +176,11 @@ class User(UserMixin, db.Model):
                 phone_number=fake.phone_number(),
                 street=fake.street_address(),
                 city=fake.city(),
-                state=fake.state(),
+                state=fake.state_abbr(include_territories=True),
                 organization_corporation=fake.company(),
                 password='password',
                 confirmed=True,
-                role=choice(roles),
+                #role=choice(roles),
                 **kwargs)
             db.session.add(u)
             try:
