@@ -12,7 +12,7 @@ from flask_rq import get_queue
 
 from app import db
 from app.decorators import volunteer_required
-from app.models import EditableHTML, Role, User
+from app.models import EditableHTML, Role, User, Volunteer
 
 volunteer = Blueprint('volunteer', __name__)
 
@@ -33,4 +33,5 @@ def upload_clearances():
 @login_required
 @volunteer_required
 def view_status():
-    return render_template('volunteer/view_status.html')
+    volunteers = Volunteer.query.all()
+    return render_template('volunteer/view_status.html', volunteers=volunteers)
