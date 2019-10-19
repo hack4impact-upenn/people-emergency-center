@@ -173,7 +173,7 @@ class User(UserMixin, db.Model):
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
                 email=fake.email(),
-                phone_number=fake,phone_number(),
+                phone_number=fake.phone_number(),
                 street=fake.street_address(),
                 city=fake.city(),
                 state=fake.state(),
