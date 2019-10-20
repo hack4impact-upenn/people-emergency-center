@@ -27,25 +27,7 @@
             {{ f.render_form_field(form.street) }}
             <div class="two fields">
                 {{ f.render_form_field(form.city) }}
-                <div class="ui menu">
-                  <div id="select-role" class="ui dropdown item">
-                          <div class="text">
-                              State
-                          </div>
-                          <i class="dropdown icon"></i>
-                          <div class="menu">
-                              <div class="item" data-value=State>
-                                {% for s in states %}
-                                  <div class="item" data-value="{{ s }}">
-
-                                    {{ s }}</div>
-                                {% endfor %}
-
-                              </div>
-
-                                </div>
-                          </div>
-                      </div>
+                {{ f.render_form_field(form.state) }}
             </div>
             {{ f.render_form_field(form.organization_corporation)}}
 

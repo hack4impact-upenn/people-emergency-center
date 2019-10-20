@@ -6,6 +6,7 @@ from wtforms.fields import (
     PasswordField,
     StringField,
     SubmitField,
+    SelectField
 )
 from wtforms.fields.html5 import EmailField
 from wtforms_alchemy import PhoneNumberField
@@ -45,10 +46,10 @@ class RegistrationForm(FlaskForm):
     city = StringField(
         'City', validators=[InputRequired(),
                             Length(1, 64)])
-    state = QuerySelectField(
-        'State',
-        validators=[InputRequired()],
-        get_label='name')
+
+    state = SelectField(choices=[('',''), ('PA', 'PA')], 
+        validators=[InputRequired()])
+
     phone_number = PhoneNumberField(
         'Phone Number', validators=[InputRequired()])
     password = PasswordField(
@@ -65,6 +66,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email already registered. (Did you mean to '
                                   '<a href="{}">log in</a> instead?)'.format(
                                     url_for('account.login')))
+
+        surgery_month = SelectField(choices=[('',''), ('January', 'January'), ('February', 'February'),
+    ('March', 'March'), ('April', 'April'), ('May', 'May'), ('June', 'June'), ('July', 'July'), 
+    ('August', 'August'), ('September', 'September'), ('October', 'October'),
+    ('November', 'November'), ('December', 'December')])
 
 
 class RequestResetPasswordForm(FlaskForm):
