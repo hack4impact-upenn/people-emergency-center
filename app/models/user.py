@@ -184,7 +184,7 @@ class User(UserMixin, db.Model):
                 organization_corporation=fake.company(),
                 password='password',
                 confirmed=True,
-                #role=choice(roles),
+                role=choice(roles),
                 **kwargs)
             db.session.add(u)
             try:

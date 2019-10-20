@@ -70,8 +70,8 @@ def register():
             organization_corporation=form.organization_corporation.data)
         print(user)
         db.session.add(user)
-        db.session.query(user)
-        db.session.commit()
+        #db.session.query(user)
+        """db.session.commit()
         token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
@@ -80,7 +80,7 @@ def register():
             subject='Confirm Your Account',
             template='account/email/confirm',
             user=user,
-            confirm_link=confirm_link)
+            confirm_link=confirm_link)"""
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))

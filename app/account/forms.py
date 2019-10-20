@@ -6,12 +6,12 @@ from wtforms.fields import (
     PasswordField,
     StringField,
     SubmitField,
-    SelectField
+    SelectField,
+    IntegerField
 )
 from wtforms.fields.html5 import EmailField
 from wtforms_alchemy import PhoneNumberField
 from wtforms.validators import Email, EqualTo, InputRequired, Length
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
 
 from app.models import User
 
@@ -50,8 +50,9 @@ class RegistrationForm(FlaskForm):
     state = SelectField(choices=[('',''), ('PA', 'PA')], 
         validators=[InputRequired()])
 
-    phone_number = PhoneNumberField(
+    phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
+
     password = PasswordField(
         'Password',
         validators=[
