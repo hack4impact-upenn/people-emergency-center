@@ -50,7 +50,6 @@ def login():
 def register():
     """Register a new user, and send them a confirmation email."""
     form = RegistrationForm()
-    states = ["PA"]
     if form.is_submitted():
         print("submitted")
 
@@ -85,7 +84,7 @@ def register():
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))
-    return render_template('account/register.html', form=form, states=states)
+    return render_template('account/register.html', form=form)
 
 
 @account.route('/logout')
