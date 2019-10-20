@@ -6,8 +6,11 @@ from wtforms.fields import (
     PasswordField,
     StringField,
     SubmitField,
+    SelectField,
+    IntegerField
 )
 from wtforms.fields.html5 import EmailField
+from wtforms_alchemy import PhoneNumberField
 from wtforms.validators import Email, EqualTo, InputRequired, Length
 
 from app.models import User
@@ -34,6 +37,22 @@ class RegistrationForm(FlaskForm):
         'Email', validators=[InputRequired(),
                              Length(1, 64),
                              Email()])
+    organization_corporation = StringField(
+        'Organization/Corporation', validators=[InputRequired(),
+                                              Length(1, 64)])
+    street = StringField(
+        'Street', validators=[InputRequired(),
+                              Length(1, 64)])
+    city = StringField(
+        'City', validators=[InputRequired(),
+                            Length(1, 64)])
+
+    state = SelectField(choices=[('',''), ('PA', 'PA')], 
+        validators=[InputRequired()])
+
+    phone_number = IntegerField(
+        'Phone Number', validators=[InputRequired()])
+
     password = PasswordField(
         'Password',
         validators=[
@@ -48,6 +67,11 @@ class RegistrationForm(FlaskForm):
             raise ValidationError('Email already registered. (Did you mean to '
                                   '<a href="{}">log in</a> instead?)'.format(
                                     url_for('account.login')))
+
+        surgery_month = SelectField(choices=[('',''), ('January', 'January'), ('February', 'February'),
+    ('March', 'March'), ('April', 'April'), ('May', 'May'), ('June', 'June'), ('July', 'July'), 
+    ('August', 'August'), ('September', 'September'), ('October', 'October'),
+    ('November', 'November'), ('December', 'December')])
 
 
 class RequestResetPasswordForm(FlaskForm):

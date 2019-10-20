@@ -3,10 +3,11 @@
 {% import 'macros/check_password.html' as check %}
 
 {% block content %}
+
     <div class="ui grid container">
         <div class="eight wide computer sixteen wide mobile centered column">
             <h2 class="ui dividing header">Create an account</h2>
-
+            {{  form.csrf_token }}
             {% set flashes = {
                 'error':   get_flashed_messages(category_filter=['form-error']),
                 'warning': get_flashed_messages(category_filter=['form-check-email']),
@@ -16,12 +17,19 @@
 
             {{ f.begin_form(form, flashes) }}
 
+
             <div class="two fields">
                 {{ f.render_form_field(form.first_name) }}
                 {{ f.render_form_field(form.last_name) }}
             </div>
-
+            {{ f.render_form_field(form.phone_number) }}
             {{ f.render_form_field(form.email) }}
+            {{ f.render_form_field(form.street) }}
+            <div class="two fields">
+                {{ f.render_form_field(form.city) }}
+                {{ f.render_form_field(form.state) }}
+            </div>
+            {{ f.render_form_field(form.organization_corporation)}}
 
             <div class="two fields">
                 {{ f.render_form_field(form.password) }}
@@ -41,4 +49,5 @@
         </div>
     </div>
     {{ check.password_check('password', 0) }}
+
 {% endblock %}
