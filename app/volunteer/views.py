@@ -33,5 +33,5 @@ def upload_clearances():
 @login_required
 @volunteer_required
 def view_status():
-    volunteers = Volunteer.query.all()
-    return render_template('volunteer/view_status.html', volunteers=volunteers)
+    volunteer = Volunteer.query.filter_by(id=current_user.id).first()
+    return render_template('volunteer/view_status.html', volunteer=volunteer)
