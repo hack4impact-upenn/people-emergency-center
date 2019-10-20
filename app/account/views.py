@@ -72,8 +72,8 @@ def register():
         print(user)
         db.session.add(user)
         #db.session.query(user)
-        """db.session.commit()
-        token = user.generate_confirmation_token()
+        db.session.commit()
+        """token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
             send_email,
