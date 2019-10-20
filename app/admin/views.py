@@ -200,5 +200,6 @@ def update_editor_contents():
 @login_required
 @admin_required
 def view_clearances():
-    """View all rows in the  volunteer table."""
-    return render_template('admin/view_clearances.html')
+    """View all volunteer clearances."""
+    volunteers = Volunteer.query.all()
+    return render_template('admin/view_clearances.html', volunteers=volunteers)
