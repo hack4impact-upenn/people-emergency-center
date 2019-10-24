@@ -37,6 +37,9 @@ class RegistrationForm(FlaskForm):
         'Email', validators=[InputRequired(),
                              Length(1, 64),
                              Email()])
+    pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
+      , choices=[('',''),('Yes','Yes'), ('No', 'No')],
+        validators=[InputRequired()])
     organization_corporation = StringField(
         'Organization/Corporation', validators=[InputRequired(),
                                               Length(1, 64)])
@@ -47,7 +50,7 @@ class RegistrationForm(FlaskForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('',''), ('PA', 'PA')], 
+    state = SelectField(choices=[('',''), ('PA', 'PA')],
         validators=[InputRequired()])
 
     phone_number = IntegerField(
@@ -69,7 +72,7 @@ class RegistrationForm(FlaskForm):
                                     url_for('account.login')))
 
         surgery_month = SelectField(choices=[('',''), ('January', 'January'), ('February', 'February'),
-    ('March', 'March'), ('April', 'April'), ('May', 'May'), ('June', 'June'), ('July', 'July'), 
+    ('March', 'March'), ('April', 'April'), ('May', 'May'), ('June', 'June'), ('July', 'July'),
     ('August', 'August'), ('September', 'September'), ('October', 'October'),
     ('November', 'November'), ('December', 'December')])
 

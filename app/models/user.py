@@ -25,11 +25,11 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'Volunteer': (Permission.VOLUNTEER, 
-                'volunteer', 
+            'Volunteer': (Permission.VOLUNTEER,
+                'volunteer',
                 True),
-            'Staff': (Permission.STAFFER, 
-                'staff', 
+            'Staff': (Permission.STAFFER,
+                'staff',
                 True),
             'Administrator': (
                 Permission.ADMINISTER,
@@ -61,6 +61,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     phone_number = db.Column(db.String(16))
+    pa_residency = db.Column(db.String(4))
     street = db.Column(db.String(64))
     city = db.Column(db.String(64))
     state = db.Column(db.String(2))
@@ -182,6 +183,7 @@ class User(UserMixin, db.Model):
                 city=fake.city(),
                 state=fake.state_abbr(include_territories=True),
                 organization_corporation=fake.company(),
+                pa_residency = 'yes' ,
                 password='password',
                 confirmed=True,
                 role=choice(roles),
