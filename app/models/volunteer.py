@@ -17,6 +17,9 @@ class Status(enum.Enum):
     DECLINED = 'Declined'
     EXPIRED = 'Expired'
 
+    def __str__(self):
+        return self.value
+
 
 class Volunteer(db.Model):
     __tablename__ = 'volunteers'
