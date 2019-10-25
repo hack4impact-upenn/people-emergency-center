@@ -55,11 +55,11 @@
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
 
-            {{ f.begin_form(form, flashes) }}
-                {{ f.render_form_field(form.link) }}
+            {{ f.begin_form(form1, flashes) }}
+                {{ f.render_form_field(form1.link) }}
                 <b>Comment: </b>{{ volunteer.comment1 }}
-                {{ f.render_form_field(form.submit) }}
-            {{ f.end_form(form) }}
+                {{ f.render_form_field(form1.submit) }}
+            {{ f.end_form(form1) }}
 
 
             <h3 class="ui header">
@@ -79,11 +79,11 @@
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
 
-            {{ f.begin_form(form, flashes) }}
-                {{ f.render_form_field(form.link) }}
+            {{ f.begin_form(form2, flashes) }}
+                {{ f.render_form_field(form2.link) }}
                 <b>Comment: </b>{{ volunteer.comment2 }}
-                {{ f.render_form_field(form.submit) }}
-            {{ f.end_form(form) }}
+                {{ f.render_form_field(form2.submit) }}
+            {{ f.end_form(form2) }}
 
 
 
@@ -114,11 +114,11 @@
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
 
-            {{ f.begin_form(form, flashes) }}
-                {{ f.render_form_field(form.link) }}
+            {{ f.begin_form(form3, flashes) }}
+                {{ f.render_form_field(form3.link) }}
                 <b>Comment: </b>{{ volunteer.comment3 }}
-                {{ f.render_form_field(form.submit) }}
-            {{ f.end_form(form) }}
+                {{ f.render_form_field(form3.submit) }}
+            {{ f.end_form(form3) }}
 
         </div>
 

@@ -23,3 +23,4 @@ class UploadClearanceForm(FlaskForm):
                             Length(1, 256)]
     )
     submit = SubmitField('Submit')
+
