@@ -43,7 +43,13 @@ def new_user():
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
-            password=form.password.data)
+            password=form.password.data,
+            phone_number=form.phone_number.data,
+            street=form.street.data,
+            city=form.city.data,
+            state=form.state.data,
+            organization_corporation=form.organization_corporation.data,
+            pa_residency =form.pa_residency.data)
         db.session.add(user)
         db.session.commit()
         flash('User {} successfully created'.format(user.full_name()),

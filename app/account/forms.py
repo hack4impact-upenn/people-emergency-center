@@ -1,6 +1,7 @@
 from flask import url_for
 from flask_wtf import FlaskForm
 from wtforms import ValidationError
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields import (
     BooleanField,
     PasswordField,
