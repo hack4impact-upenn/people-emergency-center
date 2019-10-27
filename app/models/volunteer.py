@@ -24,11 +24,11 @@ class Status(enum.Enum):
 class Volunteer(db.Model):
     __tablename__ = 'volunteers'
     id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     first_name = db.Column(String(64))
     last_name = db.Column(String(64))
     email = db.Column(String(64))
     phone_number = db.Column(db.String(16))
-    address_number = db.Column(db.Integer())
     address_street = db.Column(db.String(64))
     address_city = db.Column(db.String(64))
     address_state = db.Column(db.String(2))
@@ -54,7 +54,7 @@ class Volunteer(db.Model):
              f'Last Name: {self.last_name}\n'
              f'Email Address: {self.email}\n'
              f'Phone Number: {self.phone_number}\n'
-             f'Address: {self.address_number} {self.address_street}, {self.address_city}, {self.address_state}\n'
+             f'Address: {self.address_street}, {self.address_city}, {self.address_state}\n'
              f'Organization: {self.organization}\n'
              f'Year Moved to PA: {self.year_pa}\n'
              f'Status of Clearance 1: {self.status1}\n'
@@ -82,8 +82,7 @@ class Volunteer(db.Model):
                 last_name=fake.last_name(),
                 email=fake.email(),
                 phone_number=fake.phone_number(),
-                address_number=fake.building_number(),
-                address_street=fake.street_address().partition(' ')[2],
+                address_street=fake.street_address(),
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
                 organization=fake.company(),
@@ -110,8 +109,7 @@ class Volunteer(db.Model):
                 last_name=fake.last_name(),
                 email=fake.email(),
                 phone_number=fake.phone_number(),
-                address_number=fake.building_number(),
-                address_street=fake.street_address().partition(' ')[2],
+                address_street=fake.street_address(),
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
                 organization=fake.company(),
