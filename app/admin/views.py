@@ -13,6 +13,7 @@ from flask_rq import get_queue
 from app import db
 from app.admin.forms import (
     ChangeAccountTypeForm,
+    ClearanceStatusForm,
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
@@ -196,10 +197,51 @@ def update_editor_contents():
 
     return 'OK', 200
 
-@admin.route('/view_clearances')
+@admin.route('/view_volunteers', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def view_clearances():
     """View all volunteer clearances."""
     volunteers = Volunteer.query.all()
     return render_template('admin/view_clearances.html', volunteers=volunteers)
+
+@admin.route('/view_one/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def view_one(id):
+    volunteer = Volunteer.query.get(id)
+    form = ClearanceStatusForm()
+    if form.validate_on_submit():
+        volunteer = Volunteer(
+            status1=form.status1.data,
+            comment1=form.comment1.data,
+            link1=form.link1.data,
+            status2=form.status2.data,
+            comment2=form.comment2.data,
+            link2=form.link2.data,
+            status3=form.status3.data,
+            comment3=form.comment3.data,
+            link3=form.link3.data)
+        db.session.add(volunteer)
+        db.session.commit()
+    return render_template('admin/view_one.html', volunteer=volunteer, form=form)
+
+
+@admin.route('/edit_status', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_status():
+    form = ClearanceStatusForm()
+    if form.validate_on_submit():
+        volunteer = Volunteer(
+            status1=form.status1.data,
+            comment1=form.comment1.data,
+            link1=form.link1.data,
+            status2=form.status2.data,
+            comment2=form.comment2.data,
+            link2=form.link2.data,
+            status3=form.status3.data,
+            comment3=form.comment3.data,
+            link3=form.link3.data)
+        db.session.add(volunteer)
+        db.session.commit()

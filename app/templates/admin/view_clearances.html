@@ -1,58 +1,73 @@
 {% extends 'layouts/base.html' %}
+
+{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
+    <a class="column" href="{{ url_for(endpoint) }}">
+        <div class="ui padded segment">
+            <h3 class="ui header">
+                {% if icon is not none %}
+                    <i class="{{ icon }}"></i>
+                {% endif %}
+                <div class="content">
+                    {{ title }}
+                    {% if description is not none %}
+                        <div class="sub header">
+                            {{ description }}
+                        </div>
+                    {% endif %}
+                </div>
+            </h3>
+        </div>
+    </a>
+{% endmacro %}
+
 {% block content %}
-    <div class="ui stackable grid container">
-        <div class="sixteen wide tablet twelve wide computer centered column">
-            <a class="ui basic compact button" href="{{ url_for('admin.index') }}">
-                <i class="caret left icon"></i>
-                Back to dashboard
-            </a>
+    <div class="ui stackable centered grid container">
+        <div class="twelve wide column">
             <h2 class="ui header">
-                Volunteer Clearances
-                <div class="sub header">
-                    View and search for Volunteer Clearances.
-                </div>
+                View Volunteers
             </h2>
-
-            <div class="ui menu">
-                <div class="ui right search item">
-                    <div class="ui transparent icon input">
-                        <input id="search-users" type="text" placeholder="Search users…">
-                        <i class="search icon"></i>
-                    </div>
-                </div>
-            </div>
-
-            {# Use overflow-x: scroll so that mobile views don't freak out
-             # when the table is too wide #}
-            <div style="overflow-x: scroll;">
-              <table class="ui compact definition table">
-                  <tr>
-                      <th>First Name</th>
-                      <th>Last Name</th>
-                      <th>Email Address</th>
-                      <th>Status of Clearance 1</th>
-                      <th>Status of Clearance 2</th>
-                      <th>Status of Clearance 3</th>
-                  </tr>
-
-                  {% for v in volunteers | sort(attribute='last_name') %}
-                      <tr>
-                          <td>{{ v.first_name }}</td>
-                          <td>{{ v.last_name }}</td>
-                          <td>{{ v.email }}</td>
-                          <td>{{ v.status1 }}</td>
-                          <td>{{ v.status2 }}</td>
-                          <td>{{ v.status3 }}</td>
-                      </tr>
-                  {% endfor %}
-              </table>
-            </div>
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#search-users').keyup(function () {
+
+    <div class="ui stackable centered grid container">
+
+        <div class="twelve wide column">
+          <div class="ui right search item">
+                    <div class="ui transparent icon input">
+                        <input id="search-volunteers" type="text" placeholder="Search Volunteers…">
+                        <i class="search icon"></i>
+                    </div>
+          </div>
+            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                 <thead>
+                   <tr>
+                     <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email Address</th>
+                    <th>Status of Clearance 1</th>
+                    <th>Status of Clearance 2</th>
+                    <th>Status of Clearance 3</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   {% for volunteer in volunteers %}
+                      <tr onclick="window.location.href = '{{ url_for('admin.view_one', id=volunteer.id) }}';">
+                        <td>{{ volunteer.first_name }}</td>
+                           <td>{{ volunteer.last_name }}</td>
+                           <td>{{ volunteer.email }}</td>
+                           <td>{{ volunteer.status1 }}</td>
+                           <td>{{ volunteer.status2 }}</td>
+                           <td>{{ volunteer.status3 }}</td>
+
+                   {% endfor %}
+               </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+      $(document).ready(function () {
+        $('#search-volunteers').keyup(function () {
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
                     $('tbody td:icontains(' + searchText + ')').addClass('positive');
@@ -63,7 +78,7 @@
                     $('td.positive').removeClass('positive');
                     $('tr.hidden').removeClass('hidden').show();
                 }
-            });
         });
+      });
     </script>
 {% endblock %}

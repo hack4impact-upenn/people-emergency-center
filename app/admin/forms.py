@@ -3,6 +3,8 @@ from wtforms import ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields import (
     PasswordField,
+    SelectField,
+    TextAreaField,
     StringField,
     SubmitField,
 )
@@ -72,3 +74,21 @@ class NewUserForm(InviteUserForm):
     password2 = PasswordField('Confirm password', validators=[InputRequired()])
 
     submit = SubmitField('Create')
+
+class ClearanceStatusForm(FlaskForm):
+    status1 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
+    , ('EXPIRED', 'Expired')])
+    comment1 = TextAreaField()
+    link1 = StringField(validators=[InputRequired()])
+    status2 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
+    , ('EXPIRED', 'Expired')])
+    comment2 = TextAreaField()
+    link2 = StringField(validators=[InputRequired()])
+    status3 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
+    , ('EXPIRED', 'Expired')])
+    comment3 = TextAreaField()
+    link3 = StringField(validators=[InputRequired()])
+    submit_clearance = SubmitField()
