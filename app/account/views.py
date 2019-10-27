@@ -19,6 +19,7 @@ from app.account.forms import (
     ChangeEmailForm,
     ChangePasswordForm,
     CreatePasswordForm,
+    EditAccountInfoForm,
     LoginForm,
     RegistrationForm,
     RequestResetPasswordForm,
@@ -68,7 +69,7 @@ def register():
             city=form.city.data,
             state=form.state.data,
             organization_corporation=form.organization_corporation.data,
-            pa_residency =form.pa_residency.data, 
+            pa_residency =form.pa_residency.data,
             confirmed=True)
         print(user)
         db.session.add(user)
@@ -151,6 +152,26 @@ def reset_password(token):
             return redirect(url_for('main.index'))
     return render_template('account/reset_password.html', form=form)
 
+
+@account.route('/manage/edit-info', methods=['GET', 'POST'])
+@login_required
+def edit_account_information():
+    """Change an existing user's password."""
+    form = EditAccountInfoForm()
+    if form.validate_on_submit():
+        if current_user.verify_password(form.password.data):
+            current_user.phone_number = form.phone_number.data
+            current_user.street = form.street.data
+            current_user.city = form.city.data
+            current_user.state = form.state.data 
+            current_user.organization_corporation = form.organization_corporation.data
+            db.session.add(current_user)
+            db.session.commit()
+            flash('Your information has been updated', 'form-success')
+            return redirect(url_for('main.index'))
+        else:
+            flash('Password is invalid.', 'form-error')
+    return render_template('account/manage.html', form=form)
 
 @account.route('/manage/change-password', methods=['GET', 'POST'])
 @login_required
