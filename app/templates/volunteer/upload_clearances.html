@@ -38,87 +38,71 @@
                 Trish Downey (tdowney@pec-cares.org or 267-777-5811) must receive the
                 results before volunteer can begin.
             </p>
-            <h3 class="ui header">
-                Clearance 1
-            </h3>
-            <p>
-                This is for child abuse history clearance: keepkidssafe.pa.gov.
-                Turnaround is faster for email than mail.</br>
-                </br>
-                <b>Status</b>: {{ volunteer.status1 }}
-            </p>
 
             {% set flashes = {
                 'error':   get_flashed_messages(category_filter=['form-error']),
-                'warning': get_flashed_messages(category_filter=['form-check-email']),
-                'info':    get_flashed_messages(category_filter=['form-info']),
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
 
-            {{ f.begin_form(form1, flashes) }}
-                {{ f.render_form_field(form1.link) }}
+            {{ f.begin_form(form, flashes) }}
+
+                <!--                Clearance 1-->
+                <h3 class="ui header">
+                    Clearance 1
+                </h3>
+                <p>
+                    This is for child abuse history clearance: keepkidssafe.pa.gov.
+                    Turnaround is faster for email than mail.</br>
+                    </br>
+                    <b>Status</b>: {{ volunteer.status1 }}
+                </p>
+
+                {{ f.render_form_field(form.link1) }}
                 <b>Comment: </b>{{ volunteer.comment1 }}
-                {{ f.render_form_field(form1.submit) }}
-            {{ f.end_form(form1) }}
+                {{ f.render_form_field(form.submit1) }}
 
 
-            <h3 class="ui header">
-                Clearance 2
-            </h3>
-            <p>
-                This is for criminal record check. Go To: https://epatch.state.pa.us/.
-                Print your result from the computer. </br>
-                </br>
-                <b>Status</b>: {{ volunteer.status2 }}
-            </p>
-
-            {% set flashes = {
-                'error':   get_flashed_messages(category_filter=['form-error']),
-                'warning': get_flashed_messages(category_filter=['form-check-email']),
-                'info':    get_flashed_messages(category_filter=['form-info']),
-                'success': get_flashed_messages(category_filter=['form-success'])
-            } %}
-
-            {{ f.begin_form(form2, flashes) }}
-                {{ f.render_form_field(form2.link) }}
+                <!--                Clearance 2-->
+                <h3 class="ui header">
+                    Clearance 2
+                </h3>
+                <p>
+                    This is for criminal record check. Go To: https://epatch.state.pa.us/.
+                    Print your result from the computer. </br>
+                    </br>
+                    <b>Status</b>: {{ volunteer.status2 }}
+                </p>
+                {{ f.render_form_field(form.link2) }}
                 <b>Comment: </b>{{ volunteer.comment2 }}
-                {{ f.render_form_field(form2.submit) }}
-            {{ f.end_form(form2) }}
+                {{ f.render_form_field(form.submit2) }}
 
 
+                <!--                Clearance 3-->
+                <h3 class="ui header">
+                    Clearance 3
+                </h3>
+                <p>
+                    FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.</br>
+                    1. Go to: https://www.identogo.com/.</br>
+                    2. Click on “Get Fingerprinted.”</br>
+                    3. Select “Pennsylvania.”</br>
+                    4. Select “Digital Fingerprinting.”</br>
+                    5. Enter Service Code “1KG6ZJ.”</br>
+                    6. Select “Schedule or Manage Appointment.”</br>
+                    7. Fill out the form</br>
+                    8. Choose the Identogo site you would like to go to.</br>
+                    9. Select date and time or check “Walk In.”</br>
+                    10. Click “Done.”</br>
+                    11. Go to the Identogo site. Be sure to bring proper documentation (specified on website).</br>
+                    </br>
+                    <b>Status</b>: {{ volunteer.status3 }}
+                </p>
 
-            <h3 class="ui header">
-                Clearance 3
-            </h3>
-            <p>
-                FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.</br>
-                1. Go to: https://www.identogo.com/.</br>
-                2. Click on “Get Fingerprinted.”</br>
-                3. Select “Pennsylvania.”</br>
-                4. Select “Digital Fingerprinting.”</br>
-                5. Enter Service Code “1KG6ZJ.”</br>
-                6. Select “Schedule or Manage Appointment.”</br>
-                7. Fill out the form</br>
-                8. Choose the Identogo site you would like to go to.</br>
-                9. Select date and time or check “Walk In.”</br>
-                10. Click “Done.”</br>
-                11. Go to the Identogo site. Be sure to bring proper documentation (specified on website).</br>
-                </br>
-                <b>Status</b>: {{ volunteer.status3 }}
-            </p>
-
-            {% set flashes = {
-                'error':   get_flashed_messages(category_filter=['form-error']),
-                'warning': get_flashed_messages(category_filter=['form-check-email']),
-                'info':    get_flashed_messages(category_filter=['form-info']),
-                'success': get_flashed_messages(category_filter=['form-success'])
-            } %}
-
-            {{ f.begin_form(form3, flashes) }}
-                {{ f.render_form_field(form3.link) }}
+                {{ f.render_form_field(form.link3) }}
                 <b>Comment: </b>{{ volunteer.comment3 }}
-                {{ f.render_form_field(form3.submit) }}
-            {{ f.end_form(form3) }}
+                {{ f.render_form_field(form.submit3) }}
+
+            {{ f.end_form(form) }}
 
         </div>
 
