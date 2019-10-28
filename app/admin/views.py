@@ -13,6 +13,9 @@ from flask_rq import get_queue
 from app import db
 from app.admin.forms import (
     ChangeAccountTypeForm,
+    Clearance1StatusForm,
+    Clearance2StatusForm,
+    Clearance3StatusForm,
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
@@ -20,6 +23,7 @@ from app.admin.forms import (
 from app.decorators import admin_required
 from app.email import send_email
 from app.models import EditableHTML, Role, User, Volunteer
+import json
 
 admin = Blueprint('admin', __name__)
 
@@ -196,10 +200,43 @@ def update_editor_contents():
 
     return 'OK', 200
 
-@admin.route('/view_clearances')
+@admin.route('/view_volunteers', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def view_clearances():
     """View all volunteer clearances."""
     volunteers = Volunteer.query.all()
     return render_template('admin/view_clearances.html', volunteers=volunteers)
+
+@admin.route('/view_one/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def view_one(id):
+    v_entry = Volunteer.query.filter_by(id=id).first()
+    v_form1 = Clearance1StatusForm()
+    v_form2 = Clearance2StatusForm()
+    v_form3 = Clearance3StatusForm()
+
+    if v_form1.validate_on_submit():
+        if "submit_clearance_1" in request.form.keys():
+            print("here1")
+            v_entry.status1 = v_form1.new_status_1.data
+            v_entry.comment1 = v_form1.comment_1.data
+            db.session.commit()
+
+    if v_form2.validate_on_submit():
+        if "submit_clearance_2" in request.form.keys():
+            print("here2")
+            v_entry.status2 = v_form2.new_status_2.data
+            v_entry.comment2 = v_form2.comment_2.data
+            db.session.commit()
+
+    if v_form3.validate_on_submit():
+        if "submit_clearance_3" in request.form.keys():
+            print("here3")
+            v_entry.status3 = v_form3.new_status_3.data
+            v_entry.comment3 = v_form3.comment_3.data
+            db.session.commit()
+
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3)
+
