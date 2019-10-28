@@ -28,9 +28,22 @@ def index():
 @login_required
 @volunteer_required
 def upload_clearances():
-    form = UploadClearanceForm()
+    form1 = UploadClearanceForm()
     volunteer = Volunteer.query.filter_by(id=current_user.id).first()
-    return render_template('volunteer/upload_clearances.html', volunteer=volunteer,  form=form)
+    if form1.validate_on_submit():
+        volunteer.link1 = str(form1.link)
+        dbsession.flush()
+    form2 = UploadClearanceForm()
+    volunteer = Volunteer.query.filter_by(id=current_user.id).first()
+    if form1.validate_on_submit():
+        volunteer.link2 = str(form2.link)
+        dbsession.flush()
+    form3 = UploadClearanceForm()
+    volunteer = Volunteer.query.filter_by(id=current_user.id).first()
+    if form1.validate_on_submit():
+        volunteer.link3 = str(form3.link)
+        dbsession.flush()
+    return render_template('volunteer/upload_clearances.html', volunteer=volunteer,  form1=form1, form2=form2, form3=form3)
 
 @volunteer.route('/view_status')
 @login_required

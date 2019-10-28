@@ -1,3 +1,5 @@
+from sqlalchemy.orm import relationship
+
 from .. import db
 import enum
 from sqlalchemy.exc import IntegrityError
@@ -5,6 +7,8 @@ import random
 from random import seed, choice, randint
 from faker import Faker
 from sqlalchemy import String
+
+from app.models import User
 
 
 class Status(enum.Enum):
@@ -24,11 +28,11 @@ class Status(enum.Enum):
 class Volunteer(db.Model):
     __tablename__ = 'volunteers'
     id = db.Column(db.Integer, primary_key=True)
+    user = relationship("User", uselist=False, backref="volunteer")
     first_name = db.Column(String(64))
     last_name = db.Column(String(64))
     email = db.Column(String(64))
     phone_number = db.Column(db.String(16))
-    address_number = db.Column(db.Integer())
     address_street = db.Column(db.String(64))
     address_city = db.Column(db.String(64))
     address_state = db.Column(db.String(2))
@@ -48,13 +52,18 @@ class Volunteer(db.Model):
     comment3 = db.Column(db.String(512))
     link3 = db.Column(db.String(128))
 
+    def __init__(self, **kwargs):
+        super(Volunteer, self).__init__(**kwargs)
+        # Will email be enough for uniqueness?
+        self.user = User.query.filter_by(email=self.email).first()
+
     def __repr__(self):
        return ('<Voucher \n'
              f'First Name: {self.first_name}\n'
              f'Last Name: {self.last_name}\n'
              f'Email Address: {self.email}\n'
              f'Phone Number: {self.phone_number}\n'
-             f'Address: {self.address_number} {self.address_street}, {self.address_city}, {self.address_state}\n'
+             f'Address: {self.address_street}, {self.address_city}, {self.address_state}\n'
              f'Organization: {self.organization}\n'
              f'Year Moved to PA: {self.year_pa}\n'
              f'Status of Clearance 1: {self.status1}\n'
@@ -82,8 +91,7 @@ class Volunteer(db.Model):
                 last_name=fake.last_name(),
                 email=fake.email(),
                 phone_number=fake.phone_number(),
-                address_number=fake.building_number(),
-                address_street=fake.street_address().partition(' ')[2],
+                address_street=fake.street_address(),
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
                 organization=fake.company(),
@@ -110,8 +118,7 @@ class Volunteer(db.Model):
                 last_name=fake.last_name(),
                 email=fake.email(),
                 phone_number=fake.phone_number(),
-                address_number=fake.building_number(),
-                address_street=fake.street_address().partition(' ')[2],
+                address_street=fake.street_address(),
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
                 organization=fake.company(),
