@@ -56,9 +56,9 @@
                         <td>{{ volunteer.first_name }}</td>
                            <td>{{ volunteer.last_name }}</td>
                            <td>{{ volunteer.email }}</td>
-                           <td>{{ volunteer.status1 }}</td>
-                           <td>{{ volunteer.status2 }}</td>
-                           <td>{{ volunteer.status3 }}</td>
+                           <td>{{ volunteer.status1.value }}</td>
+                           <td>{{ volunteer.status2.value }}</td>
+                           <td>{{ volunteer.status3.value }}</td>
 
                    {% endfor %}
                </tbody>

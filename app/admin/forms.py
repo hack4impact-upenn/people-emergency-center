@@ -75,20 +75,23 @@ class NewUserForm(InviteUserForm):
 
     submit = SubmitField('Create')
 
-class ClearanceStatusForm(FlaskForm):
-    status1 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+class Clearance1StatusForm(FlaskForm):
+    new_status_1 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
     ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
     , ('EXPIRED', 'Expired')])
-    comment1 = TextAreaField()
-    link1 = StringField(validators=[InputRequired()])
-    status2 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    comment_1 = TextAreaField()
+    submit_clearance_1 = SubmitField()
+
+class Clearance2StatusForm(FlaskForm):
+    new_status_2 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
     ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
     , ('EXPIRED', 'Expired')])
-    comment2 = TextAreaField()
-    link2 = StringField(validators=[InputRequired()])
-    status3 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    comment_2 = TextAreaField()
+    submit_clearance_2 = SubmitField()
+
+class Clearance3StatusForm(FlaskForm):
+    new_status_3 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
     ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
     , ('EXPIRED', 'Expired')])
-    comment3 = TextAreaField()
-    link3 = StringField(validators=[InputRequired()])
-    submit_clearance = SubmitField()
+    comment_3 = TextAreaField()
+    submit_clearance_3 = SubmitField()

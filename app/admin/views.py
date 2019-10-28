@@ -13,7 +13,9 @@ from flask_rq import get_queue
 from app import db
 from app.admin.forms import (
     ChangeAccountTypeForm,
-    ClearanceStatusForm,
+    Clearance1StatusForm,
+    Clearance2StatusForm,
+    Clearance3StatusForm,
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
@@ -21,6 +23,7 @@ from app.admin.forms import (
 from app.decorators import admin_required
 from app.email import send_email
 from app.models import EditableHTML, Role, User, Volunteer
+import json
 
 admin = Blueprint('admin', __name__)
 
@@ -209,39 +212,31 @@ def view_clearances():
 @login_required
 @admin_required
 def view_one(id):
-    volunteer = Volunteer.query.get(id)
-    form = ClearanceStatusForm()
-    if form.validate_on_submit():
-        volunteer = Volunteer(
-            status1=form.status1.data,
-            comment1=form.comment1.data,
-            link1=form.link1.data,
-            status2=form.status2.data,
-            comment2=form.comment2.data,
-            link2=form.link2.data,
-            status3=form.status3.data,
-            comment3=form.comment3.data,
-            link3=form.link3.data)
-        db.session.add(volunteer)
-        db.session.commit()
-    return render_template('admin/view_one.html', volunteer=volunteer, form=form)
+    v_entry = Volunteer.query.filter_by(id=id).first()
+    v_form1 = Clearance1StatusForm()
+    v_form2 = Clearance2StatusForm()
+    v_form3 = Clearance3StatusForm()
 
+    if v_form1.validate_on_submit():
+        if "submit_clearance_1" in request.form.keys():
+            print("here1")
+            v_entry.status1 = v_form1.new_status_1.data
+            v_entry.comment1 = v_form1.comment_1.data
+            db.session.commit()
 
-@admin.route('/edit_status', methods=['GET', 'POST'])
-@login_required
-@admin_required
-def edit_status():
-    form = ClearanceStatusForm()
-    if form.validate_on_submit():
-        volunteer = Volunteer(
-            status1=form.status1.data,
-            comment1=form.comment1.data,
-            link1=form.link1.data,
-            status2=form.status2.data,
-            comment2=form.comment2.data,
-            link2=form.link2.data,
-            status3=form.status3.data,
-            comment3=form.comment3.data,
-            link3=form.link3.data)
-        db.session.add(volunteer)
-        db.session.commit()
+    if v_form2.validate_on_submit():
+        if "submit_clearance_2" in request.form.keys():
+            print("here2")
+            v_entry.status2 = v_form2.new_status_2.data
+            v_entry.comment2 = v_form2.comment_2.data
+            db.session.commit()
+
+    if v_form3.validate_on_submit():
+        if "submit_clearance_3" in request.form.keys():
+            print("here3")
+            v_entry.status3 = v_form3.new_status_3.data
+            v_entry.comment3 = v_form3.comment_3.data
+            db.session.commit()
+
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3)
+
