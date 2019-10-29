@@ -68,7 +68,7 @@ def register():
             city=form.city.data,
             state=form.state.data,
             organization_corporation=form.organization_corporation.data, 
-            confirmed=False)
+            confirmed=True)
         print(user)
         db.session.add(user)
         #db.session.query(user)
