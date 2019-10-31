@@ -21,8 +21,16 @@ class Status(enum.Enum):
     DECLINED = 'Declined'
     EXPIRED = 'Expired'
 
+    @classmethod
+    def choices(cls):
+        return [(choice, choice.name) for choice in cls]
+    @classmethod
+    def coerce(cls, item):
+        item = cls(item) if not isinstance(item, cls) else item  # a ValueError thrown if item is not defined in cls.
+        return item.value
+
     def __str__(self):
-        return self.value
+        return str(self.value)
 
 
 class Volunteer(db.Model):

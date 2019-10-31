@@ -6,14 +6,14 @@ from wtforms.fields import (
 
 
 class UploadClearanceForm(FlaskForm):
-    link1 = StringField('Link')
+    link1 = StringField('')
     submit1 = SubmitField('Submit')
 
-    link2 = StringField('Link')
+    link2 = StringField('')
     submit2 = SubmitField('Submit')
 
-    link3 = StringField('Link')
+    link3 = StringField('')
     submit3 = SubmitField('Submit')
 
-    link4 = StringField('Link')
+    link4 = StringField('')
     submit4 = SubmitField('Submit')

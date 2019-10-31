@@ -16,6 +16,7 @@ from app.admin.forms import (
     Clearance1StatusForm,
     Clearance2StatusForm,
     Clearance3StatusForm,
+    Clearance4StatusForm,
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
@@ -216,6 +217,7 @@ def view_one(id):
     v_form1 = Clearance1StatusForm()
     v_form2 = Clearance2StatusForm()
     v_form3 = Clearance3StatusForm()
+    v_form4 = Clearance4StatusForm()
 
     if v_form1.validate_on_submit():
         if "submit_clearance_1" in request.form.keys():
@@ -238,5 +240,13 @@ def view_one(id):
             v_entry.comment3 = v_form3.comment_3.data
             db.session.commit()
 
-    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3)
+    if v_form4.validate_on_submit():
+        if "submit_clearance_4" in request.form.keys():
+            print("here4")
+            v_entry.status4 = v_form4.new_status_4.data
+            v_entry.comment4 = v_form4.comment_4.data
+            db.session.commit()
+
+
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
 

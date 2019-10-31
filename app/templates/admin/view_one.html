@@ -127,6 +127,35 @@
               </tr>
           </tbody>
         </table>
+                    <b> Clearance 4</b>
+            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+              <tbody>
+                <tr>
+                 <td>Link</td>
+                 <td>{{ v_entry.link4 }}</td>
+                </tr>
+                <tr>
+                   <td>Status</td>
+                   <td>{{ v_entry.status4.value }}</td>
+                </tr>
+                 <tr>
+                   <td>Current Comment</td>
+                   <td>{{ v_entry.comment4 }}</td>
+                </tr>
+                 {% if v_entry.status4.value ==
+                "Submitted" or v_entry.status4.value == "Pending (state review)" or v_entry.status4.value == "Pending (pec review)"%}
+                <tr>
+                  <td colspan = 2>
+                              {{ f.begin_form(v_form4, flashes) }}
+                              {{ f.render_form(v_form4) }}
+                              {{ f.end_form(v_form4) }}
+                </td>
+                </tr>
+                  {% else %}
+                  {% endif %}
+              </tr>
+          </tbody>
+        </table>
 
 
               </div>

@@ -17,7 +17,8 @@ from wtforms.validators import (
 )
 
 from app import db
-from app.models import Role, User
+from app.models import Role, User, Status
+
 
 
 class ChangeUserEmailForm(FlaskForm):
@@ -76,22 +77,29 @@ class NewUserForm(InviteUserForm):
     submit = SubmitField('Create')
 
 class Clearance1StatusForm(FlaskForm):
-    new_status_1 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    new_status_1 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
     ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')])
+    , ('EXPIRED', 'Expired')], validators=[])
     comment_1 = TextAreaField()
     submit_clearance_1 = SubmitField()
 
 class Clearance2StatusForm(FlaskForm):
-    new_status_2 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    new_status_2 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
     ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')])
+    , ('EXPIRED', 'Expired')], validators=[])
     comment_2 = TextAreaField()
     submit_clearance_2 = SubmitField()
 
 class Clearance3StatusForm(FlaskForm):
-    new_status_3 = SelectField(choices=[('', ''), ('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    new_status_3 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
     ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')])
+    , ('EXPIRED', 'Expired')], validators=[])
     comment_3 = TextAreaField()
     submit_clearance_3 = SubmitField()
+
+class Clearance4StatusForm(FlaskForm):
+    new_status_4 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
+    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
+    , ('EXPIRED', 'Expired')], validators=[])
+    comment_4 = TextAreaField()
+    submit_clearance_4 = SubmitField()
