@@ -36,4 +36,4 @@ def view_volunteers():
 @staff_required
 def view_one(id):
     volunteer = Volunteer.query.get(id)
-    return render_template('staff/view_one.html', volunteer=volunteer)
+    return render_template('staff/view_one.html', volunteer=volunteer, form=form)
