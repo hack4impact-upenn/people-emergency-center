@@ -65,6 +65,7 @@ class User(UserMixin, db.Model):
     city = db.Column(db.String(64))
     state = db.Column(db.String(2))
     organization_corporation = db.Column(db.String(64))
+    volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.id'))
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)
