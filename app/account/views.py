@@ -25,7 +25,7 @@ from app.account.forms import (
     ResetPasswordForm,
 )
 from app.email import send_email
-from app.models import User
+from app.models import User, Status, Volunteer
 
 account = Blueprint('account', __name__)
 
@@ -69,6 +69,7 @@ def register():
             state=form.state.data,
             organization_corporation=form.organization_corporation.data, 
             confirmed=True)
+        print(user)
         db.session.add(user)
         volunteer = Volunteer(
             first_name=form.first_name.data,
@@ -84,9 +85,11 @@ def register():
             status4=Status.NOT_SUBMITTED
         )
         db.session.add(volunteer)
+        # db.session.query(user)
         db.session.commit()
 
         """token = user.generate_confirmation_token()
+        token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
             send_email,
