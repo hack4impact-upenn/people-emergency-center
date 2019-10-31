@@ -68,10 +68,10 @@ def register():
             city=form.city.data,
             state=form.state.data,
             organization_corporation=form.organization_corporation.data, 
-            confirmed=False)
+            confirmed=True)
         print(user)
         db.session.add(user)
-        #db.session.query(user)
+        # db.session.query(user)
         db.session.commit()
         token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
