@@ -34,12 +34,14 @@ def upload_clearances():
             current_volunteer.status1 = Status.SUBMITTED
         else:
             current_volunteer.status1 = Status.NOT_SUBMITTED
+
     elif form.validate_on_submit() and form.submit2.data:
         if form.link2.data.strip() != '':
             current_volunteer.link2 = form.link2.data
             current_volunteer.status2 = Status.SUBMITTED
         else:
             current_volunteer.status2 = Status.NOT_SUBMITTED
+
     elif form.validate_on_submit() and form.submit3.data:
         if form.link3.data.strip() != '':
             current_volunteer.link3 = form.link3.data
