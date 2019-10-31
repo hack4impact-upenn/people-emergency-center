@@ -48,6 +48,14 @@ def upload_clearances():
             current_volunteer.status3 = Status.SUBMITTED
         else:
             current_volunteer.status3 = Status.NOT_SUBMITTED
+
+    elif form.validate_on_submit() and form.submit4.data:
+        if form.link4.data.strip() != '':
+            current_volunteer.link4 = form.link4.data
+            current_volunteer.status4 = Status.SUBMITTED
+        else:
+            current_volunteer.status4 = Status.NOT_SUBMITTED
+
     db.session.commit()
 
     return render_template(

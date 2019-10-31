@@ -52,13 +52,17 @@ class Volunteer(db.Model):
     comment3 = db.Column(db.String(512))
     link3 = db.Column(db.String(128))
 
+    status4 = db.Column(db.Enum(Status), default=0)
+    comment4 = db.Column(db.String(512))
+    link4 = db.Column(db.String(128))
+
     def __init__(self, **kwargs):
         super(Volunteer, self).__init__(**kwargs)
         # Will email be enough for uniqueness?
         self.user = User.query.filter_by(email=self.email).first()
 
     def __repr__(self):
-       return ('<Voucher \n'
+       return ('<Volunteer \n'
              f'First Name: {self.first_name}\n'
              f'Last Name: {self.last_name}\n'
              f'Email Address: {self.email}\n'
@@ -74,7 +78,10 @@ class Volunteer(db.Model):
              f'Link to Clearance 2: {self.link2}\n'
              f'Status of Clearance 3: {self.status3}\n'
              f'Comment on Clearance 3: {self.comment3}\n'
-             f'Link to Clearance 3: {self.link3}>')
+             f'Link to Clearance 3: {self.link3}\n'
+             f'Status of Clearance 4: {self.status4}\n'
+             f'Comment on Clearance 4: {self.comment4}\n'
+             f'Link to Clearance 4: {self.link4}>')
 
     def __str__(self):
       return self.__repr__()
@@ -105,6 +112,9 @@ class Volunteer(db.Model):
                 status3=Status.CLEARED,
                 comment3=fake.text(max_nb_chars=100, ext_word_list=None),
                 link3=fake.uri(),
+                status4=Status.CLEARED,
+                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                link4=fake.uri(),
                 **kwargs)
             db.session.add(v)
             try:
@@ -132,6 +142,9 @@ class Volunteer(db.Model):
                 status3=random.choice(list(Status)),
                 comment3=fake.text(max_nb_chars=100, ext_word_list=None),
                 link3=fake.uri(),
+                status4=random.choice(list(Status)),
+                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                link4=fake.uri(),
                 **kwargs)
             db.session.add(v)
             try:

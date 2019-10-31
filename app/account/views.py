@@ -80,7 +80,8 @@ def register():
             address_state=form.state.data,
             status1=Status.NOT_SUBMITTED,
             status2=Status.NOT_SUBMITTED,
-            status3=Status.NOT_SUBMITTED
+            status3=Status.NOT_SUBMITTED,
+            status4=Status.NOT_SUBMITTED
         )
         db.session.add(volunteer)
         db.session.commit()

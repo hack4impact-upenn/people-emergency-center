@@ -14,3 +14,6 @@ class UploadClearanceForm(FlaskForm):
 
     link3 = StringField('Link')
     submit3 = SubmitField('Submit')
+
+    link4 = StringField('Link')
+    submit4 = SubmitField('Submit')
