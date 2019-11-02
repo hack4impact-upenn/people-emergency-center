@@ -21,6 +21,18 @@
 {% endmacro %}
 
 {% block content %}
+    {% if status > 9 %}
+      <div class="sub header">
+          Submit clearance 1 and clearance 2
+      </div>
+    {% else %}
+      <div class="sub header">
+          Submit all three clearances
+      </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
     <div class="ui stackable centered grid container">
         <div class="twelve wide column">
             <h2 class="ui header">

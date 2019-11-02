@@ -27,11 +27,14 @@ def index():
 @login_required
 @volunteer_required
 def upload_clearances():
-    return render_template('volunteer/upload_clearances.html')
+    """View all volunteer clearances."""
+    """View all volunteer clearances."""
+    volunteer = Volunteer.query.filter_by(email=current_user.email)
+    status = volunteer.year_pa
+    return render_template('volunteer/upload_clearances.html', status=status)
 
 @volunteer.route('/view_status')
 @login_required
 @volunteer_required
 def view_status():
-    volunteer = Volunteer.query.filter_by(id=current_user.id).first()
     return render_template('volunteer/view_status.html', volunteer=volunteer)
