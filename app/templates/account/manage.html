@@ -2,13 +2,25 @@
 {% import 'macros/form_macros.html' as f %}
 {% import 'macros/check_password.html' as check %}
 
-{% set endpoints = [
-    ('account.manage', 'Account information'),
-    ('account.edit_account_information', 'Edit account information'),
-    ('account.change_email_request', 'Change email address'),
-    ('account.change_password', 'Change password'),
-    ('account.logout', 'Log out')
-] %}
+
+  {% if 1 == 1 %}
+    {% set endpoints = [
+        ('account.manage', 'Account information'),
+        ('account.edit_account_information', 'Edit account information'),
+        ('account.change_email_request', 'Change email address'),
+        ('account.change_password', 'Change password'),
+        ('account.logout', 'Log out')
+    ] %}
+  {% else %}
+    {% set endpoints = [
+        ('account.manage', 'Account information'),
+        ('account.change_email_request', 'Change email address'),
+        ('account.change_password', 'Change password'),
+        ('account.logout', 'Log out')
+    ] %}
+  {% endif %}
+
+
 
 {% macro navigation(items) %}
     <div class="ui vertical fluid secondary menu">

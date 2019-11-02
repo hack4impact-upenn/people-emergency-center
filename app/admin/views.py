@@ -31,15 +31,22 @@ def index():
     """Admin dashboard page."""
     return render_template('admin/index.html')
 
-@admin.route('/new-user', methods=['GET', 'POST'])
+@admin.route('/new-volunteer', methods=['GET', 'POST'])
 @login_required
 @admin_required
-def new_user():
-    """Create a new user."""
+def new_volunteer():
+    """Create a new volunteer."""
     form = NewUserForm()
+    if form.is_submitted():
+        print("submitted")
+
+    if form.validate_on_submit():
+        print("valid")
+
+    print(form.errors)
     if form.validate_on_submit():
         user = User(
-            role=form.role.data,
+            role=1,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
@@ -52,10 +59,37 @@ def new_user():
             pa_residency =form.pa_residency.data)
         db.session.add(user)
         db.session.commit()
+        flash('Volunteer {} successfully created'.format(user.full_name()),
+              'form-success')
+        return redirect(url_for('main.index'))
+    return render_template('admin/new_volunteer.html', form=form)
+
+@admin.route('/new-user', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_user():
+    """Create a new user."""
+    form = NewUserForm()
+    if form.is_submitted():
+        print("submitted")
+
+    if form.validate_on_submit():
+        print("valid")
+
+    print(form.errors)
+    if form.validate_on_submit():
+        user = User(
+            role=form.role.data,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
         flash('User {} successfully created'.format(user.full_name()),
               'form-success')
+        return redirect(url_for('main.index'))
     return render_template('admin/new_user.html', form=form)
-
 
 @admin.route('/invite-user', methods=['GET', 'POST'])
 @login_required
