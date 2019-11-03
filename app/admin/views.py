@@ -25,6 +25,7 @@ from app.decorators import admin_required
 from app.email import send_email
 from app.models import EditableHTML, Role, User, Volunteer
 import json
+import datetime
 
 admin = Blueprint('admin', __name__)
 
@@ -213,6 +214,8 @@ def view_clearances():
 @login_required
 @admin_required
 def view_one(id):
+    now = datetime.datetime.now()
+
     v_entry = Volunteer.query.filter_by(id=id).first()
     v_form1 = Clearance1StatusForm()
     v_form2 = Clearance2StatusForm()
@@ -224,6 +227,8 @@ def view_one(id):
             print("here1")
             v_entry.status1 = v_form1.new_status_1.data
             v_entry.comment1 = v_form1.comment_1.data
+            v_entry.date1 = v_form1.date1.data
+
             db.session.commit()
 
     if v_form2.validate_on_submit():
@@ -231,6 +236,7 @@ def view_one(id):
             print("here2")
             v_entry.status2 = v_form2.new_status_2.data
             v_entry.comment2 = v_form2.comment_2.data
+            v_entry.date2 = v_form2.date2.data
             db.session.commit()
 
     if v_form3.validate_on_submit():
@@ -238,6 +244,7 @@ def view_one(id):
             print("here3")
             v_entry.status3 = v_form3.new_status_3.data
             v_entry.comment3 = v_form3.comment_3.data
+            v_entry.date3 = v_form2.date3.data
             db.session.commit()
 
     if v_form4.validate_on_submit():
@@ -245,8 +252,8 @@ def view_one(id):
             print("here4")
             v_entry.status4 = v_form4.new_status_4.data
             v_entry.comment4 = v_form4.comment_4.data
+            v_entry.date4 = v_form2.date3.data
             db.session.commit()
 
 
     return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
-
