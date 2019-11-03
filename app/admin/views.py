@@ -10,7 +10,7 @@ from flask import (
 from flask_login import current_user, login_required
 from flask_rq import get_queue
 
-from app import db
+from app import db, os
 from app.admin.forms import (
     ChangeAccountTypeForm,
     Clearance1StatusForm,
@@ -20,12 +20,18 @@ from app.admin.forms import (
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
+    DownloadCSVForm
 )
 from app.decorators import admin_required
 from app.email import send_email
 from app.models import EditableHTML, Role, User, Volunteer
+
+from .. import csrf
+import csv
+import io
 import json
 import datetime
+
 
 admin = Blueprint('admin', __name__)
 
@@ -202,15 +208,26 @@ def update_editor_contents():
 
     return 'OK', 200
 
-
 @admin.route('/view_volunteers', methods=['GET', 'POST'])
+@csrf.exempt
 @login_required
 @admin_required
 def view_clearances():
     """View all volunteer clearances."""
     volunteers = Volunteer.query.all()
-    return render_template('admin/view_clearances.html', volunteers=volunteers)
 
+    """Download CSV with all volunteer information"""
+    download_csv_form = DownloadCSVForm()
+
+    if request.method == 'POST':
+
+        """This should automatically set the filepath to your downloads folder.
+        Just hardcode a file path for now if it doesn't work though."""
+        file_path = os.environ["HOME"] + "/Downloads/"  
+
+        print("CSV download code here")
+
+    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
 
 @admin.route('/view_one/<int:id>', methods=['GET', 'POST'])
 @login_required
@@ -256,4 +273,9 @@ def view_one(id):
             db.session.commit()
 
     return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
+
+
+    
+
+
 

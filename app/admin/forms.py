@@ -127,3 +127,6 @@ class Clearance4StatusForm(FlaskForm):
     comment_4 = TextAreaField()
     submit_clearance_4 = SubmitField()
 
+class DownloadCSVForm(FlaskForm):
+    download_csv = SubmitField("Download CSV")
+
