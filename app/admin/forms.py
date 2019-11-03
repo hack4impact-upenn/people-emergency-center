@@ -18,7 +18,7 @@ from wtforms.validators import (
 
 from app import db
 from app.models import Role, User, Status
-
+from markupsafe import escape
 
 
 class ChangeUserEmailForm(FlaskForm):
@@ -76,30 +76,53 @@ class NewUserForm(InviteUserForm):
 
     submit = SubmitField('Create')
 
+
+def coerce_for_enum(enum):
+    def coerce(name):
+        if isinstance(name, enum):
+            return name
+        try:
+            return enum[name]
+        except KeyError:
+            raise ValueError(name)
+    return coerce
+
+
 class Clearance1StatusForm(FlaskForm):
-    new_status_1 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
-    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')], validators=[])
+    new_status_1 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
     comment_1 = TextAreaField()
     submit_clearance_1 = SubmitField()
 
+
 class Clearance2StatusForm(FlaskForm):
-    new_status_2 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
-    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')], validators=[])
+    new_status_2 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
     comment_2 = TextAreaField()
     submit_clearance_2 = SubmitField()
 
+
 class Clearance3StatusForm(FlaskForm):
-    new_status_3 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
-    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')], validators=[])
+    new_status_3 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
     comment_3 = TextAreaField()
     submit_clearance_3 = SubmitField()
 
+
 class Clearance4StatusForm(FlaskForm):
-    new_status_4 = SelectField(choices=[('NOT_SUBMITTED', 'Not Submitted'), ('SUBMITTED', 'Submitted'),
-    ('PENDING_STATE_REVIEW', 'Pending (state review)'), ('PENDING_PEC_REVIEW', 'Pending (pec review)'), ('CLEARED', 'Cleared'), ('RESUBMISSION', 'Resubmission requested'), ('DECLINED', 'Declined')
-    , ('EXPIRED', 'Expired')], validators=[])
+    new_status_4 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
     comment_4 = TextAreaField()
     submit_clearance_4 = SubmitField()

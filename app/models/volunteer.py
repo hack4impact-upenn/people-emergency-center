@@ -2,9 +2,7 @@ from sqlalchemy.orm import relationship
 
 from .. import db
 import enum
-from sqlalchemy.exc import IntegrityError
 import random
-from random import seed, choice, randint
 from faker import Faker
 from sqlalchemy import String
 
@@ -21,16 +19,11 @@ class Status(enum.Enum):
     DECLINED = 'Declined'
     EXPIRED = 'Expired'
 
-    @classmethod
-    def choices(cls):
-        return [(choice, choice.name) for choice in cls]
-    @classmethod
-    def coerce(cls, item):
-        item = cls(item) if not isinstance(item, cls) else item  # a ValueError thrown if item is not defined in cls.
-        return item.value
-
     def __str__(self):
-        return str(self.value)
+        return self.name
+
+    def __html__(self):
+        return self.value
 
 
 class Volunteer(db.Model):
