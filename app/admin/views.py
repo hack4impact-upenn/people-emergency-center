@@ -25,6 +25,7 @@ from app.decorators import admin_required
 from app.email import send_email
 from app.models import EditableHTML, Role, User, Volunteer
 import json
+import datetime
 
 admin = Blueprint('admin', __name__)
 
@@ -215,6 +216,7 @@ def view_clearances():
 @login_required
 @admin_required
 def view_one(id):
+
     v_entry = Volunteer.query.filter_by(id=id).first()
     v_form1 = Clearance1StatusForm()
     v_form2 = Clearance2StatusForm()
@@ -225,23 +227,33 @@ def view_one(id):
         if "submit_clearance_1" in request.form.keys():
             v_entry.status1 = v_form1.new_status_1.data
             v_entry.comment1 = v_form1.comment_1.data
+            if "CLEARED" in v_entry.status1.value:
+                v_entry.date1 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
 
     if v_form2.submit_clearance_2.data and v_form2.validate():
         if "submit_clearance_2" in request.form.keys():
             v_entry.status2 = v_form2.new_status_2.data
             v_entry.comment2 = v_form2.comment_2.data
+            if "CLEARED" in v_entry.status2.value:
+                v_entry.date2 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
 
     if v_form3.submit_clearance_3.data and v_form3.validate():
         if "submit_clearance_3" in request.form.keys():
             v_entry.status3 = v_form3.new_status_3.data
             v_entry.comment3 = v_form3.comment_3.data
+            if "CLEARED" in v_entry.status3.value:
+                v_entry.date3 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
 
     if v_form4.submit_clearance_4.data and v_form4.validate():
         if "submit_clearance_4" in request.form.keys():
             v_entry.status4 = v_form4.new_status_4.data
             v_entry.comment4 = v_form4.comment_4.data
+            if "CLEARED" in v_entry.status4.value:
+                v_entry.date4 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
 
-    db.session.commit()
-
-    return render_template('admin/view_one.html', v_entry=v_entry, v_form1=v_form1, v_form2=v_form2, v_form3=v_form3, v_form4=v_form4)
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
 
