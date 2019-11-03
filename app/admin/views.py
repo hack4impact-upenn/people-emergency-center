@@ -225,28 +225,32 @@ def view_one(id):
         if "submit_clearance_1" in request.form.keys():
             v_entry.status1 = v_form1.new_status_1.data
             v_entry.comment1 = v_form1.comment_1.data
-            v_entry.date1 = datetime.datetime.now()
+            if "CLEARED" in v_entry.status1:
+                v_entry.date1 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form2.validate_on_submit():
         if "submit_clearance_2" in request.form.keys():
             v_entry.status2 = v_form2.new_status_2.data
             v_entry.comment2 = v_form2.comment_2.data
-            v_entry.date1 = datetime.datetime.now()
+            if "CLEARED" in v_entry.status2:
+                v_entry.date2 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form3.validate_on_submit():
         if "submit_clearance_3" in request.form.keys():
             v_entry.status3 = v_form3.new_status_3.data
             v_entry.comment3 = v_form3.comment_3.data
-            v_entry.date3 = datetime.datetime.now()
+            if "CLEARED" in v_entry.status3:
+                v_entry.date3 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form4.validate_on_submit():
         if "submit_clearance_4" in request.form.keys():
             v_entry.status4 = v_form4.new_status_4.data
             v_entry.comment4 = v_form4.comment_4.data
-            v_entry.date4 = datetime.datetime.now()
+            if "CLEARED" in v_entry.status4:
+                v_entry.date4 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
 
