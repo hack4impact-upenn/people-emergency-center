@@ -171,23 +171,97 @@ class User(UserMixin, db.Model):
 
         fake = Faker()
         roles = Role.query.all()
-
         seed()
-        for i in range(count):
-            u = User(
+
+         for i in range(5):
+            v = Volunteer(
                 first_name=fake.first_name(),
                 last_name=fake.last_name(),
                 email=fake.email(),
                 phone_number=fake.phone_number(),
-                street=fake.street_address(),
-                city=fake.city(),
-                state=fake.state_abbr(include_territories=True),
-                organization_corporation=fake.company(),
+                address_street=fake.street_address(),
+                address_city=fake.city(),
+                address_state=fake.state_abbr(include_territories=True),
+                organization=fake.company(),
+                year_pa=fake.year(),
+                status1=Status.CLEARED,
+                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                link1=fake.uri(),
+                date1=now.strftime("%Y-%m-%d %H:%M"),
+                status2=Status.CLEARED,
+                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                link2=fake.uri(),
+                date2=now.strftime("%Y-%m-%d %H:%M"),
+                status3=Status.CLEARED,
+                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                link3=fake.uri(),
+                date3=now.strftime("%Y-%m-%d %H:%M"),
+                status4=Status.CLEARED,
+                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                link4=fake.uri(),
+                date4=now.strftime("%Y-%m-%d %H:%M"),
+                **kwargs)
+            db.session.add(v)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+
+        fake_first_name = fake.first_name()
+        fake_last_name = fake.last_name()
+        fake_email = fake.email()
+        fake_phone_number = fake.phone_number()
+        fake_street = fake.stree_address()
+        fake_city = fake.city()
+        fake_state = fake.stat_abbr(include_territories=True)
+        fake_organization_corporation = fake.company()
+
+        for i in range(count):
+            u = User(
+                first_name=fake_first_name,
+                last_name=fake_last_name,
+                email=fake_email,
+                phone_number=fake_phone_number,
+                street=fake_street,
+                city=fake_city,
+                state=fake_state,
+                organization_corporation=fake_organization_corporation,
                 password='password',
                 confirmed=True,
                 role=choice(roles),
                 **kwargs)
+            
+            v = Volunteer(
+                first_name=fake_first_name,
+                last_name=fake_last_name,
+                email=fake_email,
+                phone_number=fake_phone_number,
+                address_street=fake_street,
+                address_city=fake_city,
+                address_state=fake_state,
+                organization=fake_organization_corporation,
+                year_pa=fake.year(),
+                status1=random.choice(list(Status)),
+                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                link1=fake.uri(),
+                date1=now.strftime("%Y-%m-%d %H:%M"),
+                status2=random.choice(list(Status)),
+                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                link2=fake.uri(),
+                date2=now.strftime("%Y-%m-%d %H:%M"),
+                status3=random.choice(list(Status)),
+                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                link3=fake.uri(),
+                date3=now.strftime("%Y-%m-%d %H:%M"),
+                status4=random.choice(list(Status)),
+                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                link4=fake.uri(),
+                date4=now.strftime("%Y-%m-%d %H:%M"),
+                **kwargs)
+
             db.session.add(u)
+            db.session.add(v)
+
             try:
                 db.session.commit()
             except IntegrityError:
