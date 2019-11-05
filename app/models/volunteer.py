@@ -94,6 +94,9 @@ class Volunteer(db.Model):
     def __str__(self):
       return self.__repr__()
 
+
+    # Note: This generate_fake() is no longer used. The generation of fake data of both users and volunteers is left
+    # to generate_fake() in user.py 
     @staticmethod
     def generate_fake(count=10, **kwargs):
         from sqlalchemy.exc import IntegrityError

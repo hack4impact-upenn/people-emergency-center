@@ -162,61 +162,40 @@ class User(UserMixin, db.Model):
         db.session.commit()
         return True
 
+    ### Generate Fake Data ###
+    # Generates fake data for Volunteers and Users
+    # Volunteers and Users share common attributes for the following:
+    # first_name, last_name, email, phone_number, street, city, state, organization
+    # First the user is cadded to session, then the volunteer
+    # First 5 Volunteers have all their statuses cleared
+    # Note: generate_fake() in volunteer.py is no longer used.
+    ##########################
     @staticmethod
     def generate_fake(count=100, **kwargs):
         """Generate a number of fake users for testing."""
         from sqlalchemy.exc import IntegrityError
         from random import seed, choice
+        import random
+        import enum
+        import datetime
         from faker import Faker
+        from app.models import Volunteer, Status
 
         fake = Faker()
         roles = Role.query.all()
+        now = datetime.datetime.now()
         seed()
 
-         for i in range(5):
-            v = Volunteer(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                email=fake.email(),
-                phone_number=fake.phone_number(),
-                address_street=fake.street_address(),
-                address_city=fake.city(),
-                address_state=fake.state_abbr(include_territories=True),
-                organization=fake.company(),
-                year_pa=fake.year(),
-                status1=Status.CLEARED,
-                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
-                link1=fake.uri(),
-                date1=now.strftime("%Y-%m-%d %H:%M"),
-                status2=Status.CLEARED,
-                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
-                link2=fake.uri(),
-                date2=now.strftime("%Y-%m-%d %H:%M"),
-                status3=Status.CLEARED,
-                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
-                link3=fake.uri(),
-                date3=now.strftime("%Y-%m-%d %H:%M"),
-                status4=Status.CLEARED,
-                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
-                link4=fake.uri(),
-                date4=now.strftime("%Y-%m-%d %H:%M"),
-                **kwargs)
-            db.session.add(v)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()
-
-        fake_first_name = fake.first_name()
-        fake_last_name = fake.last_name()
-        fake_email = fake.email()
-        fake_phone_number = fake.phone_number()
-        fake_street = fake.stree_address()
-        fake_city = fake.city()
-        fake_state = fake.stat_abbr(include_territories=True)
-        fake_organization_corporation = fake.company()
-
         for i in range(count):
+            fake_first_name = fake.first_name()
+            fake_last_name = fake.last_name()
+            fake_email = fake.email()
+            fake_phone_number = fake.phone_number()
+            fake_street = fake.street_address()
+            fake_city = fake.city()
+            fake_state = fake.state_abbr(include_territories=True)
+            fake_organization = fake.company()
+            
             u = User(
                 first_name=fake_first_name,
                 last_name=fake_last_name,
@@ -225,39 +204,68 @@ class User(UserMixin, db.Model):
                 street=fake_street,
                 city=fake_city,
                 state=fake_state,
-                organization_corporation=fake_organization_corporation,
+                organization_corporation=fake_organization,
                 password='password',
                 confirmed=True,
                 role=choice(roles),
                 **kwargs)
-            
-            v = Volunteer(
-                first_name=fake_first_name,
-                last_name=fake_last_name,
-                email=fake_email,
-                phone_number=fake_phone_number,
-                address_street=fake_street,
-                address_city=fake_city,
-                address_state=fake_state,
-                organization=fake_organization_corporation,
-                year_pa=fake.year(),
-                status1=random.choice(list(Status)),
-                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
-                link1=fake.uri(),
-                date1=now.strftime("%Y-%m-%d %H:%M"),
-                status2=random.choice(list(Status)),
-                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
-                link2=fake.uri(),
-                date2=now.strftime("%Y-%m-%d %H:%M"),
-                status3=random.choice(list(Status)),
-                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
-                link3=fake.uri(),
-                date3=now.strftime("%Y-%m-%d %H:%M"),
-                status4=random.choice(list(Status)),
-                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
-                link4=fake.uri(),
-                date4=now.strftime("%Y-%m-%d %H:%M"),
-                **kwargs)
+
+            if (i < 5):
+                v = Volunteer(
+                    first_name=fake_first_name,
+                    last_name=fake_last_name,
+                    email=fake_email,
+                    phone_number=fake_phone_number,
+                    address_street=fake_street,
+                    address_city=fake_city,
+                    address_state=fake_state,
+                    organization=fake_organization,
+                    year_pa=fake.year(),
+                    status1=Status.CLEARED,
+                    comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link1=fake.uri(),
+                    date1=now.strftime("%Y-%m-%d %H:%M"),
+                    status2=Status.CLEARED,
+                    comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link2=fake.uri(),
+                    date2=now.strftime("%Y-%m-%d %H:%M"),
+                    status3=Status.CLEARED,
+                    comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link3=fake.uri(),
+                    date3=now.strftime("%Y-%m-%d %H:%M"),
+                    status4=Status.CLEARED,
+                    comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link4=fake.uri(),
+                    date4=now.strftime("%Y-%m-%d %H:%M"),
+                    **kwargs)
+            else:
+                v = Volunteer(
+                    first_name=fake_first_name,
+                    last_name=fake_last_name,
+                    email=fake_email,
+                    phone_number=fake_phone_number,
+                    address_street=fake_street,
+                    address_city=fake_city,
+                    address_state=fake_state,
+                    organization=fake_organization,
+                    year_pa=fake.year(),
+                    status1=random.choice(list(Status)),
+                    comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link1=fake.uri(),
+                    date1=now.strftime("%Y-%m-%d %H:%M"),
+                    status2=random.choice(list(Status)),
+                    comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link2=fake.uri(),
+                    date2=now.strftime("%Y-%m-%d %H:%M"),
+                    status3=random.choice(list(Status)),
+                    comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link3=fake.uri(),
+                    date3=now.strftime("%Y-%m-%d %H:%M"),
+                    status4=random.choice(list(Status)),
+                    comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                    link4=fake.uri(),
+                    date4=now.strftime("%Y-%m-%d %H:%M"),
+                    **kwargs)
 
             db.session.add(u)
             db.session.add(v)
