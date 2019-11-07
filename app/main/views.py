@@ -44,7 +44,7 @@ def sign_s3():
 
     # Generate and return the presigned URL
     presigned_post = s3.generate_presigned_post(
-        Bucket=os.environ.get('S3_BUCKET'),
+        Bucket=S3_BUCKET,
         Key=TARGET_FOLDER + file_name,
         Fields={
             "acl": "public-read",

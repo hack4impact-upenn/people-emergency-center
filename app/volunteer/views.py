@@ -35,9 +35,8 @@ def upload_clearances():
     form = UploadClearanceForm()
 
     current_volunteer = Volunteer.query.filter_by(email=current_user.email).first()
-    current_volunteer.link1 = form.picture_urls.data
+    # current_volunteer.link1 = form.picture_urls.data
 
-    
     # if form.validate_on_submit() and form.submit1.data:
     #     if form.link1_d.data.strip() != '':
     #         current_volunteer.link1 = form.link1.data
@@ -70,7 +69,6 @@ def upload_clearances():
 
     return render_template(
         'volunteer/upload_clearances.html', volunteer=current_volunteer,  form=form)
-
 
 
 # May not need this
