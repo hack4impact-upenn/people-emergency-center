@@ -35,7 +35,9 @@ def upload_clearances():
     form = UploadClearanceForm()
 
     current_volunteer = Volunteer.query.filter_by(email=current_user.email).first()
+    current_volunteer.link1 = form.picture_urls.data
 
+    
     # if form.validate_on_submit() and form.submit1.data:
     #     if form.link1_d.data.strip() != '':
     #         current_volunteer.link1 = form.link1.data
@@ -49,14 +51,14 @@ def upload_clearances():
     #         current_volunteer.status2 = Status.SUBMITTED
     #     else:
     #         current_volunteer.status2 = Status.NOT_SUBMITTED
-    #
+
     # elif form.validate_on_submit() and form.submit3.data:
     #     if form.link3.data.strip() != '':
     #         current_volunteer.link3 = form.link3.data
     #         current_volunteer.status3 = Status.SUBMITTED
     #     else:
     #         current_volunteer.status3 = Status.NOT_SUBMITTED
-    #
+
     # elif form.validate_on_submit() and form.submit4.data:
     #     if form.link4.data.strip() != '':
     #         current_volunteer.link4 = form.link4.data

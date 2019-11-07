@@ -46,27 +46,13 @@
 
             {{ f.begin_form(form, flashes) }}
 
-                <!--                Clearance 1-->
-                <h3 class="ui header">
-                    Clearance 1
-                </h3>
-                <p>
-                    This is for child abuse history clearance: keepkidssafe.pa.gov.
-                    Turnaround is faster for email than mail.</br>
-                    </br>
-                    <b>Status</b>: {{ volunteer.status1 }}
-                </p>
-                <b>Link: </b>
-                {{ f.render_form_field(form.link1_display) }}
-                {{ f.render_form_input(form.file_urls) }}
-                {{ upload.file_upload('file_urls') }}
-                <b>Comment: </b>{{ volunteer.comment1 }}
-                {{ f.render_form_field(form.submit1) }}
+             
+
+                 {{ f.render_form(form) }}
+                 {{ upload.file_upload('picture_urls') }}
 
 
-            {{ f.end_form(form) }}
-
-
+               
 
 
 

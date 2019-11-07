@@ -24,9 +24,9 @@ def about():
 @main.route('/sign-s3/')
 def sign_s3():
     # Load necessary information into the application
-    S3_BUCKET = "h4i-test2"
     TARGET_FOLDER = 'json/'
     S3_REGION = 'us-east-2'
+    S3_BUCKET = os.environ.get('S3_BUCKET')
 
     # Load required data from the request
     pre_file_name = request.args.get('file-name')
@@ -36,15 +36,15 @@ def sign_s3():
     file_type = request.args.get('file-type')
 
     # Initialise the S3 client
-    s3 = boto3.client('s3', 
-    	region_name=S3_REGION,
-    	aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
-    	aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
-    )
+    s3 = boto3.client('s3',
+                      region_name=S3_REGION,
+                      aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                      aws_secret_access_key=os.environ.get('AWS_SECRET_ACCESS_KEY')
+                      )
 
     # Generate and return the presigned URL
     presigned_post = s3.generate_presigned_post(
-        Bucket=S3_BUCKET,
+        Bucket=os.environ.get('S3_BUCKET'),
         Key=TARGET_FOLDER + file_name,
         Fields={
             "acl": "public-read",
@@ -62,8 +62,7 @@ def sign_s3():
         'data':
             presigned_post,
         'url_upload':
-            'https://%s.%s.amazonaws.com' % (S3_BUCKET, S3_REGION),
+            'https://%s.%s.%s.amazonaws.com' % (S3_BUCKET, 's3', S3_REGION),
         'url':
-            'https://%s.amazonaws.com/%s/json/%s' % (S3_REGION, S3_BUCKET,
-                                                     file_name)
+            'https://%s.%s.%s.amazonaws.com/json/%s' % (S3_BUCKET, 's3', S3_REGION, file_name)
     })
