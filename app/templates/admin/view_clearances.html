@@ -1,4 +1,5 @@
 {% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
 
 {% macro dashboard_option(title, endpoint, description=None, icon=None) %}
     <a class="column" href="{{ url_for(endpoint) }}">
@@ -21,6 +22,7 @@
 {% endmacro %}
 
 {% block content %}
+
     <div class="ui stackable centered grid container">
         <div class="twelve wide column">
             <h2 class="ui header">
@@ -29,11 +31,20 @@
         </div>
     </div>
 
-
+{% set flashes = {
+                     'success': get_flashed_messages(category_filter=['form-success'])
+                 } %}
     <div class="ui stackable centered grid container">
 
+
+
         <div class="twelve wide column">
-          <div class="ui right search item">
+          {{ f.begin_form(download_csv_form, flashes) }}
+          {{ f.render_form(download_csv_form) }}
+          {{ f.end_form(download_csv_form) }}
+          <br/>
+          <br/>
+            <div class="ui right search item">
                     <div class="ui transparent icon input">
                         <input id="search-volunteers" type="text" placeholder="Search Volunteers…">
                         <i class="search icon"></i>
