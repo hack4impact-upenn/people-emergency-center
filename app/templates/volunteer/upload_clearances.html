@@ -56,15 +56,15 @@
                     </br>
                     <b>Status</b>: {{ volunteer.status1 }}
                 </p>
-                <b>Link: </b>{{ volunteer.link1_display }}
-                {{ f.render_form_field(form.link1_upload) }}
-                {{ f.render_form_input(form.link1_upload) }}
+                <b>Link: </b>
+                {{ f.render_form_field(form.link1_display) }}
+                {{ f.render_form_input(form.file_urls) }}
                 {{ upload.file_upload('file_urls') }}
                 <b>Comment: </b>{{ volunteer.comment1 }}
                 {{ f.render_form_field(form.submit1) }}
 
 
-                <!--                Clearance 2-->
+                <!--                Clearance 2
                 <h3 class="ui header">
                     Clearance 2
                 </h3>
@@ -80,7 +80,7 @@
                 {{ f.render_form_field(form.submit2) }}
 
 
-                <!--                Clearance 3-->
+                                Clearance 3
                 <h3 class="ui header">
                     Clearance 3
                 </h3>
@@ -105,7 +105,7 @@
                 <b>Comment: </b>{{ volunteer.comment3 }}
                 {{ f.render_form_field(form.submit3) }}
 
-                <!--                Clearance 4-->
+                               Clearance 4
                 <h3 class="ui header">
                     Clearance 4
                 </h3>
@@ -121,7 +121,7 @@
 
             {{ f.end_form(form) }}
 
-        </div>
+        </div> -->
 
 
 

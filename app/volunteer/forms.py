@@ -11,7 +11,7 @@ class MultipleFileUploadField(StringField):
 
 class UploadClearanceForm(FlaskForm):
     link1_display = StringField('')
-    link1_upload = MultipleFileUploadField()
+    file_urls = MultipleFileUploadField()
     submit1 = SubmitField('Submit')
 
     link2 = StringField('')

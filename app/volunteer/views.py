@@ -36,14 +36,14 @@ def upload_clearances():
 
     current_volunteer = Volunteer.query.filter_by(email=current_user.email).first()
 
-    if form.validate_on_submit() and form.submit1.data:
-        if form.link1.data.strip() != '':
-            current_volunteer.link1 = form.link1.data
-            current_volunteer.status1 = Status.SUBMITTED
-        else:
-            current_volunteer.status1 = Status.NOT_SUBMITTED
+    # if form.validate_on_submit() and form.submit1.data:
+    #     if form.link1_d.data.strip() != '':
+    #         current_volunteer.link1 = form.link1.data
+    #         current_volunteer.status1 = Status.SUBMITTED
+    #     else:
+    #         current_volunteer.status1 = Status.NOT_SUBMITTED
 
-    elif form.validate_on_submit() and form.submit2.data:
+    if form.validate_on_submit() and form.submit2.data:
         if form.link2.data.strip() != '':
             current_volunteer.link2 = form.link2.data
             current_volunteer.status2 = Status.SUBMITTED
@@ -68,52 +68,6 @@ def upload_clearances():
 
     return render_template(
         'volunteer/upload_clearances.html', volunteer=current_volunteer,  form=form)
-
-
-@volunteer_required
-@volunteer.route('sign-s3/')
-@login_required
-def sign_s3():
-    # Load necessary information into the application
-    S3_BUCKET = "h4i-test2"
-    TARGET_FOLDER = 'json/'
-    S3_REGION = 'us-east-2'
-
-    # Load required data from the request
-    pre_file_name = request.args.get('file-name')
-    file_name = ''.join(pre_file_name.split('.')[:-1]) + \
-                str(time.time()).replace('.',  '-') + '.' + \
-                ''.join(pre_file_name.split('.')[-1:])
-    file_type = request.args.get('file-type')
-
-    # Initialise the S3 client
-    s3 = boto3.client('s3', S3_REGION)
-
-    # Generate and return the presigned URL
-    presigned_post = s3.generate_presigned_post(
-        Bucket=S3_BUCKET,
-        Key=TARGET_FOLDER + file_name,
-        Fields={
-            "acl": "public-read",
-            "Content-Type": file_type
-        },
-        Conditions=[{
-            "acl": "public-read"
-        }, {
-            "Content-Type": file_type
-        }],
-        ExpiresIn=60000)
-
-    # Return the data to the client
-    return json.dumps({
-        'data':
-            presigned_post,
-        'url_upload':
-            'https://%s.%s.amazonaws.com' % (S3_BUCKET, S3_REGION),
-        'url':
-            'https://%s.amazonaws.com/%s/json/%s' % (S3_REGION, S3_BUCKET,
-                                                     file_name)
-    })
 
 
 
