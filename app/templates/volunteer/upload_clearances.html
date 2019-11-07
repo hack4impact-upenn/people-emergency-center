@@ -1,4 +1,6 @@
 {% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+{% import 'macros/file_upload.html' as upload %}
 
 {% macro dashboard_option(title, endpoint, description=None, icon=None) %}
     <a class="column" href="{{ url_for(endpoint) }}">
@@ -19,8 +21,6 @@
         </div>
     </a>
 {% endmacro %}
-
-{% import 'macros/form_macros.html' as f %}
 
 {% block content %}
     <div class="ui stackable centered grid container">
@@ -56,8 +56,10 @@
                     </br>
                     <b>Status</b>: {{ volunteer.status1 }}
                 </p>
-                <b>Link: </b>{{ volunteer.link1 }}
-                {{ f.render_form_field(form.link1) }}
+                <b>Link: </b>{{ volunteer.link1_display }}
+                {{ f.render_form_field(form.link1_display }}
+                {{ f.render_form_input(form.link1_upload }}
+                {{ upload.file_upload('file_urls') }}
                 <b>Comment: </b>{{ volunteer.comment1 }}
                 {{ f.render_form_field(form.submit1) }}
 

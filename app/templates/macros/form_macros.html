@@ -117,6 +117,19 @@
             </div>
         {% endif %}
     </div>
+        {% if field.type == 'MultipleFileUploadField' %}
+            <strong>Upload File</strong>
+            <input type="file" id="file" style=""><br>
+            <div style="display:none">{{ field }}</div>
+            <div id="{{ field.id }}_list">
+              {% if field.data %}
+                {% set data = field.data.split(',') %}
+                {% for d in data %}
+                <span class="badge badge-light"><a href="{{ d }}">{{ d }}</a> <span class="delete badge badge-danger" data-url="{{ d }}">Delete Document</span></span><br/>
+                {% endfor %}
+              {% endif %}
+            </div>
+        {% endif %}
 {% endmacro %}
 
 {% macro render_form_input(field) %}
@@ -149,3 +162,5 @@
         {{ field(placeholder=field.label.text) }}
     {% endif %}
 {% endmacro %}
+
+

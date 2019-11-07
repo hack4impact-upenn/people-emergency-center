@@ -5,8 +5,13 @@ from wtforms.fields import (
 )
 
 
+class MultipleFileUploadField(StringField):
+    pass
+
+
 class UploadClearanceForm(FlaskForm):
-    link1 = StringField('')
+    link1_display = StringField('')
+    link1_upload = MultipleFileUploadField()
     submit1 = SubmitField('Submit')
 
     link2 = StringField('')
