@@ -223,7 +223,7 @@ def view_clearances():
 
         """This should automatically set the filepath to your downloads folder.
         Just hardcode a file path for now if it doesn't work though."""
-        file_path = os.path.expanduser("C:/Users/cz/Downloads/")
+        file_path = file_path = os.path.expanduser('~') + "/Downloads/"
 
         print("CSV download code here")
         volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
