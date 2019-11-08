@@ -2,26 +2,6 @@
 {% import 'macros/form_macros.html' as f %}
 {% import 'macros/check_password.html' as check %}
 
-
-  {% if 1 == 1 %}
-    {% set endpoints = [
-        ('account.manage', 'Account information'),
-        ('account.edit_account_information', 'Edit account information'),
-        ('account.change_email_request', 'Change email address'),
-        ('account.change_password', 'Change password'),
-        ('account.logout', 'Log out')
-    ] %}
-  {% else %}
-    {% set endpoints = [
-        ('account.manage', 'Account information'),
-        ('account.change_email_request', 'Change email address'),
-        ('account.change_password', 'Change password'),
-        ('account.logout', 'Log out')
-    ] %}
-  {% endif %}
-
-
-
 {% macro navigation(items) %}
     <div class="ui vertical fluid secondary menu">
         {% for route, name in items %}
@@ -58,6 +38,23 @@
         </div>
         <div class="stretched divided very relaxed row">
             <div class="four wide column">
+            {%  if current_user.role_id == 1 %}
+                {% set endpoints = [
+                    ('account.manage', 'Account information'),
+                    ('account.edit_account_information', 'Edit account information'),
+                    ('account.change_email_request', 'Change email address'),
+                    ('account.change_password', 'Change password'),
+                    ('account.logout', 'Log out')
+                ] %}
+            {%  else %}
+                {% set endpoints = [
+                    ('account.manage', 'Account information'),
+                    ('account.change_email_request', 'Change email address'),
+                    ('account.change_password', 'Change password'),
+                    ('account.logout', 'Log out')
+                ] %}
+            {%  endif %}
+
                 {{ navigation(endpoints) }}
             </div>
             <div class="eight wide column">

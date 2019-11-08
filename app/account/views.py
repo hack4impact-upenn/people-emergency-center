@@ -163,9 +163,8 @@ def edit_account_information():
             current_user.phone_number = form.phone_number.data
             current_user.street = form.street.data
             current_user.city = form.city.data
-            current_user.state = form.state.data 
+            current_user.state = form.state.data
             current_user.organization_corporation = form.organization_corporation.data
-            db.session.add(current_user)
             db.session.commit()
             flash('Your information has been updated', 'form-success')
             return redirect(url_for('main.index'))
