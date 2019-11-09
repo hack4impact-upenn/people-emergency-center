@@ -16,6 +16,7 @@ from app.admin.forms import (
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
+    NewVolunteerForm
 )
 from app.decorators import admin_required
 from app.email import send_email
@@ -36,7 +37,7 @@ def index():
 @admin_required
 def new_volunteer():
     """Create a new volunteer."""
-    form = NewUserForm()
+    form = NewVolunteerForm()
     if form.is_submitted():
         print("submitted")
 
@@ -46,7 +47,7 @@ def new_volunteer():
     print(form.errors)
     if form.validate_on_submit():
         user = User(
-            role=1,
+            role_id=1,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
@@ -56,7 +57,7 @@ def new_volunteer():
             city=form.city.data,
             state=form.state.data,
             organization_corporation=form.organization_corporation.data,
-            pa_residency =form.pa_residency.data)
+            pa_residency=form.pa_residency.data)
         db.session.add(user)
         db.session.commit()
         flash('Volunteer {} successfully created'.format(user.full_name()),

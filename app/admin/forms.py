@@ -43,11 +43,6 @@ class ChangeAccountTypeForm(FlaskForm):
 
 
 class InviteUserForm(FlaskForm):
-    role = QuerySelectField(
-        'Account type',
-        validators=[InputRequired()],
-        get_label='name',
-        query_factory=lambda: db.session.query(Role).filter(Role.id!=1).order_by('permissions'))
     first_name = StringField(
         'First name', validators=[InputRequired(),
                                   Length(1, 64)])
@@ -58,6 +53,30 @@ class InviteUserForm(FlaskForm):
         'Email', validators=[InputRequired(),
                              Length(1, 64),
                              Email()])
+    submit = SubmitField('Invite')
+
+    def validate_email(self, field):
+        if User.query.filter_by(email=field.data).first():
+            raise ValidationError('Email already registered.')
+
+
+class NewUserForm(InviteUserForm):
+    role = QuerySelectField(
+        'Account type',
+        validators=[InputRequired()],
+        get_label='name',
+        query_factory=lambda: db.session.query(Role).filter(Role.id!=1).order_by('permissions'))
+    password = PasswordField(
+        'Password',
+        validators=[
+            InputRequired(),
+            EqualTo('password2', 'Passwords must match.')
+        ])
+    password2 = PasswordField('Confirm password', validators=[InputRequired()])
+
+    submit = SubmitField('Create')
+
+class NewVolunteerForm(InviteUserForm):
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
       , choices=[('',''),('Yes','Yes'), ('No', 'No')],
         validators=[InputRequired()])
@@ -76,14 +95,6 @@ class InviteUserForm(FlaskForm):
 
     phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
-    submit = SubmitField('Invite')
-
-    def validate_email(self, field):
-        if User.query.filter_by(email=field.data).first():
-            raise ValidationError('Email already registered.')
-
-
-class NewUserForm(InviteUserForm):
     password = PasswordField(
         'Password',
         validators=[
