@@ -157,7 +157,14 @@ def reset_password(token):
 @login_required
 def edit_account_information():
     """Change an existing user's password."""
-    form = EditAccountInfoForm()
+    u_entry = User.query.filter_by(id=current_user.id).first()
+    form = EditAccountInfoForm(phone_number = u_entry.phone_number,
+                               street = u_entry.street,
+                               city = u_entry.city,
+                               state = u_entry.state,
+                               organization_corporation = u_entry.organization_corporation)
+    #form.phone_number = u_entry.phone_number;
+    #u_form = FormName(form_attribute = u_entry.database_field_name)
     if form.validate_on_submit():
         if current_user.verify_password(form.password.data):
             current_user.phone_number = form.phone_number.data

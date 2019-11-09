@@ -135,18 +135,14 @@ class ChangePasswordForm(FlaskForm):
 
 class EditAccountInfoForm(FlaskForm):
     phone_number = IntegerField(
-        'Phone Number', validators=[InputRequired()])
+        'Phone Number')
     street = StringField(
-        'Street', validators=[InputRequired(),
-                              Length(1, 64)])
+        'Street', validators=[Length(1, 64)])
     city = StringField(
-        'City', validators=[InputRequired(),
-                            Length(1, 64)])
-    state = SelectField(choices=[('',''), ('PA', 'PA')],
-        validators=[InputRequired()])
+        'City', validators=[Length(1, 64)])
+    state = SelectField(choices=[('',''), ('PA', 'PA')])
     organization_corporation = StringField(
-        'Organization/Corporation', validators=[InputRequired(),
-                                 Length(1, 64)])
+        'Organization/Corporation', validators=[Length(1, 64)])
     password = PasswordField('Password', validators=[InputRequired()])
     submit = SubmitField('Update account information')
 class ChangeEmailForm(FlaskForm):
