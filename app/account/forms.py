@@ -141,6 +141,8 @@ class EditAccountInfoForm(FlaskForm):
     city = StringField(
         'City', validators=[Length(1, 64)])
     state = SelectField(choices=[('',''), ('PA', 'PA')])
+    pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
+      , choices=[('',''),('Yes','Yes'), ('No', 'No')])
     organization_corporation = StringField(
         'Organization/Corporation', validators=[Length(1, 64)])
     password = PasswordField('Password', validators=[InputRequired()])

@@ -162,6 +162,7 @@ def edit_account_information():
                                street = u_entry.street,
                                city = u_entry.city,
                                state = u_entry.state,
+                               pa_residency = u_entry.pa_residency,
                                organization_corporation = u_entry.organization_corporation)
     #form.phone_number = u_entry.phone_number;
     #u_form = FormName(form_attribute = u_entry.database_field_name)
@@ -171,6 +172,7 @@ def edit_account_information():
             current_user.street = form.street.data
             current_user.city = form.city.data
             current_user.state = form.state.data
+            current_user.pa_residency = form.pa_residency.data
             current_user.organization_corporation = form.organization_corporation.data
             db.session.commit()
             flash('Your information has been updated', 'form-success')
