@@ -29,7 +29,7 @@ def index():
 def upload_clearances():
     """View all volunteer clearances."""
     """View all volunteer clearances."""
-    volunteer = Volunteer.query.filter_by(email=current_user.email)
+    volunteer = Volunteer.query.filter_by(email=current_user.email).first()
     status = volunteer.year_pa
     return render_template('volunteer/upload_clearances.html', status=status)
 
