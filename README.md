@@ -1,4 +1,4 @@
-# flask-base
+# PECosystem
 [![Circle CI](https://circleci.com/gh/hack4impact/flask-base.svg?style=svg)](https://circleci.com/gh/hack4impact/flask-base) 
 [![Code Climate](https://codeclimate.com/github/hack4impact/flask-base/badges/gpa.svg)](https://codeclimate.com/github/hack4impact/flask-base/coverage)
 [![Issue Count](https://codeclimate.com/github/hack4impact/flask-base/badges/issue_count.svg)](https://codeclimate.com/github/hack4impact/flask-base) ![python3.x](https://img.shields.io/badge/python-3.x-brightgreen.svg)  ![python2.x](https://img.shields.io/badge/python-2.x-yellow.svg)
@@ -148,7 +148,13 @@ $ python3 manage.py add_fake_data
 
 ```
 $ source env/bin/activate
-$ python3 manage.py runserver
+$ python3 manage.py runserver 
+```
+
+Use the command below instead of ```$ python3 manage.py runserver``` if your code utilizes variables within the config.env file.
+
+```
+$ honcho start -e config.env -f Local
 ```
 
 For Windows users having issues with binding to a redis port locally, refer to [this issue](https://github.com/hack4impact/flask-base/issues/132).

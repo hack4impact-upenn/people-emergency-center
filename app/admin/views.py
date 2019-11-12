@@ -10,17 +10,32 @@ from flask import (
 from flask_login import current_user, login_required
 from flask_rq import get_queue
 
-from app import db
+from app import db, os
 from app.admin.forms import (
     ChangeAccountTypeForm,
+    Clearance1StatusForm,
+    Clearance2StatusForm,
+    Clearance3StatusForm,
+    Clearance4StatusForm,
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
+<<<<<<< HEAD
     NewVolunteerForm
+=======
+    DownloadCSVForm
+>>>>>>> master
 )
 from app.decorators import admin_required
 from app.email import send_email
 from app.models import EditableHTML, Role, User, Volunteer
+
+from .. import csrf
+import csv
+import io
+import json
+from datetime import datetime
+
 
 admin = Blueprint('admin', __name__)
 
@@ -236,10 +251,124 @@ def update_editor_contents():
 
     return 'OK', 200
 
-@admin.route('/view_clearances')
+@admin.route('/view_volunteers', methods=['GET', 'POST'])
+@csrf.exempt
 @login_required
 @admin_required
 def view_clearances():
     """View all volunteer clearances."""
     volunteers = Volunteer.query.all()
-    return render_template('admin/view_clearances.html', volunteers=volunteers)
+
+    """Download CSV with all volunteer information"""
+    download_csv_form = DownloadCSVForm()
+
+    if request.method == 'POST':
+
+        """This should automatically set the filepath to your downloads folder.
+        Just hardcode a file path for now if it doesn't work though."""
+        file_path = file_path = os.path.expanduser('~') + "/Downloads/"
+
+        print("CSV download code here")
+        volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
+        today = datetime.now()
+        timestr = today.strftime("%Y%m%d-%H%M%S")
+        file_name = "volunteers" + timestr + ".csv"
+
+        with io.open(file_path + file_name, 'w', newline='') as csvfile:
+
+            csv_writer = csv.writer(csvfile)
+
+            csv_writer.writerow(['First Name', 'Last Name', 'Email',
+                                 'Phone Number', 'Address Street', 'City', 'State', 'Organization',
+                                 'Over 10 years in PA', 'Child Abuse Clearance Status', 'Comment 1',
+                                 '(Link) Child Abuse Clearance', '(Date) Child Abuse Clearance',
+                                 'Criminal Record Clearance','Comment 2','(Link) Criminal Record Clearance',
+                                 '(Date) Criminal Record', 'FBI Background Check', 'Comment 3',
+                                 '(Link) FBI Background Check', '(Date) FBI Background Check',
+                                 'Volunteer Conflict of Interest','Comment 4', '(Link) Volunteer Conflict of Interest',
+                                 '(Date) Volunteer Conflict of Interest'])
+
+            for v in volunteers:
+                csv_writer.writerow([
+                    v.first_name,
+                    v.last_name,
+                    v.email,
+                    v.phone_number,
+                    v.address_street,
+                    v.address_city,
+                    v.address_state,
+                    v.organization,
+                    str(v.year_pa),
+
+                    str(v.status1),
+                    v.comment1,
+                    v.link1,
+                    v.date1,
+
+                    str(v.status2),
+                    v.comment2,
+                    v.link2,
+                    v.date2,
+
+                    str(v.status3),
+                    v.comment3,
+                    v.link3,
+                    v.date3,
+
+                    str(v.status4),
+                    v.comment4,
+                    v.link4,
+                    v.date4])
+
+    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
+
+@admin.route('/view_one/<int:id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def view_one(id):
+
+    v_entry = Volunteer.query.filter_by(id=id).first()
+    v_form1 = Clearance1StatusForm()
+    v_form2 = Clearance2StatusForm()
+    v_form3 = Clearance3StatusForm()
+    v_form4 = Clearance4StatusForm()
+
+    if v_form1.submit_clearance_1.data and v_form1.validate():
+        if "submit_clearance_1" in request.form.keys():
+            v_entry.status1 = v_form1.new_status_1.data
+            v_entry.comment1 = v_form1.comment_1.data
+            if "CLEARED" in v_entry.status1.value:
+                v_entry.date1 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
+
+    if v_form2.submit_clearance_2.data and v_form2.validate():
+        if "submit_clearance_2" in request.form.keys():
+            v_entry.status2 = v_form2.new_status_2.data
+            v_entry.comment2 = v_form2.comment_2.data
+            if "CLEARED" in v_entry.status2.value:
+                v_entry.date2 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
+
+    if v_form3.submit_clearance_3.data and v_form3.validate():
+        if "submit_clearance_3" in request.form.keys():
+            v_entry.status3 = v_form3.new_status_3.data
+            v_entry.comment3 = v_form3.comment_3.data
+            if "CLEARED" in v_entry.status3.value:
+                v_entry.date3 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
+
+    if v_form4.submit_clearance_4.data and v_form4.validate():
+        if "submit_clearance_4" in request.form.keys():
+            v_entry.status4 = v_form4.new_status_4.data
+            v_entry.comment4 = v_form4.comment_4.data
+            if "CLEARED" in v_entry.status4.value:
+                v_entry.date4 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            db.session.commit()
+
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
+
+
+    
+
+
+

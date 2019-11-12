@@ -4,6 +4,8 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields import (
     BooleanField,
     PasswordField,
+    SelectField,
+    TextAreaField,
     StringField,
     SubmitField,
     SelectField,
@@ -18,8 +20,9 @@ from wtforms.validators import (
 )
 
 from app import db
-from app.models import Role, User
-
+from app.models import Role, User, Status
+import datetime
+from markupsafe import escape
 
 class ChangeUserEmailForm(FlaskForm):
     email = EmailField(
@@ -104,3 +107,58 @@ class NewVolunteerForm(InviteUserForm):
     password2 = PasswordField('Confirm password', validators=[InputRequired()])
 
     submit = SubmitField('Create')
+
+
+def coerce_for_enum(enum):
+    def coerce(name):
+        if isinstance(name, enum):
+            return name
+        try:
+            return enum[name]
+        except KeyError:
+            raise ValueError(name)
+    return coerce
+
+
+class Clearance1StatusForm(FlaskForm):
+    new_status_1 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
+    comment_1 = TextAreaField()
+    submit_clearance_1 = SubmitField()
+
+
+class Clearance2StatusForm(FlaskForm):
+    new_status_2 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
+    comment_2 = TextAreaField()
+    submit_clearance_2 = SubmitField()
+
+
+class Clearance3StatusForm(FlaskForm):
+    new_status_3 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
+    comment_3 = TextAreaField()
+    submit_clearance_3 = SubmitField()
+
+
+class Clearance4StatusForm(FlaskForm):
+    new_status_4 = SelectField(
+        'Status',
+        choices=[(v, escape(v)) for v in Status],
+        coerce=coerce_for_enum(Status)
+    )
+    comment_4 = TextAreaField()
+    submit_clearance_4 = SubmitField()
+
+class DownloadCSVForm(FlaskForm):
+    download_csv = SubmitField("Download CSV")
+
