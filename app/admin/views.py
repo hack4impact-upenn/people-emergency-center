@@ -20,15 +20,13 @@ from app.admin.forms import (
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
-<<<<<<< HEAD
-    NewVolunteerForm
-=======
+    NewVolunteerForm,
     DownloadCSVForm
->>>>>>> master
 )
+
 from app.decorators import admin_required
 from app.email import send_email
-from app.models import EditableHTML, Role, User, Volunteer
+from app.models import EditableHTML, Role, User, Volunteer, Status
 
 from .. import csrf
 import csv
@@ -72,8 +70,25 @@ def new_volunteer():
             city=form.city.data,
             state=form.state.data,
             organization_corporation=form.organization_corporation.data,
-            pa_residency=form.pa_residency.data)
+            pa_residency=form.pa_residency.data,
+            confirmed = True)
         db.session.add(user)
+        volunteer = Volunteer(
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            phone_number=form.phone_number.data,
+            address_street=form.street.data,
+            address_city=form.city.data,
+            address_state=form.state.data,
+            organization = form.organization_corporation.data,
+            year_pa = form.pa_residency.data,
+            status1=Status.NOT_SUBMITTED,
+            status2=Status.NOT_SUBMITTED,
+            status3=Status.NOT_SUBMITTED,
+            status4=Status.NOT_SUBMITTED
+        )
+        db.session.add(volunteer)
         db.session.commit()
         flash('Volunteer {} successfully created'.format(user.full_name()),
               'form-success')

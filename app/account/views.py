@@ -81,6 +81,8 @@ def register():
             address_street=form.street.data,
             address_city=form.city.data,
             address_state=form.state.data,
+            organization = form.organization_corporation.data,
+            year_pa = form.pa_residency.data,
             status1=Status.NOT_SUBMITTED,
             status2=Status.NOT_SUBMITTED,
             status3=Status.NOT_SUBMITTED,
@@ -90,7 +92,6 @@ def register():
         # db.session.query(user)
         db.session.commit()
 
-        token = user.generate_confirmation_token()
         token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
@@ -174,6 +175,7 @@ def reset_password(token):
 def edit_account_information():
     """Change an existing user's password."""
     u_entry = User.query.filter_by(id=current_user.id).first()
+    v_entry = Volunteer.query.filter_by(email=current_user.email).first()
     form = EditAccountInfoForm(phone_number = u_entry.phone_number,
                                street = u_entry.street,
                                city = u_entry.city,
@@ -190,6 +192,14 @@ def edit_account_information():
             current_user.state = form.state.data
             current_user.pa_residency = form.pa_residency.data
             current_user.organization_corporation = form.organization_corporation.data
+
+            v_entry.phone_number = form.phone_number.data
+            v_entry.address_street = form.street.data
+            v_entry.address_city = form.city.data
+            v_entry.address_state = form.state.data
+            v_entry.year_pa = form.pa_residency.data
+            v_entry.organization = form.organization_corporation.data
+
             db.session.commit()
             flash('Your information has been updated', 'form-success')
             #return redirect(url_for('main.index'))
