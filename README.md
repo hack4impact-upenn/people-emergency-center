@@ -148,7 +148,13 @@ $ python3 manage.py add_fake_data
 
 ```
 $ source env/bin/activate
-$ python3 manage.py runserver
+$ python3 manage.py runserver 
+```
+
+Use the command below if your code utilizes variables within the config.env file.
+
+```
+$ honcho start -e config.env -f Local
 ```
 
 For Windows users having issues with binding to a redis port locally, refer to [this issue](https://github.com/hack4impact/flask-base/issues/132).
