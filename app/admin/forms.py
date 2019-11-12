@@ -78,7 +78,7 @@ class NewUserForm(InviteUserForm):
 
 class NewVolunteerForm(InviteUserForm):
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
-      , choices=[('',''),('Yes','Yes'), ('No', 'No')],
+      , choices=[('Yes','Yes'), ('No', 'No')],
         validators=[InputRequired()])
     organization_corporation = StringField(
         'Organization/Corporation', validators=[InputRequired(),
@@ -90,7 +90,7 @@ class NewVolunteerForm(InviteUserForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('',''), ('PA', 'PA')],
+    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')],
         validators=[InputRequired()])
 
     phone_number = IntegerField(

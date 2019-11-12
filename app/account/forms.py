@@ -39,7 +39,7 @@ class RegistrationForm(FlaskForm):
                              Length(1, 64),
                              Email()])
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
-      , choices=[('',''),('Yes','Yes'), ('No', 'No')],
+      , choices=[('Yes','Yes'), ('No', 'No')],
         validators=[InputRequired()])
     organization_corporation = StringField(
         'Organization/Corporation', validators=[InputRequired(),
@@ -51,7 +51,7 @@ class RegistrationForm(FlaskForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('',''), ('PA', 'PA')],
+    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')],
         validators=[InputRequired()])
 
     phone_number = IntegerField(
@@ -140,9 +140,9 @@ class EditAccountInfoForm(FlaskForm):
         'Street', validators=[Length(1, 64)])
     city = StringField(
         'City', validators=[Length(1, 64)])
-    state = SelectField(choices=[('',''), ('PA', 'PA')])
+    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')])
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
-      , choices=[('',''),('Yes','Yes'), ('No', 'No')])
+      , choices=[('Yes','Yes'), ('No', 'No')])
     organization_corporation = StringField(
         'Organization/Corporation', validators=[Length(1, 64)])
     password = PasswordField('Password', validators=[InputRequired()])

@@ -75,7 +75,7 @@ def register():
         db.session.add(user)
         #db.session.query(user)
         db.session.commit()
-        """token = user.generate_confirmation_token()
+        token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
             send_email,
@@ -83,7 +83,7 @@ def register():
             subject='Confirm Your Account',
             template='account/email/confirm',
             user=user,
-            confirm_link=confirm_link)"""
+            confirm_link=confirm_link)
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))
@@ -176,7 +176,7 @@ def edit_account_information():
             current_user.organization_corporation = form.organization_corporation.data
             db.session.commit()
             flash('Your information has been updated', 'form-success')
-            return redirect(url_for('main.index'))
+            #return redirect(url_for('main.index'))
         else:
             flash('Password is invalid.', 'form-error')
     return render_template('account/manage.html', form=form)
