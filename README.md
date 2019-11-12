@@ -151,7 +151,7 @@ $ source env/bin/activate
 $ python3 manage.py runserver 
 ```
 
-Use the command below instead of ```$ python3 manage.py runserver``` your code utilizes variables within the config.env file.
+Use the command below instead of ```$ python3 manage.py runserver``` if your code utilizes variables within the config.env file.
 
 ```
 $ honcho start -e config.env -f Local
