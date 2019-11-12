@@ -2,11 +2,14 @@ from flask_wtf import FlaskForm
 from wtforms import ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields import (
+    BooleanField,
     PasswordField,
     SelectField,
     TextAreaField,
     StringField,
     SubmitField,
+    SelectField,
+    IntegerField
 )
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
@@ -43,11 +46,6 @@ class ChangeAccountTypeForm(FlaskForm):
 
 
 class InviteUserForm(FlaskForm):
-    role = QuerySelectField(
-        'Account type',
-        validators=[InputRequired()],
-        get_label='name',
-        query_factory=lambda: db.session.query(Role).order_by('permissions'))
     first_name = StringField(
         'First name', validators=[InputRequired(),
                                   Length(1, 64)])
@@ -66,6 +64,40 @@ class InviteUserForm(FlaskForm):
 
 
 class NewUserForm(InviteUserForm):
+    role = QuerySelectField(
+        'Account type',
+        validators=[InputRequired()],
+        get_label='name',
+        query_factory=lambda: db.session.query(Role).filter(Role.id!=1).order_by('permissions'))
+    password = PasswordField(
+        'Password',
+        validators=[
+            InputRequired(),
+            EqualTo('password2', 'Passwords must match.')
+        ])
+    password2 = PasswordField('Confirm password', validators=[InputRequired()])
+
+    submit = SubmitField('Create')
+
+class NewVolunteerForm(InviteUserForm):
+    pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
+      , choices=[('Yes','Yes'), ('No', 'No')],
+        validators=[InputRequired()])
+    organization_corporation = StringField(
+        'Organization/Corporation', validators=[InputRequired(),
+                                              Length(1, 64)])
+    street = StringField(
+        'Street', validators=[InputRequired(),
+                              Length(1, 64)])
+    city = StringField(
+        'City', validators=[InputRequired(),
+                            Length(1, 64)])
+
+    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')],
+        validators=[InputRequired()])
+
+    phone_number = IntegerField(
+        'Phone Number', validators=[InputRequired()])
     password = PasswordField(
         'Password',
         validators=[

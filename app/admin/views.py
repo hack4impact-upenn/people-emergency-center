@@ -20,11 +20,13 @@ from app.admin.forms import (
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
+    NewVolunteerForm,
     DownloadCSVForm
 )
+
 from app.decorators import admin_required
 from app.email import send_email
-from app.models import EditableHTML, Role, User, Volunteer
+from app.models import EditableHTML, Role, User, Volunteer, Status
 
 from .. import csrf
 import csv
@@ -43,12 +45,69 @@ def index():
     """Admin dashboard page."""
     return render_template('admin/index.html')
 
+@admin.route('/new-volunteer', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_volunteer():
+    """Create a new volunteer."""
+    form = NewVolunteerForm()
+    if form.is_submitted():
+        print("submitted")
+
+    if form.validate_on_submit():
+        print("valid")
+
+    print(form.errors)
+    if form.validate_on_submit():
+        user = User(
+            role_id=1,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            password=form.password.data,
+            phone_number=form.phone_number.data,
+            street=form.street.data,
+            city=form.city.data,
+            state=form.state.data,
+            organization_corporation=form.organization_corporation.data,
+            pa_residency=form.pa_residency.data,
+            confirmed = True)
+        db.session.add(user)
+        volunteer = Volunteer(
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            phone_number=form.phone_number.data,
+            address_street=form.street.data,
+            address_city=form.city.data,
+            address_state=form.state.data,
+            organization = form.organization_corporation.data,
+            year_pa = form.pa_residency.data,
+            status1=Status.NOT_SUBMITTED,
+            status2=Status.NOT_SUBMITTED,
+            status3=Status.NOT_SUBMITTED,
+            status4=Status.NOT_SUBMITTED
+        )
+        db.session.add(volunteer)
+        db.session.commit()
+        flash('Volunteer {} successfully created'.format(user.full_name()),
+              'form-success')
+        return redirect(url_for('main.index'))
+    return render_template('admin/new_volunteer.html', form=form)
+
 @admin.route('/new-user', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def new_user():
     """Create a new user."""
     form = NewUserForm()
+    if form.is_submitted():
+        print("submitted")
+
+    if form.validate_on_submit():
+        print("valid")
+
+    print(form.errors)
     if form.validate_on_submit():
         user = User(
             role=form.role.data,
@@ -60,8 +119,8 @@ def new_user():
         db.session.commit()
         flash('User {} successfully created'.format(user.full_name()),
               'form-success')
+        return redirect(url_for('main.index'))
     return render_template('admin/new_user.html', form=form)
-
 
 @admin.route('/invite-user', methods=['GET', 'POST'])
 @login_required
@@ -71,7 +130,6 @@ def invite_user():
     form = InviteUserForm()
     if form.validate_on_submit():
         user = User(
-            role=form.role.data,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data)
