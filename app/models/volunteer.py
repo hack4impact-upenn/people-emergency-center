@@ -17,6 +17,7 @@ class Status(enum.Enum):
     RESUBMISSION = 'Resubmission requested'
     DECLINED = 'Declined'
     EXPIRED = 'Expired'
+    NOT_NEEDED = 'Not Needed'
 
     def __str__(self):
         return self.name

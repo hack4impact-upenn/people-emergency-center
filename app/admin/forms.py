@@ -68,7 +68,7 @@ class NewUserForm(InviteUserForm):
         'Account type',
         validators=[InputRequired()],
         get_label='name',
-        query_factory=lambda: db.session.query(Role).filter(Role.id!=1).order_by('permissions'))
+        query_factory=lambda: db.session.query(Role).filter(Role.id!=3).order_by('permissions'))
     password = PasswordField(
         'Password',
         validators=[

@@ -25,7 +25,7 @@
             } %}
 
             {{ f.begin_form(form, flashes) }}
-
+                 {{ f.render_form_field(form.role) }}
                 <div class="two fields">
                     {{ f.render_form_field(form.first_name) }}
                     {{ f.render_form_field(form.last_name) }}
