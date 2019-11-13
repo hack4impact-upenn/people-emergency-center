@@ -219,6 +219,11 @@ def edit_account_information():
             v_entry.year_pa = form.pa_residency.data
             v_entry.organization = form.organization_corporation.data
 
+            if(form.pa_residency.data == "Yes"):
+                v_entry.status3=Status.NOT_NEEDED
+            if(form.pa_residency.data == "No"):
+                v_entry.status3=Status.NOT_SUBMITTED
+
             db.session.commit()
             flash('Your information has been updated', 'form-success')
             #return redirect(url_for('main.index'))
