@@ -70,29 +70,48 @@ def register():
             state=form.state.data,
             organization_corporation=form.organization_corporation.data,
             pa_residency =form.pa_residency.data,
-            confirmed=True)
+            confirmed=True,
+            role_id=1)
         print(user)
         db.session.add(user)
-        volunteer = Volunteer(
-            first_name=form.first_name.data,
-            last_name=form.last_name.data,
-            email=form.email.data,
-            phone_number=form.phone_number.data,
-            address_street=form.street.data,
-            address_city=form.city.data,
-            address_state=form.state.data,
-            organization = form.organization_corporation.data,
-            year_pa = form.pa_residency.data,
-            status1=Status.NOT_SUBMITTED,
-            status2=Status.NOT_SUBMITTED,
-            status3=Status.NOT_SUBMITTED,
-            status4=Status.NOT_SUBMITTED
-        )
+        print("Residency Data" + form.pa_residency.data)
+        if form.pa_residency.data == "Yes":
+            volunteer = Volunteer(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                phone_number=form.phone_number.data,
+                address_street=form.street.data,
+                address_city=form.city.data,
+                address_state=form.state.data,
+                organization = form.organization_corporation.data,
+                year_pa = form.pa_residency.data,
+                status1=Status.NOT_SUBMITTED,
+                status2=Status.NOT_SUBMITTED,
+                status3=Status.NOT_NEEDED,
+                status4=Status.NOT_SUBMITTED
+            )
+        if form.pa_residency.data == "No":
+            volunteer = Volunteer(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                phone_number=form.phone_number.data,
+                address_street=form.street.data,
+                address_city=form.city.data,
+                address_state=form.state.data,
+                organization = form.organization_corporation.data,
+                year_pa = form.pa_residency.data,
+                status1=Status.NOT_SUBMITTED,
+                status2=Status.NOT_SUBMITTED,
+                status3=Status.NOT_SUBMITTED,
+                status4=Status.NOT_SUBMITTED
+            )
         db.session.add(volunteer)
         # db.session.query(user)
         db.session.commit()
 
-        token = user.generate_confirmation_token()
+        """token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
             send_email,
@@ -100,7 +119,7 @@ def register():
             subject='Confirm Your Account',
             template='account/email/confirm',
             user=user,
-            confirm_link=confirm_link)
+            confirm_link=confirm_link)"""
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))
