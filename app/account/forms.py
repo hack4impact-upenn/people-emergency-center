@@ -51,9 +51,21 @@ class RegistrationForm(FlaskForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')],
+    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'), 
+        ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'),
+        ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'), ('FL', 'FL'),
+        ('GA', 'GA'), ('HI', 'HI'), ('ID', 'ID'), ('IL', 'IL'),
+        ('IN', 'IN'), ('IA', 'IA'), ('KS', 'KS'), ('KY', 'KY'),
+        ('LA', 'LA'), ('ME', 'ME'), ('MD', 'MD'), ('MA', 'MA'),
+        ('MI', 'MI'), ('MN', 'MN'), ('MS', 'MS'), ('MO', 'MO'),
+        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'), 
+        ('NJ', 'NJ'), ('NM', 'NM'), ('NY', 'NY'), ('NC', 'NC'),
+        ('ND', 'ND'), ('OH', 'OH'), ('OK', 'OK'), ('OR', 'OR'),
+        ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
+        ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
+        ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')],
         validators=[InputRequired()])
-
+    
     phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
 
@@ -140,7 +152,20 @@ class EditAccountInfoForm(FlaskForm):
         'Street', validators=[Length(1, 64)])
     city = StringField(
         'City', validators=[Length(1, 64)])
-    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')])
+    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'), 
+        ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'),
+        ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'), ('FL', 'FL'),
+        ('GA', 'GA'), ('HI', 'HI'), ('ID', 'ID'), ('IL', 'IL'),
+        ('IN', 'IN'), ('IA', 'IA'), ('KS', 'KS'), ('KY', 'KY'),
+        ('LA', 'LA'), ('ME', 'ME'), ('MD', 'MD'), ('MA', 'MA'),
+        ('MI', 'MI'), ('MN', 'MN'), ('MS', 'MS'), ('MO', 'MO'),
+        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'), 
+        ('NJ', 'NJ'), ('NM', 'NM'), ('NY', 'NY'), ('NC', 'NC'),
+        ('ND', 'ND'), ('OH', 'OH'), ('OK', 'OK'), ('OR', 'OR'),
+        ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
+        ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
+        ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')])
+
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
       , choices=[('Yes','Yes'), ('No', 'No')])
     organization_corporation = StringField(

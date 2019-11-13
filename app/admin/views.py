@@ -131,7 +131,8 @@ def new_user():
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
-            password=form.password.data)
+            password=form.password.data,
+            confirmed=True)
         db.session.add(user)
         db.session.commit()
         flash('User {} successfully created'.format(user.full_name()),

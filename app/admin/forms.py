@@ -68,7 +68,7 @@ class NewUserForm(InviteUserForm):
         'Account type',
         validators=[InputRequired()],
         get_label='name',
-        query_factory=lambda: db.session.query(Role).filter(Role.id!=3).order_by('permissions'))
+        query_factory=lambda: db.session.query(Role).filter(Role.id!=1).order_by('permissions'))
     password = PasswordField(
         'Password',
         validators=[
@@ -93,7 +93,19 @@ class NewVolunteerForm(InviteUserForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('PA', 'PA'), ('NJ', 'NJ')],
+    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'), 
+        ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'),
+        ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'), ('FL', 'FL'),
+        ('GA', 'GA'), ('HI', 'HI'), ('ID', 'ID'), ('IL', 'IL'),
+        ('IN', 'IN'), ('IA', 'IA'), ('KS', 'KS'), ('KY', 'KY'),
+        ('LA', 'LA'), ('ME', 'ME'), ('MD', 'MD'), ('MA', 'MA'),
+        ('MI', 'MI'), ('MN', 'MN'), ('MS', 'MS'), ('MO', 'MO'),
+        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'), 
+        ('NJ', 'NJ'), ('NM', 'NM'), ('NY', 'NY'), ('NC', 'NC'),
+        ('ND', 'ND'), ('OH', 'OH'), ('OK', 'OK'), ('OR', 'OR'),
+        ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
+        ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
+        ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')],
         validators=[InputRequired()])
 
     phone_number = IntegerField(
