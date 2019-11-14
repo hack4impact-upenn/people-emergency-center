@@ -196,9 +196,10 @@ class User(UserMixin, db.Model):
             fake_city = fake.city()
             fake_state = fake.state_abbr(include_territories=True)
             fake_organization = fake.company()
+            fake_clearance_exp = fake.month_name() + " " + fake.day_of_month() + " " + fake.year()
             fake_residency = random.choice(["Yes", "No"])
             user_role = choice(roles)
-            
+
             u = User(
                 first_name=fake_first_name,
                 last_name=fake_last_name,
@@ -226,23 +227,20 @@ class User(UserMixin, db.Model):
                         address_city=fake_city,
                         address_state=fake_state,
                         organization=fake_organization,
-                        year_pa=fake.year(),
+                        year_pa=fake_residency,
+                        clearance_expiration = fake_clearance_exp,
                         status1=Status.CLEARED,
                         comment1=fake.text(max_nb_chars=100, ext_word_list=None),
                         link1=fake.uri(),
-                        date1=now.strftime("%Y-%m-%d %H:%M"),
                         status2=Status.CLEARED,
                         comment2=fake.text(max_nb_chars=100, ext_word_list=None),
                         link2=fake.uri(),
-                        date2=now.strftime("%Y-%m-%d %H:%M"),
                         status3=Status.CLEARED,
                         comment3=fake.text(max_nb_chars=100, ext_word_list=None),
                         link3=fake.uri(),
-                        date3=now.strftime("%Y-%m-%d %H:%M"),
                         status4=Status.CLEARED,
                         comment4=fake.text(max_nb_chars=100, ext_word_list=None),
                         link4=fake.uri(),
-                        date4=now.strftime("%Y-%m-%d %H:%M"),
                         **kwargs)
                 else:
                     v = Volunteer(
@@ -254,23 +252,20 @@ class User(UserMixin, db.Model):
                         address_city=fake_city,
                         address_state=fake_state,
                         organization=fake_organization,
-                        year_pa=fake.year(),
+                        year_pa=fake_residency,
+                        clearance_expiration = fake_clearance_exp,
                         status1=random.choice(list(Status)),
                         comment1=fake.text(max_nb_chars=100, ext_word_list=None),
                         link1=fake.uri(),
-                        date1=now.strftime("%Y-%m-%d %H:%M"),
                         status2=random.choice(list(Status)),
                         comment2=fake.text(max_nb_chars=100, ext_word_list=None),
                         link2=fake.uri(),
-                        date2=now.strftime("%Y-%m-%d %H:%M"),
                         status3=random.choice(list(Status)),
                         comment3=fake.text(max_nb_chars=100, ext_word_list=None),
                         link3=fake.uri(),
-                        date3=now.strftime("%Y-%m-%d %H:%M"),
                         status4=random.choice(list(Status)),
                         comment4=fake.text(max_nb_chars=100, ext_word_list=None),
                         link4=fake.uri(),
-                        date4=now.strftime("%Y-%m-%d %H:%M"),
                         **kwargs)
 
             db.session.add(u)

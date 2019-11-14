@@ -20,6 +20,7 @@ from app.admin.forms import (
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
+    ClearanceExpirationForm,
     NewVolunteerForm,
     DownloadCSVForm
 )
@@ -313,13 +314,12 @@ def view_clearances():
 
             csv_writer.writerow(['First Name', 'Last Name', 'Email',
                                  'Phone Number', 'Address Street', 'City', 'State', 'Organization',
-                                 'Over 10 years in PA', 'Child Abuse Clearance Status', 'Comment 1',
-                                 '(Link) Child Abuse Clearance', '(Date) Child Abuse Clearance',
+                                 'Over 10 years in PA', 'Clearance Expiration Date', 'Child Abuse Clearance Status', 'Comment 1',
+                                 '(Link) Child Abuse Clearance',
                                  'Criminal Record Clearance','Comment 2','(Link) Criminal Record Clearance',
-                                 '(Date) Criminal Record', 'FBI Background Check', 'Comment 3',
-                                 '(Link) FBI Background Check', '(Date) FBI Background Check',
-                                 'Volunteer Conflict of Interest','Comment 4', '(Link) Volunteer Conflict of Interest',
-                                 '(Date) Volunteer Conflict of Interest'])
+                                  'FBI Background Check', 'Comment 3',
+                                 '(Link) FBI Background Check',
+                                 'Volunteer Conflict of Interest','Comment 4', '(Link) Volunteer Conflict of Interest'])
 
             for v in volunteers:
                 csv_writer.writerow([
@@ -331,27 +331,24 @@ def view_clearances():
                     v.address_city,
                     v.address_state,
                     v.organization,
-                    str(v.year_pa),
+                    v.year_pa,
+                    v.clearance_expiration,
 
                     str(v.status1),
                     v.comment1,
                     v.link1,
-                    v.date1,
 
                     str(v.status2),
                     v.comment2,
                     v.link2,
-                    v.date2,
 
                     str(v.status3),
                     v.comment3,
                     v.link3,
-                    v.date3,
 
                     str(v.status4),
                     v.comment4,
-                    v.link4,
-                    v.date4])
+                    v.link4,])
 
     return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
 
@@ -366,42 +363,38 @@ def view_one(id):
     v_form3 = Clearance3StatusForm()
     v_form4 = Clearance4StatusForm()
 
+    expiration_date_form = ClearanceExpirationForm(clearance_expiration=v_entry.clearance_expiration)
+
+    if expiration_date_form.submit_expiration_date.data and expiration_date_form.validate():
+        if "submit_expiration_date" in request.form.keys():
+            v_entry.clearance_expiration = expiration_date_form.clearance_expiration.data
+            db.session.commit()
+
     if v_form1.submit_clearance_1.data and v_form1.validate():
         if "submit_clearance_1" in request.form.keys():
             v_entry.status1 = v_form1.new_status_1.data
             v_entry.comment1 = v_form1.comment_1.data
-            if "CLEARED" in v_entry.status1.value:
-                v_entry.date1 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form2.submit_clearance_2.data and v_form2.validate():
         if "submit_clearance_2" in request.form.keys():
             v_entry.status2 = v_form2.new_status_2.data
             v_entry.comment2 = v_form2.comment_2.data
-            if "CLEARED" in v_entry.status2.value:
-                v_entry.date2 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form3.submit_clearance_3.data and v_form3.validate():
         if "submit_clearance_3" in request.form.keys():
             v_entry.status3 = v_form3.new_status_3.data
             v_entry.comment3 = v_form3.comment_3.data
-            if "CLEARED" in v_entry.status3.value:
-                v_entry.date3 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form4.submit_clearance_4.data and v_form4.validate():
         if "submit_clearance_4" in request.form.keys():
             v_entry.status4 = v_form4.new_status_4.data
             v_entry.comment4 = v_form4.comment_4.data
-            if "CLEARED" in v_entry.status4.value:
-                v_entry.date4 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
-    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
 
 
-    
-
-
-
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1,
+                            v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4, expiration_date_form = expiration_date_form)
