@@ -6,7 +6,7 @@
     <div class="twelve wide computer sixteen wide mobile centered column">
     <a class="ui basic compact button" href="{{ url_for('admin.view_clearances') }}">
                 <i class="caret left icon"></i>
-                Back to review vouchers
+                Back to volunteer clearances
             </a>
         <h2 class="ui dividing header">Review Voucher Submission</h2>
           <div class="ui grid container">
@@ -46,6 +46,19 @@
                </tbody>
            </table>
 
+           <b>Clearance Expiration</b>
+           <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+             <tbody>
+               <tr>
+                 <td>
+                   {{ f.begin_form(expiration_date_form, flashes) }}
+                   {{ f.render_form(expiration_date_form) }}
+                   {{ f.end_form(expiration_date_form) }}
+                </td>
+               </tr>
+             </tbody>
+           </table>
+
             <b> Clearance 1</b>
             <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
               <tbody>
@@ -57,14 +70,6 @@
                    <td>Current Status</td>
                    <td>{{ v_entry.status1.value }}</td>
                 </tr>
-
-              {% if v_entry.status1.value == "Cleared"%}
-                <tr>
-                  <td> Date Cleared </td>
-                   <td>{{ v_entry.date1 }}</td>
-                </tr>
-                {% else %}
-              {% endif %}
 
                 <tr>
                    <td>Current Comment</td>
@@ -96,15 +101,6 @@
                    <td>Current Status</td>
                    <td>{{ v_entry.status2.value }}</td>
 
-                </tr>
-                {% if v_entry.status2.value == "Cleared"%}
-                  <tr>
-                    <td> Date Cleared </td>
-                     <td>{{ v_entry.date2 }}</td>
-                  </tr>
-                  {% else %}
-                {% endif %}
-
                 <tr>
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment2 }}</td>
@@ -134,14 +130,6 @@
                    <td>{{ v_entry.status3.value }}</td>
                 </tr>
 
-                {% if v_entry.status3.value == "Cleared"%}
-                  <tr>
-                    <td> Date Cleared </td>
-                     <td>{{ v_entry.date3 }}</td>
-                  </tr>
-                  {% else %}
-                {% endif %}
-
                  <tr>
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment3 }}</td>
@@ -170,13 +158,6 @@
                    <td>Status</td>
                    <td>{{ v_entry.status4.value }}</td>
                 </tr>
-                {% if v_entry.status4.value == "Cleared"%}
-                  <tr>
-                    <td> Date Cleared </td>
-                     <td>{{ v_entry.date4 }}</td>
-                  </tr>
-                  {% else %}
-                {% endif %}
 
                  <tr>
                    <td>Current Comment</td>

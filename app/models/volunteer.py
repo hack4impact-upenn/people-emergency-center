@@ -38,28 +38,25 @@ class Volunteer(db.Model):
     address_city = db.Column(db.String(64))
     address_state = db.Column(db.String(2))
     organization = db.Column(db.String(128))
-    year_pa = db.Column(db.Integer())
+    year_pa = db.Column(db.String(4))
+    clearance_expiration = db.Column(db.String(64))
 
     # link, comment, status
     status1 = db.Column(db.Enum(Status), default=0)
     comment1 = db.Column(db.String(512))
     link1 = db.Column(db.String(128))
-    date1 = db.Column(db.String(128))
 
     status2 = db.Column(db.Enum(Status), default=0)
     comment2 = db.Column(db.String(512))
     link2 = db.Column(db.String(128))
-    date2 = db.Column(db.String(128))
 
     status3 = db.Column(db.Enum(Status), default=0)
     comment3 = db.Column(db.String(512))
     link3 = db.Column(db.String(128))
-    date3 = db.Column(db.String(128))
 
     status4 = db.Column(db.Enum(Status), default=0)
     comment4 = db.Column(db.String(512))
     link4 = db.Column(db.String(128))
-    date4 = db.Column(db.String(128))
 
     def __init__(self, **kwargs):
         super(Volunteer, self).__init__(**kwargs)
@@ -75,29 +72,26 @@ class Volunteer(db.Model):
              f'Address: {self.address_street}, {self.address_city}, {self.address_state}\n'
              f'Organization: {self.organization}\n'
              f'Year Moved to PA: {self.year_pa}\n'
+             f'Clearance Expiration: {self.clearance_expiration}\n'
              f'Status of Clearance 1: {self.status1}\n'
              f'Comment on Clearance 1: {self.comment1}\n'
              f'Link to Clearance 1: {self.link1}\n'
-             f'Clearance 1 Date Cleared: {self.date1}\n'
              f'Status of Clearance 2: {self.status2}\n'
              f'Comment on Clearance 2: {self.comment2}\n'
              f'Link to Clearance 2: {self.link2}\n'
-             f'Clearance 2 Date Cleared: {self.date2}\n'
              f'Status of Clearance 3: {self.status3}\n'
              f'Comment on Clearance 3: {self.comment3}\n'
              f'Link to Clearance 3: {self.link3}\n'
-             f'Clearance 3 Date Cleared: {self.date3}\n'
              f'Status of Clearance 4: {self.status4}\n'
              f'Comment on Clearance 4: {self.comment4}\n'
-             f'Link to Clearance 4: {self.link4}\n'
-             f'Clearance 4 Date Cleared : {self.date4}\n')
+             f'Link to Clearance 4: {self.link4}\n')
 
     def __str__(self):
       return self.__repr__()
 
 
     # Note: This generate_fake() is no longer used. The generation of fake data of both users and volunteers is left
-    # to generate_fake() in user.py 
+    # to generate_fake() in user.py
     @staticmethod
     def generate_fake(count=10, **kwargs):
         from sqlalchemy.exc import IntegrityError
@@ -121,19 +115,15 @@ class Volunteer(db.Model):
                 status1=Status.CLEARED,
                 comment1=fake.text(max_nb_chars=100, ext_word_list=None),
                 link1=fake.uri(),
-                date1=now.strftime("%Y-%m-%d %H:%M"),
                 status2=Status.CLEARED,
                 comment2=fake.text(max_nb_chars=100, ext_word_list=None),
                 link2=fake.uri(),
-                date2=now.strftime("%Y-%m-%d %H:%M"),
                 status3=Status.CLEARED,
                 comment3=fake.text(max_nb_chars=100, ext_word_list=None),
                 link3=fake.uri(),
-                date3=now.strftime("%Y-%m-%d %H:%M"),
                 status4=Status.CLEARED,
                 comment4=fake.text(max_nb_chars=100, ext_word_list=None),
                 link4=fake.uri(),
-                date4=now.strftime("%Y-%m-%d %H:%M"),
                 **kwargs)
             db.session.add(v)
             try:
@@ -155,19 +145,15 @@ class Volunteer(db.Model):
                 status1=random.choice(list(Status)),
                 comment1=fake.text(max_nb_chars=100, ext_word_list=None),
                 link1=fake.uri(),
-                date1=now.strftime("%Y-%m-%d %H:%M"),
                 status2=random.choice(list(Status)),
                 comment2=fake.text(max_nb_chars=100, ext_word_list=None),
                 link2=fake.uri(),
-                date2=now.strftime("%Y-%m-%d %H:%M"),
                 status3=random.choice(list(Status)),
                 comment3=fake.text(max_nb_chars=100, ext_word_list=None),
                 link3=fake.uri(),
-                date3=now.strftime("%Y-%m-%d %H:%M"),
                 status4=random.choice(list(Status)),
                 comment4=fake.text(max_nb_chars=100, ext_word_list=None),
                 link4=fake.uri(),
-                date4=now.strftime("%Y-%m-%d %H:%M"),
                 **kwargs)
             db.session.add(v)
             try:

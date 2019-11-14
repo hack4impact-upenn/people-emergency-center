@@ -93,14 +93,14 @@ class NewVolunteerForm(InviteUserForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'), 
+    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'),
         ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'),
         ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'), ('FL', 'FL'),
         ('GA', 'GA'), ('HI', 'HI'), ('ID', 'ID'), ('IL', 'IL'),
         ('IN', 'IN'), ('IA', 'IA'), ('KS', 'KS'), ('KY', 'KY'),
         ('LA', 'LA'), ('ME', 'ME'), ('MD', 'MD'), ('MA', 'MA'),
         ('MI', 'MI'), ('MN', 'MN'), ('MS', 'MS'), ('MO', 'MO'),
-        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'), 
+        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'),
         ('NJ', 'NJ'), ('NM', 'NM'), ('NY', 'NY'), ('NC', 'NC'),
         ('ND', 'ND'), ('OH', 'OH'), ('OK', 'OK'), ('OR', 'OR'),
         ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
@@ -131,6 +131,11 @@ def coerce_for_enum(enum):
             raise ValueError(name)
     return coerce
 
+class ClearanceExpirationForm(FlaskForm):
+    clearance_expiration = StringField(
+        'Clearace Expiration Date', validators=[Length(1, 64)])
+    submit_expiration_date = SubmitField()
+
 
 class Clearance1StatusForm(FlaskForm):
     new_status_1 = SelectField(
@@ -138,7 +143,7 @@ class Clearance1StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_1 = TextAreaField()
+    comment_1 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_1 = SubmitField()
 
 
@@ -148,7 +153,7 @@ class Clearance2StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_2 = TextAreaField()
+    comment_2 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_2 = SubmitField()
 
 
@@ -158,7 +163,7 @@ class Clearance3StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_3 = TextAreaField()
+    comment_3 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_3 = SubmitField()
 
 
@@ -168,9 +173,8 @@ class Clearance4StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_4 = TextAreaField()
+    comment_4 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_4 = SubmitField()
 
 class DownloadCSVForm(FlaskForm):
     download_csv = SubmitField("Download CSV")
-
