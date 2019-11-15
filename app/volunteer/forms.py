@@ -9,16 +9,26 @@ class MultipleFileUploadField(StringField):
     pass
 
 
-class UploadClearanceForm(FlaskForm):
-    link1_display = StringField('')
+class UploadClearanceForm1(FlaskForm):
+    link_display = StringField('')
+    form1_file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit1')
+
+
+class UploadClearanceForm2(FlaskForm):
+    link_display = StringField('')
+    form2_file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit2')
+
+
+class UploadClearanceForm3(FlaskForm):
+    link_display = StringField('')
     file_urls = MultipleFileUploadField()
-    submit1 = SubmitField('Submit')
+    submit = SubmitField('Submit3')
 
-    # link2 = StringField('')
-    # submit2 = SubmitField('Submit')
 
-    # link3 = StringField('')
-    # submit3 = SubmitField('Submit')
+class UploadClearanceForm4(FlaskForm):
+    link_display = StringField('')
+    file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit4')
 
-    # link4 = StringField('')
-    # submit4 = SubmitField('Submit')

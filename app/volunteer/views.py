@@ -4,18 +4,16 @@ from flask import (
     request,
 )
 from flask_login import current_user, login_required
-import boto3
-import boto.s3
-from boto.s3.key import Key
-import boto.s3.connection
-import json
-import time
-import os
 
 from app import db
 from app.decorators import volunteer_required
 from app.models import Volunteer, Status
-from app.volunteer.forms import UploadClearanceForm
+from app.volunteer.forms import (
+    UploadClearanceForm1,
+    UploadClearanceForm2,
+    UploadClearanceForm3,
+    UploadClearanceForm4
+)
 
 volunteer = Blueprint('volunteer', __name__)
 
@@ -32,17 +30,14 @@ def index():
 @login_required
 @volunteer_required
 def upload_clearances():
-    form = UploadClearanceForm()
+    form1 = UploadClearanceForm1()
+    form2 = UploadClearanceForm2()
+    form3 = UploadClearanceForm3()
+    form4 = UploadClearanceForm4()
 
     current_volunteer = Volunteer.query.filter_by(email=current_user.email).first()
-    # current_volunteer.link1 = form.picture_urls.data
 
-    # if form.validate_on_submit() and form.submit1.data:
-    #     if form.link1_d.data.strip() != '':
-    #         current_volunteer.link1 = form.link1.data
-    #         current_volunteer.status1 = Status.SUBMITTED
-    #     else:
-    #         current_volunteer.status1 = Status.NOT_SUBMITTED
+    # current_volunteer.link1 = form.picture_urls.data
 
     # if form.validate_on_submit() and form.submit2.data:
     #     if form.link2.data.strip() != '':
@@ -50,14 +45,14 @@ def upload_clearances():
     #         current_volunteer.status2 = Status.SUBMITTED
     #     else:
     #         current_volunteer.status2 = Status.NOT_SUBMITTED
-
+    #
     # elif form.validate_on_submit() and form.submit3.data:
     #     if form.link3.data.strip() != '':
     #         current_volunteer.link3 = form.link3.data
     #         current_volunteer.status3 = Status.SUBMITTED
     #     else:
     #         current_volunteer.status3 = Status.NOT_SUBMITTED
-
+    #
     # elif form.validate_on_submit() and form.submit4.data:
     #     if form.link4.data.strip() != '':
     #         current_volunteer.link4 = form.link4.data
@@ -68,7 +63,12 @@ def upload_clearances():
     db.session.commit()
 
     return render_template(
-        'volunteer/upload_clearances.html', volunteer=current_volunteer,  form=form)
+        'volunteer/upload_clearances.html', volunteer=current_volunteer,
+        form1=form1,
+        form2=form2,
+        form3=form3,
+        form4=form4
+    )
 
 
 # May not need this
