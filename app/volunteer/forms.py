@@ -23,12 +23,12 @@ class UploadClearanceForm2(FlaskForm):
 
 class UploadClearanceForm3(FlaskForm):
     link_display = StringField('')
-    file_urls = MultipleFileUploadField()
+    form3_file_urls = MultipleFileUploadField()
     submit = SubmitField('Submit3')
 
 
 class UploadClearanceForm4(FlaskForm):
     link_display = StringField('')
-    file_urls = MultipleFileUploadField()
+    form4_file_urls = MultipleFileUploadField()
     submit = SubmitField('Submit4')
 
