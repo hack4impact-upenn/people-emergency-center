@@ -37,28 +37,33 @@ def upload_clearances():
 
     current_volunteer = Volunteer.query.filter_by(email=current_user.email).first()
 
-    # current_volunteer.link1 = form.picture_urls.data
+    if form1.validate_on_submit() and form1.submit.data:
+        if form1.form1_file_urls.data != '':
+            current_volunteer.link1 = form1.form1_file_urls.data
+            current_volunteer.status1 = Status.SUBMITTED
+        else:
+            current_volunteer.status1 = Status.NOT_SUBMITTED
 
-    # if form.validate_on_submit() and form.submit2.data:
-    #     if form.link2.data.strip() != '':
-    #         current_volunteer.link2 = form.link2.data
-    #         current_volunteer.status2 = Status.SUBMITTED
-    #     else:
-    #         current_volunteer.status2 = Status.NOT_SUBMITTED
-    #
-    # elif form.validate_on_submit() and form.submit3.data:
-    #     if form.link3.data.strip() != '':
-    #         current_volunteer.link3 = form.link3.data
-    #         current_volunteer.status3 = Status.SUBMITTED
-    #     else:
-    #         current_volunteer.status3 = Status.NOT_SUBMITTED
-    #
-    # elif form.validate_on_submit() and form.submit4.data:
-    #     if form.link4.data.strip() != '':
-    #         current_volunteer.link4 = form.link4.data
-    #         current_volunteer.status4 = Status.SUBMITTED
-    #     else:
-    #         current_volunteer.status4 = Status.NOT_SUBMITTED
+    elif form2.validate_on_submit() and form2.submit.data:
+        if form2.form2_file_urls != '':
+            current_volunteer.link2 = form2.form2_file_urls.data
+            current_volunteer.status2 = Status.SUBMITTED
+        else:
+            current_volunteer.status2 = Status.NOT_SUBMITTED
+
+    elif form3.validate_on_submit() and form3.submit.data:
+        if form3.form3_file_urls != '':
+            current_volunteer.link3 = form3.form3_file_urls.data
+            current_volunteer.status3 = Status.SUBMITTED
+        else:
+            current_volunteer.status3 = Status.NOT_SUBMITTED
+
+    elif form4.validate_on_submit() and form4.submit.data:
+        if form4.form4_file_urls != '':
+            current_volunteer.link4 = form4.form4_file_urls.data
+            current_volunteer.status4 = Status.SUBMITTED
+        else:
+            current_volunteer.status4 = Status.NOT_SUBMITTED
 
     db.session.commit()
 
