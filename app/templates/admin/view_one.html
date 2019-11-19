@@ -64,7 +64,7 @@
               <tbody>
                 <tr>
                  <td>Link</td>
-                 <td>{{ v_entry.link1 }}</td>
+                 <td>{% if v_entry.link1 %}<a href = "{{ v_entry.link1 }}">Click here</a>{%else %} None {% endif %}</td>
                 </tr>
                 <tr>
                    <td>Current Status</td>
