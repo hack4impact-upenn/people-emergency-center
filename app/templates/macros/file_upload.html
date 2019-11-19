@@ -1,0 +1,98 @@
+{% macro file_upload(fieldname) %}
+<script>
+var global_file = null;
+
+$('body').on('change', '#file-{{ fieldname }}', function() {
+  var file = $(this)[0].files[0];
+  console.log('before');
+  console.log(file.name);
+  console.log(file.type);
+  global_file = file;
+  {{fieldname}}_getSignedRequest(file);
+})
+
+function {{fieldname}}_getSignedRequest(file){
+  var xhr = new XMLHttpRequest();
+  if (file.name && file.name.length > 0) {
+    xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200){
+        var response = JSON.parse(xhr.responseText);
+        {{fieldname}}_uploadFile(file, response.data, response.url, response.url_upload)
+      } else{
+      alert('Could not get signed URL.'); //INTERNAL SERVER ERROR HERE
+      }
+    }
+  }
+};
+  xhr.send();
+}
+function {{fieldname}}_uploadFile(file, s3Data, url, urlUpload, fieldName) {
+  // basic validation
+  var fileType = url.substring(url.lastIndexOf('.') + 1);
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', urlUpload);
+  xhr.setRequestHeader('x-amz-acl', 'public-read');
+  var postData = new FormData();
+  postData.append('key', s3Data.fields.key);
+  postData.append('file', file);
+  xhr.onreadystatechange = function()  {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200 || xhr.status === 204) {
+        {{fieldname}}_handleFunc(url, file);
+      } else{
+        alert('Could not upload file.');
+      }
+    }
+  };
+  xhr.send(postData);
+}
+function {{fieldname}}_handleFunc(url, file) {
+  var curr = $("#{{ fieldname }}").val()
+  $("div > input#{{ fieldname }}").val(url);
+};
+
+$('body').on('click', '#{{fieldname}}-delete', function() {
+  var url = $(this).data('url');
+  var arr = $("div > input#{{ fieldname }}").val().split(',');
+  var idx = arr.indexOf(url);
+  if (idx > -1) {
+    arr.splice(idx, 1)
+  }
+  $("div > input#{{ fieldname }}").val(arr.join(','))
+  $(this).parent().remove();
+  $(this).remove();
+
+  var xhr = new XMLHttpRequest();
+    xhr.open('GET', `/sign-s3?file-name=${global_file.name}&file-type=${global_file.type}`);
+    xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+      if (xhr.status === 200){
+        var response = JSON.parse(xhr.responseText);
+        {{fieldname}}_delete(response.url);
+      } else{
+      alert('Could not get signed URL.'); //INTERNAL SERVER ERROR HERE
+      }
+    }
+  }
+  xhr.send();
+})
+
+function {{fieldname}}_delete(url) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", url, true);
+    xhr.setRequestHeader('x-amz-acl', 'public-read');
+    xhr.onload = function () {
+        if (xhr.readyState == 4 && xhr.status == "200") {
+            console.log("Successfully deleted!");
+        } else {
+          alert('Could not get signed URL.'); //INTERNAL SERVER ERROR HERE
+        }
+    }
+    xhr.send(null);
+};
+
+</script>
+
+{% endmacro %}

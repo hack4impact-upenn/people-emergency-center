@@ -5,15 +5,30 @@ from wtforms.fields import (
 )
 
 
-class UploadClearanceForm(FlaskForm):
-    link1 = StringField('')
-    submit1 = SubmitField('Submit')
+class MultipleFileUploadField(StringField):
+    pass
 
-    link2 = StringField('')
-    submit2 = SubmitField('Submit')
 
-    link3 = StringField('')
-    submit3 = SubmitField('Submit')
+class UploadClearanceForm1(FlaskForm):
+    link_display = StringField('')
+    form1_file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit Clearance 1')
 
-    link4 = StringField('')
-    submit4 = SubmitField('Submit')
+
+class UploadClearanceForm2(FlaskForm):
+    link_display = StringField('')
+    form2_file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit Clearance 2')
+
+
+class UploadClearanceForm3(FlaskForm):
+    link_display = StringField('')
+    form3_file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit Clearance 3')
+
+
+class UploadClearanceForm4(FlaskForm):
+    link_display = StringField('')
+    form4_file_urls = MultipleFileUploadField()
+    submit = SubmitField('Submit Clearance 4')
+
