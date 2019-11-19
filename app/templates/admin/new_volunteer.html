@@ -13,8 +13,8 @@
                 Back to dashboard
             </a>
             <h2 class="ui header">
-                Add New User
-                <div class="sub header">Create a new user account</div>
+                Add New Volunteer
+                <div class="sub header">Create a new volunteer account</div>
             </h2>
 
             {% set flashes = {
@@ -25,12 +25,21 @@
             } %}
 
             {{ f.begin_form(form, flashes) }}
-                 {{ f.render_form_field(form.role) }}
+
                 <div class="two fields">
                     {{ f.render_form_field(form.first_name) }}
                     {{ f.render_form_field(form.last_name) }}
                 </div>
+              {{ f.render_form_field(form.phone_number) }}
               {{ f.render_form_field(form.email) }}
+              {{ f.render_form_field(form.street) }}
+              <div class="two fields">
+                  {{ f.render_form_field(form.city) }}
+                  {{ f.render_form_field(form.state) }}
+              </div>
+              {{ f.render_form_field(form.organization_corporation) }}
+              {{ f.render_form_field(form.pa_residency) }}
+
                 {% if form.password %}
                     <div class="two fields">
                         {{ f.render_form_field(form.password) }}

@@ -1,6 +1,7 @@
 from flask import url_for
 from flask_wtf import FlaskForm
 from wtforms import ValidationError
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from wtforms.fields import (
     BooleanField,
     PasswordField,
@@ -37,6 +38,9 @@ class RegistrationForm(FlaskForm):
         'Email', validators=[InputRequired(),
                              Length(1, 64),
                              Email()])
+    pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
+      , choices=[('Yes','Yes'), ('No', 'No')],
+        validators=[InputRequired()])
     organization_corporation = StringField(
         'Organization/Corporation', validators=[InputRequired(),
                                               Length(1, 64)])
@@ -47,9 +51,21 @@ class RegistrationForm(FlaskForm):
         'City', validators=[InputRequired(),
                             Length(1, 64)])
 
-    state = SelectField(choices=[('',''), ('PA', 'PA')], 
+    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'), 
+        ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'),
+        ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'), ('FL', 'FL'),
+        ('GA', 'GA'), ('HI', 'HI'), ('ID', 'ID'), ('IL', 'IL'),
+        ('IN', 'IN'), ('IA', 'IA'), ('KS', 'KS'), ('KY', 'KY'),
+        ('LA', 'LA'), ('ME', 'ME'), ('MD', 'MD'), ('MA', 'MA'),
+        ('MI', 'MI'), ('MN', 'MN'), ('MS', 'MS'), ('MO', 'MO'),
+        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'), 
+        ('NJ', 'NJ'), ('NM', 'NM'), ('NY', 'NY'), ('NC', 'NC'),
+        ('ND', 'ND'), ('OH', 'OH'), ('OK', 'OK'), ('OR', 'OR'),
+        ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
+        ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
+        ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')],
         validators=[InputRequired()])
-
+    
     phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
 
@@ -69,7 +85,7 @@ class RegistrationForm(FlaskForm):
                                     url_for('account.login')))
 
         surgery_month = SelectField(choices=[('',''), ('January', 'January'), ('February', 'February'),
-    ('March', 'March'), ('April', 'April'), ('May', 'May'), ('June', 'June'), ('July', 'July'), 
+    ('March', 'March'), ('April', 'April'), ('May', 'May'), ('June', 'June'), ('July', 'July'),
     ('August', 'August'), ('September', 'September'), ('October', 'October'),
     ('November', 'November'), ('December', 'December')])
 
@@ -129,7 +145,33 @@ class ChangePasswordForm(FlaskForm):
         'Confirm new password', validators=[InputRequired()])
     submit = SubmitField('Update password')
 
+class EditAccountInfoForm(FlaskForm):
+    phone_number = IntegerField(
+        'Phone Number')
+    street = StringField(
+        'Street', validators=[Length(1, 64)])
+    city = StringField(
+        'City', validators=[Length(1, 64)])
+    state = SelectField(choices=[('PA', 'PA'), ('AL', 'AL'), 
+        ('AK', 'AK'), ('AZ', 'AZ'), ('AR', 'AR'), ('CA', 'CA'),
+        ('CO', 'CO'), ('CT', 'CT'), ('DE', 'DE'), ('FL', 'FL'),
+        ('GA', 'GA'), ('HI', 'HI'), ('ID', 'ID'), ('IL', 'IL'),
+        ('IN', 'IN'), ('IA', 'IA'), ('KS', 'KS'), ('KY', 'KY'),
+        ('LA', 'LA'), ('ME', 'ME'), ('MD', 'MD'), ('MA', 'MA'),
+        ('MI', 'MI'), ('MN', 'MN'), ('MS', 'MS'), ('MO', 'MO'),
+        ('MT', 'MT'), ('NE', 'NE'), ('NV', 'NV'), ('NH', 'NH'), 
+        ('NJ', 'NJ'), ('NM', 'NM'), ('NY', 'NY'), ('NC', 'NC'),
+        ('ND', 'ND'), ('OH', 'OH'), ('OK', 'OK'), ('OR', 'OR'),
+        ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
+        ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
+        ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')])
 
+    pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
+      , choices=[('Yes','Yes'), ('No', 'No')])
+    organization_corporation = StringField(
+        'Organization/Corporation', validators=[Length(1, 64)])
+    password = PasswordField('Password', validators=[InputRequired()])
+    submit = SubmitField('Update account information')
 class ChangeEmailForm(FlaskForm):
     email = EmailField(
         'New email', validators=[InputRequired(),

@@ -20,17 +20,20 @@ from app.admin.forms import (
     ChangeUserEmailForm,
     InviteUserForm,
     NewUserForm,
+    ClearanceExpirationForm,
+    NewVolunteerForm,
     DownloadCSVForm
 )
+
 from app.decorators import admin_required
 from app.email import send_email
-from app.models import EditableHTML, Role, User, Volunteer
+from app.models import EditableHTML, Role, User, Volunteer, Status
 
 from .. import csrf
 import csv
 import io
 import json
-import datetime
+from datetime import datetime
 
 
 admin = Blueprint('admin', __name__)
@@ -43,25 +46,100 @@ def index():
     """Admin dashboard page."""
     return render_template('admin/index.html')
 
+@admin.route('/new-volunteer', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def new_volunteer():
+    """Create a new volunteer."""
+    form = NewVolunteerForm()
+    if form.is_submitted():
+        print("submitted")
+
+    if form.validate_on_submit():
+        print("valid")
+
+    print(form.errors)
+    if form.validate_on_submit():
+        user = User(
+            role_id=1,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            email=form.email.data,
+            password=form.password.data,
+            phone_number=form.phone_number.data,
+            street=form.street.data,
+            city=form.city.data,
+            state=form.state.data,
+            organization_corporation=form.organization_corporation.data,
+            pa_residency=form.pa_residency.data,
+            confirmed = True)
+        db.session.add(user)
+        if form.pa_residency.data == "Yes":
+            volunteer = Volunteer(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                phone_number=form.phone_number.data,
+                address_street=form.street.data,
+                address_city=form.city.data,
+                address_state=form.state.data,
+                organization = form.organization_corporation.data,
+                year_pa = form.pa_residency.data,
+                status1=Status.NOT_SUBMITTED,
+                status2=Status.NOT_SUBMITTED,
+                status3=Status.NOT_NEEDED,
+                status4=Status.NOT_SUBMITTED
+            )
+        if form.pa_residency.data == "No":
+            volunteer = Volunteer(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                email=form.email.data,
+                phone_number=form.phone_number.data,
+                address_street=form.street.data,
+                address_city=form.city.data,
+                address_state=form.state.data,
+                organization = form.organization_corporation.data,
+                year_pa = form.pa_residency.data,
+                status1=Status.NOT_SUBMITTED,
+                status2=Status.NOT_SUBMITTED,
+                status3=Status.NOT_SUBMITTED,
+                status4=Status.NOT_SUBMITTED
+            )
+        db.session.add(volunteer)
+        db.session.commit()
+        flash('Volunteer {} successfully created'.format(user.full_name()),
+              'form-success')
+        return redirect(url_for('main.index'))
+    return render_template('admin/new_volunteer.html', form=form)
+
 @admin.route('/new-user', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def new_user():
     """Create a new user."""
     form = NewUserForm()
+    if form.is_submitted():
+        print("submitted")
+
+    if form.validate_on_submit():
+        print("valid")
+
+    print(form.errors)
     if form.validate_on_submit():
         user = User(
             role=form.role.data,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
-            password=form.password.data)
+            password=form.password.data,
+            confirmed=True)
         db.session.add(user)
         db.session.commit()
         flash('User {} successfully created'.format(user.full_name()),
               'form-success')
+        return redirect(url_for('main.index'))
     return render_template('admin/new_user.html', form=form)
-
 
 @admin.route('/invite-user', methods=['GET', 'POST'])
 @login_required
@@ -71,7 +149,6 @@ def invite_user():
     form = InviteUserForm()
     if form.validate_on_submit():
         user = User(
-            role=form.role.data,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data)
@@ -223,9 +300,55 @@ def view_clearances():
 
         """This should automatically set the filepath to your downloads folder.
         Just hardcode a file path for now if it doesn't work though."""
-        file_path = os.environ["HOME"] + "/Downloads/"  
+        file_path = file_path = os.path.expanduser('~') + "/Downloads/"
 
         print("CSV download code here")
+        volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
+        today = datetime.now()
+        timestr = today.strftime("%Y%m%d-%H%M%S")
+        file_name = "volunteers" + timestr + ".csv"
+
+        with io.open(file_path + file_name, 'w', newline='') as csvfile:
+
+            csv_writer = csv.writer(csvfile)
+
+            csv_writer.writerow(['First Name', 'Last Name', 'Email',
+                                 'Phone Number', 'Address Street', 'City', 'State', 'Organization',
+                                 'Over 10 years in PA', 'Clearance Expiration Date', 'Child Abuse Clearance Status', 'Comment 1',
+                                 '(Link) Child Abuse Clearance',
+                                 'Criminal Record Clearance','Comment 2','(Link) Criminal Record Clearance',
+                                  'FBI Background Check', 'Comment 3',
+                                 '(Link) FBI Background Check',
+                                 'Volunteer Conflict of Interest','Comment 4', '(Link) Volunteer Conflict of Interest'])
+
+            for v in volunteers:
+                csv_writer.writerow([
+                    v.first_name,
+                    v.last_name,
+                    v.email,
+                    v.phone_number,
+                    v.address_street,
+                    v.address_city,
+                    v.address_state,
+                    v.organization,
+                    v.year_pa,
+                    v.clearance_expiration,
+
+                    str(v.status1),
+                    v.comment1,
+                    v.link1,
+
+                    str(v.status2),
+                    v.comment2,
+                    v.link2,
+
+                    str(v.status3),
+                    v.comment3,
+                    v.link3,
+
+                    str(v.status4),
+                    v.comment4,
+                    v.link4,])
 
     return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
 
@@ -240,42 +363,38 @@ def view_one(id):
     v_form3 = Clearance3StatusForm()
     v_form4 = Clearance4StatusForm()
 
+    expiration_date_form = ClearanceExpirationForm(clearance_expiration=v_entry.clearance_expiration)
+
+    if expiration_date_form.submit_expiration_date.data and expiration_date_form.validate():
+        if "submit_expiration_date" in request.form.keys():
+            v_entry.clearance_expiration = expiration_date_form.clearance_expiration.data
+            db.session.commit()
+
     if v_form1.submit_clearance_1.data and v_form1.validate():
         if "submit_clearance_1" in request.form.keys():
             v_entry.status1 = v_form1.new_status_1.data
             v_entry.comment1 = v_form1.comment_1.data
-            if "CLEARED" in v_entry.status1.value:
-                v_entry.date1 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form2.submit_clearance_2.data and v_form2.validate():
         if "submit_clearance_2" in request.form.keys():
             v_entry.status2 = v_form2.new_status_2.data
             v_entry.comment2 = v_form2.comment_2.data
-            if "CLEARED" in v_entry.status2.value:
-                v_entry.date2 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form3.submit_clearance_3.data and v_form3.validate():
         if "submit_clearance_3" in request.form.keys():
             v_entry.status3 = v_form3.new_status_3.data
             v_entry.comment3 = v_form3.comment_3.data
-            if "CLEARED" in v_entry.status3.value:
-                v_entry.date3 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
     if v_form4.submit_clearance_4.data and v_form4.validate():
         if "submit_clearance_4" in request.form.keys():
             v_entry.status4 = v_form4.new_status_4.data
             v_entry.comment4 = v_form4.comment_4.data
-            if "CLEARED" in v_entry.status4.value:
-                v_entry.date4 = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
             db.session.commit()
 
-    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1, v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4)
 
 
-    
-
-
-
+    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1,
+                            v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4, expiration_date_form = expiration_date_form)

@@ -29,10 +29,12 @@
             <div class="ui two column stackable grid">
                 {{ dashboard_option('Registered Users', 'admin.registered_users',
                                     description='View and manage user accounts', icon='users icon') }}
-                {{ dashboard_option('Add New User', 'admin.new_user',
-                                    description='Create a new user account', icon='add user icon') }}
-                {{ dashboard_option('Invite New User', 'admin.invite_user',
-                                    description='Invites a new user to create their own account', icon='add user icon') }}
+                {{ dashboard_option('Add New Volunteer', 'admin.new_volunteer',
+                                    description='Create a new volunteer account', icon='add user icon') }}
+                {{ dashboard_option('Add New Admin/Staff', 'admin.new_user',
+                                    description='Create a new administrator or staff account', icon='add user icon') }}
+                {{ dashboard_option('Invite New Volunteer', 'admin.invite_user',
+                                    description='Invites a new volunteer to create their own account', icon='add user icon') }}
                 {{ dashboard_option('View Clearances', 'admin.view_clearances',
                                     description='View and update clearances', icon='edit icon') }}
             </div>

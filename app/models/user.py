@@ -25,11 +25,11 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'Volunteer': (Permission.VOLUNTEER, 
-                'volunteer', 
+            'Volunteer': (Permission.VOLUNTEER,
+                'volunteer',
                 True),
-            'Staff': (Permission.STAFFER, 
-                'staff', 
+            'Staff': (Permission.STAFFER,
+                'staff',
                 True),
             'Administrator': (
                 Permission.ADMINISTER,
@@ -61,6 +61,7 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     phone_number = db.Column(db.String(16))
+    pa_residency = db.Column(db.String(4))
     street = db.Column(db.String(64))
     city = db.Column(db.String(64))
     state = db.Column(db.String(2))
@@ -162,32 +163,116 @@ class User(UserMixin, db.Model):
         db.session.commit()
         return True
 
+    ### Generate Fake Data ###
+    # Generates fake data for Volunteers and Users
+    # Volunteers and Users share common attributes for the following:
+    # first_name, last_name, email, phone_number, street, city, state, organization
+    # First the user is cadded to session, then the volunteer
+    # First 5 Volunteers have all their statuses cleared
+    # Note: generate_fake() in volunteer.py is no longer used.
+    ##########################
     @staticmethod
     def generate_fake(count=100, **kwargs):
         """Generate a number of fake users for testing."""
         from sqlalchemy.exc import IntegrityError
         from random import seed, choice
+        import random
+        import enum
+        import datetime
         from faker import Faker
+        from app.models import Volunteer, Status
 
         fake = Faker()
         roles = Role.query.all()
-
+        now = datetime.datetime.now()
         seed()
+
         for i in range(count):
+            fake_first_name = fake.first_name()
+            fake_last_name = fake.last_name()
+            fake_email = fake.email()
+            fake_phone_number = fake.phone_number()
+            fake_street = fake.street_address()
+            fake_city = fake.city()
+            fake_state = fake.state_abbr(include_territories=True)
+            fake_organization = fake.company()
+            fake_clearance_exp = fake.month_name() + " " + fake.day_of_month() + " " + fake.year()
+            fake_residency = random.choice(["Yes", "No"])
+            user_role = choice(roles)
+
             u = User(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                email=fake.email(),
-                phone_number=fake.phone_number(),
-                street=fake.street_address(),
-                city=fake.city(),
-                state=fake.state_abbr(include_territories=True),
-                organization_corporation=fake.company(),
+                first_name=fake_first_name,
+                last_name=fake_last_name,
+                email=fake_email,
+                phone_number=fake_phone_number,
+                street=fake_street,
+                city=fake_city,
+                state=fake_state,
+                organization_corporation=fake_organization,
+                pa_residency = fake_residency,
                 password='password',
                 confirmed=True,
-                role=choice(roles),
+                role = user_role,
                 **kwargs)
+
+            # User is only assigned as a volunteer if its user_role is 'Volunteer'
+            if (user_role.name == 'Volunteer'):
+                if (i < 5):
+                    v = Volunteer(
+                        first_name=fake_first_name,
+                        last_name=fake_last_name,
+                        email=fake_email,
+                        phone_number=fake_phone_number,
+                        address_street=fake_street,
+                        address_city=fake_city,
+                        address_state=fake_state,
+                        organization=fake_organization,
+                        year_pa=fake_residency,
+                        clearance_expiration = fake_clearance_exp,
+                        status1=Status.CLEARED,
+                        comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link1=fake.uri(),
+                        status2=Status.CLEARED,
+                        comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link2=fake.uri(),
+                        status3=Status.CLEARED,
+                        comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link3=fake.uri(),
+                        status4=Status.CLEARED,
+                        comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link4=fake.uri(),
+                        **kwargs)
+                else:
+                    v = Volunteer(
+                        first_name=fake_first_name,
+                        last_name=fake_last_name,
+                        email=fake_email,
+                        phone_number=fake_phone_number,
+                        address_street=fake_street,
+                        address_city=fake_city,
+                        address_state=fake_state,
+                        organization=fake_organization,
+                        year_pa=fake_residency,
+                        clearance_expiration = fake_clearance_exp,
+                        status1=random.choice(list(Status)),
+                        comment1=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link1=fake.uri(),
+                        status2=random.choice(list(Status)),
+                        comment2=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link2=fake.uri(),
+                        status3=random.choice(list(Status)),
+                        comment3=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link3=fake.uri(),
+                        status4=random.choice(list(Status)),
+                        comment4=fake.text(max_nb_chars=100, ext_word_list=None),
+                        link4=fake.uri(),
+                        **kwargs)
+
             db.session.add(u)
+            # User is only assigned as a volunteer if its user_role is 'Volunteer'
+            if (user_role.name == 'Volunteer'):
+                db.session.add(v)
+
             try:
                 db.session.commit()
             except IntegrityError:

@@ -2,13 +2,6 @@
 {% import 'macros/form_macros.html' as f %}
 {% import 'macros/check_password.html' as check %}
 
-{% set endpoints = [
-    ('account.manage', 'Account information'),
-    ('account.change_email_request', 'Change email address'),
-    ('account.change_password', 'Change password'),
-    ('account.logout', 'Log out')
-] %}
-
 {% macro navigation(items) %}
     <div class="ui vertical fluid secondary menu">
         {% for route, name in items %}
@@ -22,9 +15,15 @@
 
 {% macro user_info(user) %}
     <table class="ui compact definition table">
-        <tr><td>Full name</td><td>{{ '%s %s' % (user.first_name, user.last_name) }}</td></tr>
-        <tr><td>Email address</td><td>{{ user.email }}</td></tr>
-        <tr><td>Account type</td><td>{{ user.role.name }}</td></tr>
+      <tr><td>Full name</td><td>{{ '%s %s' % (user.first_name, user.last_name) }}</td></tr>
+      <tr><td>Email address</td><td>{{ user.email }}</td></tr>
+      {%  if user.phone_number %}<tr><td>Phone Number</td><td>{{ user.phone_number }}</td></tr>{% endif %}
+      {%  if user.street %}<tr><td>Street</td><td>{{ user.street }}</td></tr>{% endif %}
+      {%  if user.city %}<tr><td>City</td><td>{{ user.city }}</td></tr>{% endif %}
+      {%  if user.state %}<tr><td>State</td><td>{{ user.state }}</td></tr>{% endif %}
+      {%  if user.organization_corporation %}<tr><td>Organization/Corporation</td><td>{{ user.phone_number }}</td></tr>{% endif %}
+      {%  if user.organization_corporation %}<tr><td>Lived in PA for 10 or more years?</td><td>{{ user.pa_residency }}</td></tr>{% endif %}
+      <tr><td>Account type</td><td>{{ user.role.name }}</td></tr>
     </table>
 {% endmacro %}
 
@@ -38,6 +37,23 @@
         </div>
         <div class="stretched divided very relaxed row">
             <div class="four wide column">
+            {%  if current_user.role_id == 1 %}
+                {% set endpoints = [
+                    ('account.manage', 'Account information'),
+                    ('account.edit_account_information', 'Edit account information'),
+                    ('account.change_email_request', 'Change email address'),
+                    ('account.change_password', 'Change password'),
+                    ('account.logout', 'Log out')
+                ] %}
+            {%  else %}
+                {% set endpoints = [
+                    ('account.manage', 'Account information'),
+                    ('account.change_email_request', 'Change email address'),
+                    ('account.change_password', 'Change password'),
+                    ('account.logout', 'Log out')
+                ] %}
+            {%  endif %}
+
                 {{ navigation(endpoints) }}
             </div>
             <div class="eight wide column">
