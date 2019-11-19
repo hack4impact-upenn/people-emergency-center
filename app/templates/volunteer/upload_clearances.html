@@ -55,9 +55,11 @@
             </br>
             <b>Status</b>: {{ volunteer.status1 }}
         </p>
-        <b>Uploaded File: {{ volunteer.link1 }} </b>
+        {% if volunteer.link1 %}
+        <b>Uploaded File:</b> <a href = "{{ volunteer.link1 }}">Click here</a>
         <br />
         <br />
+        {% endif %}
         {{ f.render_form_input(form1.form1_file_urls) }}
         {{ upload.file_upload('form1_file_urls') }}
         <br />
@@ -79,9 +81,11 @@
             </br>
             <b>Status</b>: {{ volunteer.status2 }}
         </p>
-        <b>Uploaded File: {{ volunteer.link2 }} </b>
+        {% if volunteer.link2 %}
+        <b>Uploaded File:</b> <a href = "{{ volunteer.link2 }}">Click here</a>
         <br />
         <br />
+        {% endif %}
         {{ f.render_form_input(form2.form2_file_urls) }}
         {{ upload.file_upload('form2_file_urls') }}
         <br />
@@ -113,9 +117,11 @@
             </br>
             <b>Status</b>: {{ volunteer.status3 }}
         </p>
-        <b>Uploaded File: {{ volunteer.link3 }} </b>
+        {% if volunteer.link3 %}
+        <b>Uploaded File:</b> <a href = "{{ volunteer.link3 }}">Click here</a>
         <br />
         <br />
+        {% endif %}
         {{ f.render_form_input(form3.form3_file_urls) }}
         {{ upload.file_upload('form3_file_urls') }}
         <br />
@@ -136,9 +142,11 @@
             </br>
             <b>Status</b>: {{ volunteer.status4 }}
         </p>
-        <b>Uploaded File: {{ volunteer.link4 }} </b>
+        {% if volunteer.link4 %}
+        <b>Uploaded File:</b> <a href = "{{ volunteer.link4 }}">Click here</a>
         <br />
         <br />
+        {% endif %}
         {{ f.render_form_input(form4.form4_file_urls) }}
         {{ upload.file_upload('form4_file_urls') }}
         <br />

@@ -26,7 +26,7 @@ def sign_s3():
     # Load necessary information into the application
     TARGET_FOLDER = 'json/'
     S3_REGION = 'us-east-2'
-    S3_BUCKET = os.environ.get('S3_BUCKET')
+    S3_BUCKET = 'h4i-test2'
 
     # Load required data from the request
     pre_file_name = request.args.get('file-name')

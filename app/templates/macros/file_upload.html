@@ -49,11 +49,8 @@ function {{fieldname}}_uploadFile(file, s3Data, url, urlUpload, fieldName) {
   xhr.send(postData);
 }
 function {{fieldname}}_handleFunc(url, file) {
-  console.log(url);
   var curr = $("#{{ fieldname }}").val()
-  $("div > input#{{ fieldname }}").val(curr + ( curr ? ',': '' ) + url);
-  $("#{{ fieldname }}_list").append(
-    '<div class="badge badge-light"><br /><i class="file icon"></i><a href="' + url + '">' + file.name + '</a><span id="{{fieldname}}-delete"class="delete" data-url="' + url + '"> <Button class="primary">Delete Document</Button></span></span>')
+  $("div > input#{{ fieldname }}").val(url);
 };
 
 $('body').on('click', '#{{fieldname}}-delete', function() {
