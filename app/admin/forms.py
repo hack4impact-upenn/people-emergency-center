@@ -158,6 +158,7 @@ class Clearance2StatusForm(FlaskForm):
     submit_clearance_2 = SubmitField()
     form2_file_urls = MultipleFileUploadField()
 
+
 class Clearance3StatusForm(FlaskForm):
     new_status_3 = SelectField(
         'Status',
@@ -168,6 +169,7 @@ class Clearance3StatusForm(FlaskForm):
     submit_clearance_3 = SubmitField()
     form3_file_urls = MultipleFileUploadField()
 
+
 class Clearance4StatusForm(FlaskForm):
     new_status_4 = SelectField(
         'Status',
@@ -177,6 +179,7 @@ class Clearance4StatusForm(FlaskForm):
     comment_4 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_4 = SubmitField()
     form4_file_urls = MultipleFileUploadField()
+
 
 class DownloadCSVForm(FlaskForm):
     download_csv = SubmitField("Download CSV")
