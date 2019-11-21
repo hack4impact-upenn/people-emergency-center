@@ -76,14 +76,8 @@
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment1 }}</td>
                 </tr>
-
-                <tr>
-                   <td>Upload Clearance</td>
-                   <td>{{ f.render_form_input(v_form1.form1_file_urls) }}
-                    {{ upload.file_upload('form1_file_urls') }}</td>
-                </tr>
                 
-                 {% if v_entry.status1.value == "Submitted" or v_entry.status1.value == "Pending (state review)" or v_entry.status1.value == "Pending (pec review)"%}
+                 {% if v_entry.status1.value == "Submitted" or v_entry.status1.value == "Pending (state review)" or v_entry.status1.value == "Pending (pec review)" or v_entry.status1.value == "Not Submitted"%}
 
                 <tr>
                   <td colspan = 2>
@@ -113,7 +107,7 @@
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment2 }}</td>
                 </tr>
-                {% if v_entry.status2.value == "Submitted" or v_entry.status2.value == "Pending (state review)" or v_entry.status2.value == "Pending (pec review)"%}
+                {% if v_entry.status2.value == "Submitted" or v_entry.status2.value == "Pending (state review)" or v_entry.status2.value == "Pending (pec review)" or v_entry.status2.value == "Not Submitted"%}
                 <tr>
                   <td colspan = 2>
                               {{ f.begin_form(v_form2, flashes) }}
@@ -142,7 +136,7 @@
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment3 }}</td>
                 </tr>
-                 {% if v_entry.status3.value == "Submitted" or v_entry.status3.value == "Pending (state review)" or v_entry.status3.value == "Pending (pec review)"%}
+                 {% if v_entry.status3.value == "Submitted" or v_entry.status3.value == "Pending (state review)" or v_entry.status3.value == "Pending (pec review)" or v_entry.status3.value == "Not Submitted"%}
                 <tr>
                   <td colspan = 2>
                               {{ f.begin_form(v_form3, flashes) }}
@@ -171,8 +165,7 @@
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment4 }}</td>
                 </tr>
-                 {% if v_entry.status4.value ==
-                "Submitted" or v_entry.status4.value == "Pending (state review)" or v_entry.status4.value == "Pending (pec review)"%}
+                 {% if v_entry.status4.value == "Submitted" or v_entry.status4.value == "Pending (state review)" or v_entry.status4.value == "Pending (pec review)" or v_entry.status4.value == "Not Submitted"%}
                 <tr>
                   <td colspan = 2>
                               {{ f.begin_form(v_form4, flashes) }}
