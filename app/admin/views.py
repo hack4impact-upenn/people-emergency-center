@@ -205,6 +205,13 @@ def view_clearances():
     volunteers = Volunteer.query.all()
     return render_template('admin/view_clearances.html', volunteers=volunteers)
 
+@admin.route('/weekly_digest', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def weekly_digest():
+    """View weekly digest."""
+    return render_template('admin/weekly_digest.html')
+
 @admin.route('/view_one/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
