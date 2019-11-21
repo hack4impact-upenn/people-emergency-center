@@ -9,7 +9,7 @@ from wtforms.fields import (
     StringField,
     SubmitField,
     SelectField,
-    IntegerField
+    IntegerField,
 )
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
@@ -18,6 +18,7 @@ from wtforms.validators import (
     InputRequired,
     Length,
 )
+from app.volunteer.forms import MultipleFileUploadField
 
 from app import db
 from app.models import Role, User, Status
@@ -145,7 +146,7 @@ class Clearance1StatusForm(FlaskForm):
     )
     comment_1 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_1 = SubmitField()
-
+    form1_file_urls = MultipleFileUploadField()
 
 class Clearance2StatusForm(FlaskForm):
     new_status_2 = SelectField(
@@ -155,7 +156,7 @@ class Clearance2StatusForm(FlaskForm):
     )
     comment_2 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_2 = SubmitField()
-
+    form2_file_urls = MultipleFileUploadField()
 
 class Clearance3StatusForm(FlaskForm):
     new_status_3 = SelectField(
@@ -165,7 +166,7 @@ class Clearance3StatusForm(FlaskForm):
     )
     comment_3 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_3 = SubmitField()
-
+    form3_file_urls = MultipleFileUploadField()
 
 class Clearance4StatusForm(FlaskForm):
     new_status_4 = SelectField(
@@ -175,6 +176,7 @@ class Clearance4StatusForm(FlaskForm):
     )
     comment_4 = TextAreaField(validators=[Length(1, 512)])
     submit_clearance_4 = SubmitField()
+    form4_file_urls = MultipleFileUploadField()
 
 class DownloadCSVForm(FlaskForm):
     download_csv = SubmitField("Download CSV")
