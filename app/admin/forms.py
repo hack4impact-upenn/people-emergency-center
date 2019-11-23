@@ -148,6 +148,7 @@ class Clearance1StatusForm(FlaskForm):
     submit_clearance_1 = SubmitField()
     form1_file_urls = MultipleFileUploadField()
 
+
 class Clearance2StatusForm(FlaskForm):
     new_status_2 = SelectField(
         'Status',

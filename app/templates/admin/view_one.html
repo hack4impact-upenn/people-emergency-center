@@ -76,12 +76,6 @@
                    <td>Current Comment</td>
                    <td>{{ v_entry.comment1 }}</td>
                 </tr>
-
-                <tr>
-                   <td>Upload Clearance</td>
-                   <td>{{ f.render_form_input(v_form1.form1_file_urls) }}
-                    {{ upload.file_upload('form1_file_urls') }}</td>
-                </tr>
                 
                  {% if v_entry.status1.value == "Submitted" or v_entry.status1.value == "Pending (state review)" or v_entry.status1.value == "Pending (pec review)"%}
 

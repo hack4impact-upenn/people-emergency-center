@@ -115,5 +115,11 @@ def format():
     subprocess.call(yapf, shell=True)
 
 
+@manager.command
+def setup():
+    recreate_db()
+    setup_dev()
+
+
 if __name__ == '__main__':
     manager.run()

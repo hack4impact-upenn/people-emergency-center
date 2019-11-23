@@ -394,7 +394,5 @@ def view_one(id):
             v_entry.comment4 = v_form4.comment_4.data
             db.session.commit()
 
-
-
     return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1,
                             v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4, expiration_date_form = expiration_date_form)
