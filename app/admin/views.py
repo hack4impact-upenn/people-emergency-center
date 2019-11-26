@@ -352,11 +352,11 @@ def view_clearances():
 
     return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
 
+
 @admin.route('/view_one/<int:id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def view_one(id):
-
     v_entry = Volunteer.query.filter_by(id=id).first()
     v_form1 = Clearance1StatusForm()
     v_form2 = Clearance2StatusForm()
@@ -373,26 +373,47 @@ def view_one(id):
     if v_form1.submit_clearance_1.data and v_form1.validate():
         if "submit_clearance_1" in request.form.keys():
             v_entry.status1 = v_form1.new_status_1.data
+        if v_form1.comment_1.data != '':
             v_entry.comment1 = v_form1.comment_1.data
-            db.session.commit()
+        if v_form1.form1_file_urls.data != '':
+            v_entry.link1 = v_form1.form1_file_urls.data
+            if v_entry.status1 != Status.SUBMITTED:
+                v_entry.status1 = Status.SUBMITTED
+        db.session.commit()
 
     if v_form2.submit_clearance_2.data and v_form2.validate():
         if "submit_clearance_2" in request.form.keys():
             v_entry.status2 = v_form2.new_status_2.data
+        if v_form2.comment_2.data != '':
             v_entry.comment2 = v_form2.comment_2.data
-            db.session.commit()
+        if v_form2.form2_file_urls.data != '':
+            v_entry.link2 = v_form2.form2_file_urls.data
+            if v_entry.status2 != Status.SUBMITTED:
+                v_entry.status2 = Status.SUBMITTED
+        db.session.commit()
 
     if v_form3.submit_clearance_3.data and v_form3.validate():
         if "submit_clearance_3" in request.form.keys():
             v_entry.status3 = v_form3.new_status_3.data
+        if v_form3.comment_3.data != '':
             v_entry.comment3 = v_form3.comment_3.data
-            db.session.commit()
+        if v_form3.form3_file_urls.data != '':
+            v_entry.link3 = v_form3.form3_file_urls.data
+            if v_entry.status3 != Status.SUBMITTED:
+                v_entry.status3 = Status.SUBMITTED
+        db.session.commit()
 
     if v_form4.submit_clearance_4.data and v_form4.validate():
         if "submit_clearance_4" in request.form.keys():
             v_entry.status4 = v_form4.new_status_4.data
+        if v_form4.comment_4.data != '':
             v_entry.comment4 = v_form4.comment_4.data
-            db.session.commit()
+        if v_form4.form4_file_urls.data != '':
+            v_entry.link4 = v_form4.form4_file_urls.data
+            if v_entry.status4 != Status.SUBMITTED:
+                v_entry.status4 = Status.SUBMITTED
+        db.session.commit()
 
-    return render_template('admin/view_one.html', v_entry = v_entry, v_form1 = v_form1,
-                            v_form2 = v_form2, v_form3 = v_form3, v_form4 = v_form4, expiration_date_form = expiration_date_form)
+    return render_template('admin/view_one.html', v_entry=v_entry, v_form1=v_form1,
+                           v_form2=v_form2, v_form3=v_form3, v_form4=v_form4,
+                           expiration_date_form=expiration_date_form)

@@ -5,184 +5,220 @@
 {% block content %}
 <div class="ui grid container">
     <div class="twelve wide computer sixteen wide mobile centered column">
-    <a class="ui basic compact button" href="{{ url_for('admin.view_clearances') }}">
-                <i class="caret left icon"></i>
-                Back to volunteer clearances
-            </a>
+        <a class="ui basic compact button" href="{{ url_for('admin.view_clearances') }}">
+            <i class="caret left icon"></i>
+            Back to volunteer clearances
+        </a>
         <h2 class="ui dividing header">Review Voucher Submission</h2>
-          <div class="ui grid container">
-              <div class="sixteen wide computer sixteen wide mobile centered column">
+        <div class="ui grid container">
+            <div class="sixteen wide computer sixteen wide mobile centered column">
                 <div class="sixteen wide computer sixteen wide mobile centered column">
-                  {% set flashes = {
-                     'success': get_flashed_messages(category_filter=['form-success'])
-                 } %}
+                    {% set flashes = {
+                    'success': get_flashed_messages(category_filter=['form-success'])
+                    } %}
 
-             <b>General Info</b>
-             <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
-               <tbody>
-                   <tr>
-                     <td><b>Name</b></td>
-                     <td>{{ v_entry.first_name }} {{ v_entry.last_name }}</td>
-                   </tr>
-                   <tr>
-                     <td><b>Email</b></td>
-                     <td>{{ v_entry.email }}</td>
-                   </tr>
-                   <tr>
-                     <td><b>Phone Number</b></td>
-                     <td>{{ v_entry.phone_number }}</td>
-                   </tr>
-                   <tr>
-                     <td><b>Address</b></td>
-                     <td>{{ v_entry.address_number }} {{ v_entry.address_street }}, {{ v_entry.address_city }}, {{ v_entry.address_state }}</td>
-                   </tr>
-                   <tr>
-                     <td><b>Organization</b></td>
-                     <td>{{ v_entry.organization }}</td>
-                   </tr>
-                   <tr>
-                     <td><b>Have you lived in PA for 10 consecutive years or more?</b></td>
-                     <td>{{ v_entry.year_pa }}</td>
-                   </tr>
-               </tbody>
-           </table>
+                    <b>General Info</b>
+                    <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                        <tbody>
+                        <tr>
+                            <td><b>Name</b></td>
+                            <td>{{ v_entry.first_name }} {{ v_entry.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Email</b></td>
+                            <td>{{ v_entry.email }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Phone Number</b></td>
+                            <td>{{ v_entry.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Address</b></td>
+                            <td>{{ v_entry.address_number }} {{ v_entry.address_street }}, {{ v_entry.address_city }}, {{ v_entry.address_state }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Organization</b></td>
+                            <td>{{ v_entry.organization }}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Have you lived in PA for 10 consecutive years or more?</b></td>
+                            <td>{{ v_entry.year_pa }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-           <b>Clearance Expiration</b>
-           <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
-             <tbody>
-               <tr>
-                 <td>
-                   {{ f.begin_form(expiration_date_form, flashes) }}
-                   {{ f.render_form(expiration_date_form) }}
-                   {{ f.end_form(expiration_date_form) }}
-                </td>
-               </tr>
-             </tbody>
-           </table>
+                    <b>Clearance Expiration</b>
+                    <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                        <tbody>
+                        <tr>
+                            <td>
+                                {{ f.begin_form(expiration_date_form, flashes) }}
+                                {{ f.render_form(expiration_date_form) }}
+                                {{ f.end_form(expiration_date_form) }}
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
 
-            <b> Clearance 1</b>
-            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
-              <tbody>
-                <tr>
-                 <td>Link</td>
-                 <td>{% if v_entry.link1 %}<a href = "{{ v_entry.link1 }}">Click here</a>{%else %} None {% endif %}</td>
-                </tr>
-                <tr>
-                   <td>Current Status</td>
-                   <td>{{ v_entry.status1.value }}</td>
-                </tr>
+                    <b> Clearance 1</b>
+                    <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                        <tbody>
+                        <tr>
+                            <td>Link</td>
+                            <td>{% if v_entry.link1 %}<a href = "{{ v_entry.link1 }}">Click here</a>{%else %} None {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Current Status</td>
+                            <td>{{ v_entry.status1.value }}</td>
+                        </tr>
 
-                <tr>
-                   <td>Current Comment</td>
-                   <td>{{ v_entry.comment1 }}</td>
-                </tr>
-                
-                 {% if v_entry.status1.value == "Submitted" or v_entry.status1.value == "Pending (state review)" or v_entry.status1.value == "Pending (pec review)" or v_entry.status1.value == "Not Submitted"%}
+                        <tr>
+                            <td>Current Comment</td>
+                            <td>{{ v_entry.comment1 }}</td>
+                        </tr>
 
-                <tr>
-                  <td colspan = 2>
-                              {{ f.begin_form(v_form1, flashes) }}
-                              {{ f.render_form(v_form1) }}
-                              {{ f.end_form(v_form1) }}
-                </td>
-                </tr>
-                     {% else %}
-                  {% endif %}
-              </tr>
-          </tbody>
-        </table>
+                        {% if v_entry.status1.value == "Submitted" or v_entry.status1.value == "Pending (state review)" or v_entry.status1.value == "Pending (pec review)" or v_entry.status1.value == "Not Submitted"%}
 
-        <b> Clearance 2</b>
-            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
-              <tbody>
-                <tr>
-                 <td>Link</td>
-                 <td>{{ v_entry.link2 }}</td>
-                </tr>
-                <tr>
-                   <td>Current Status</td>
-                   <td>{{ v_entry.status2.value }}</td>
+                        <tr>
+                            <td colspan = 2>
+                                {{ f.begin_form(v_form1, flashes) }}
+                                {{ f.render_form_input(v_form1.new_status_1) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_input(v_form1.form1_file_urls) }}
+                                {{ upload.file_upload('form1_file_urls') }}
+                                <br />
+                                {{ f.render_form_input(v_form1.comment_1) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_field(v_form1.submit_clearance_1) }}
+                                {{ f.end_form(v_form1) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
 
-                <tr>
-                   <td>Current Comment</td>
-                   <td>{{ v_entry.comment2 }}</td>
-                </tr>
-                {% if v_entry.status2.value == "Submitted" or v_entry.status2.value == "Pending (state review)" or v_entry.status2.value == "Pending (pec review)" or v_entry.status2.value == "Not Submitted"%}
-                <tr>
-                  <td colspan = 2>
-                              {{ f.begin_form(v_form2, flashes) }}
-                              {{ f.render_form(v_form2) }}
-                              {{ f.end_form(v_form2) }}
-                </td>
-                </tr>
-                     {% else %}
-                  {% endif %}
-          </tbody>
-        </table>
-        
-        <b> Clearance 3</b>
-            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
-              <tbody>
-                <tr>
-                 <td>Link</td>
-                 <td>{{ v_entry.link3 }}</td>
-                </tr>
-                <tr>
-                   <td>Status</td>
-                   <td>{{ v_entry.status3.value }}</td>
-                </tr>
+                    <b> Clearance 2</b>
+                    <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                        <tbody>
+                        <tr>
+                            <td>Link</td>
+                            <td>{% if v_entry.link2 %}<a href = "{{ v_entry.link2 }}">Click here</a>{%else %} None {% endif %}</td>
+                        </tr>
 
-                 <tr>
-                   <td>Current Comment</td>
-                   <td>{{ v_entry.comment3 }}</td>
-                </tr>
-                 {% if v_entry.status3.value == "Submitted" or v_entry.status3.value == "Pending (state review)" or v_entry.status3.value == "Pending (pec review)" or v_entry.status3.value == "Not Submitted"%}
-                <tr>
-                  <td colspan = 2>
-                              {{ f.begin_form(v_form3, flashes) }}
-                              {{ f.render_form(v_form3) }}
-                              {{ f.end_form(v_form3) }}
-                </td>
-                </tr>
-                  {% else %}
-                  {% endif %}
-              </tr>
-          </tbody>
-        </table>
-        
+                        <tr>
+                            <td>Current Status</td>
+                            <td>{{ v_entry.status2.value }}</td>
+
+                        <tr>
+                            <td>Current Comment</td>
+                            <td>{{ v_entry.comment2 }}</td>
+                        </tr>
+                        {% if v_entry.status2.value == "Submitted" or v_entry.status2.value == "Pending (state review)" or v_entry.status2.value == "Pending (pec review)" or v_entry.status2.value == "Not Submitted"%}
+                        <tr>
+                            <td colspan = 2>
+                                {{ f.begin_form(v_form2, flashes) }}
+                                {{ f.render_form_input(v_form2.new_status_2) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_input(v_form2.form2_file_urls) }}
+                                {{ upload.file_upload('form2_file_urls') }}
+                                <br />
+                                {{ f.render_form_input(v_form2.comment_2) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_field(v_form2.submit_clearance_2) }}
+                                {{ f.end_form(v_form2) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+
+                    <b> Clearance 3</b>
+                    <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                        <tbody>
+                        <tr>
+                            <td>Link</td>
+                            <td>{% if v_entry.link3 %}<a href = "{{ v_entry.link3 }}">Click here</a>{%else %} None {% endif %}</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>{{ v_entry.status3.value }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Current Comment</td>
+                            <td>{{ v_entry.comment3 }}</td>
+                        </tr>
+                        {% if v_entry.status3.value == "Submitted" or v_entry.status3.value == "Pending (state review)" or v_entry.status3.value == "Pending (pec review)" or v_entry.status3.value == "Not Submitted"%}
+                        <tr>
+                            <td colspan = 2>
+                                {{ f.begin_form(v_form3, flashes) }}
+                                {{ f.render_form_input(v_form3.new_status_3) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_input(v_form3.form3_file_urls) }}
+                                {{ upload.file_upload('form3_file_urls') }}
+                                <br />
+                                {{ f.render_form_input(v_form3.comment_3) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_field(v_form3.submit_clearance_3) }}
+                                {{ f.end_form(v_form3) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
+
                     <b> Clearance 4</b>
-            <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
-              <tbody>
-                <tr>
-                 <td>Link</td>
-                 <td>{{ v_entry.link4 }}</td>
-                </tr>
-                <tr>
-                   <td>Status</td>
-                   <td>{{ v_entry.status4.value }}</td>
-                </tr>
+                    <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
+                        <tbody>
+                        <tr>
+                            <td>Link</td>
+                            <td>{% if v_entry.link4 %}<a href = "{{ v_entry.link4 }}">Click here</a>{%else %} None {% endif %}</td>
+                        </tr>
+                        <td>Status</td>
+                        <td>{{ v_entry.status4.value }}</td>
+                        </tr>
 
-                 <tr>
-                   <td>Current Comment</td>
-                   <td>{{ v_entry.comment4 }}</td>
-                </tr>
-                 {% if v_entry.status4.value == "Submitted" or v_entry.status4.value == "Pending (state review)" or v_entry.status4.value == "Pending (pec review)" or v_entry.status4.value == "Not Submitted"%}
-                <tr>
-                  <td colspan = 2>
-                              {{ f.begin_form(v_form4, flashes) }}
-                              {{ f.render_form(v_form4) }}
-                              {{ f.end_form(v_form4) }}
-                </td>
-                </tr>
-                  {% else %}
-                  {% endif %}
-              </tr>
-          </tbody>
-        </table>
+                        <tr>
+                            <td>Current Comment</td>
+                            <td>{{ v_entry.comment4 }}</td>
+                        </tr>
+                        {% if v_entry.status4.value == "Submitted" or v_entry.status4.value == "Pending (state review)" or v_entry.status4.value == "Pending (pec review)" or v_entry.status4.value == "Not Submitted"%}
+                        <tr>
+                            <td colspan = 2>
+                                {{ f.begin_form(v_form4, flashes) }}
+                                {{ f.render_form_input(v_form4.new_status_4) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_input(v_form4.form4_file_urls) }}
+                                {{ upload.file_upload('form4_file_urls') }}
+                                <br />
+                                {{ f.render_form_input(v_form4.comment_4) }}
+                                <br />
+                                <br />
+                                {{ f.render_form_field(v_form4.submit_clearance_4) }}
+                                {{ f.end_form(v_form4) }}
+                            </td>
+                        </tr>
+                        {% else %}
+                        {% endif %}
+                        </tr>
+                        </tbody>
+                    </table>
 
 
-              </div>
-          </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
