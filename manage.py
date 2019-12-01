@@ -116,10 +116,10 @@ def format():
 
 
 @manager.command
-def setup():
+def setup_dev():
     recreate_db()
     setup_dev()
-
+    add_fake_data(30)
 
 if __name__ == '__main__':
     manager.run()

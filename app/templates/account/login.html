@@ -3,7 +3,35 @@
 
 {% block content %}
     <div class="ui center grid ui-corner-rounded">
-        <div class="column" style="border-radius: 10px; width: 25%; padding: 0px 20px 20px; position: absolute; right: 300px; top: 200px">
+        
+        <div class="column" style="width: 50%; height: 20%; top: 10%; left: 10%; position: absolute;">
+            <h2 style = "font-family: Helvetica; font-style: bold; font-weight: 750; font-size: 60px; line-height: 80%; 
+                            letter-spacing: 0.02em; color: #263056">
+                PEC
+            </h2>
+            <h2 style="font-family: Helvetica; font-style: normal; font-weight: 150; font-size: 25px; line-height: 1px; 
+                        letter-spacing: 0.02em; color: ORANGE">
+                People's Emergency Center
+            </h2>
+        </div>
+        <div class="column" style="width: 35%; height: 40%; top: 30%; left: 15%; position: absolute;">
+                <h2 style = "font-family: Candara; font-style: normal; font-size: 100%; line-height: 100%; 
+                                letter-spacing: 0.05em; color: #000000">
+                    <a href="https://www.pec-cares.org">People’s Emergency Center (PEC)</a> is located in West Philadelphia.
+                    PEC’s mission is to nurture families, strengthen neighborhoods and drive change.
+                    For families, children, and youth experiencing homelessness, 
+                    PEC offers more than 235 affordable housing units, job training, parenting and early childhood education, 
+                    financial education and planning, life skills and technology classes. 
+                    PEC seeks to change the life trajectory for the families who seek its services and inspire them to achieve 
+                    housing security and financial stability.
+                    <br><br><br>
+                    The PEC Community Development Corporation (<a href="https://www.lancasteravephilly.com">lancasteravephilly.com</a>) 
+                    programs respond to community needs and build on neighborhood assets to help bridge the digital divide, 
+                    expand mixed-income housing opportunities, stimulate economic growth, create wealth, 
+                    and improve the quality of life for all West Philadelphia residents.
+                </h2>
+            </div>
+        <div class="column" style="border-radius: 10px; width: 25%; padding: 0px 20px 20px; position: absolute; right: 300px; top: 25%">
             <h2 class="ui image header">
             </h2>
                {% set flashes = {
@@ -35,4 +63,5 @@
                 {{ f.end_form(form) }}
         </div>
     </div>
+    <div id="rectangle" style="width: 100%; position: absolute; bottom: 0%; height: 10%; background-color:rgba(38, 48, 86, 0.8)"></div>
 {% endblock %}
