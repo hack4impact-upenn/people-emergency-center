@@ -129,14 +129,14 @@
     {% elif field.type == 'RadioField' %}
         {{ field.label }}
         {% for item in field %}
-            <div class="ui radio checkbox">
+            <div class="ui radio checkbox"  style="background-color: #444">
                 {{ item }}
                 {{ item.label }}
             </div>
         {% endfor %}
     {% elif field.type == 'MultipleFileUploadField' %}
             <strong>Upload File</strong>
-            <input type="file" id="file-{{field.id}}" style=""><br>
+            <input type="file" id="file-{{field.id}}"><br>
             <div style="display:none">{{ field }}</div>
             <div id="{{ field.id }}_list">
               {% if field.data %}
