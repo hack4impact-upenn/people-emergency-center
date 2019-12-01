@@ -3,6 +3,12 @@ Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
 For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 
+.ui.robin {
+	background-image: linear-gradient(#283E51, #3874A9, #283E51);
+			color: #eee;
+			color: rgba(255, 255, 255, 0.75);
+}
+
 body
 {
 	/* Font */

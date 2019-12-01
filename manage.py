@@ -114,9 +114,9 @@ def format():
     print('Running {}'.format(yapf))
     subprocess.call(yapf, shell=True)
 
-
+# Used during development, essentially saves time by running recreate_deb, setup_dev, and add_fake_data all at once
 @manager.command
-def setup_dev():
+def run_setup():
     recreate_db()
     setup_dev()
     add_fake_data(30)

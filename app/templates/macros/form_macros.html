@@ -151,7 +151,7 @@
     {% elif field.type == 'CustomSelectField' %}
         {{ render_custom_select(field) }}
     {% else %}
-        {{ field.label }}
+        <!-- {{ field.label }} -->
         {% if field.description %}
             <div class="ui pointing below label">
                 {{ field.description }}
