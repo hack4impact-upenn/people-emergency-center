@@ -9,7 +9,7 @@ from wtforms.fields import (
     StringField,
     SubmitField,
     SelectField,
-    IntegerField
+    IntegerField,
 )
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import (
@@ -18,6 +18,7 @@ from wtforms.validators import (
     InputRequired,
     Length,
 )
+from app.volunteer.forms import MultipleFileUploadField
 
 from app import db
 from app.models import Role, User, Status
@@ -131,6 +132,7 @@ def coerce_for_enum(enum):
             raise ValueError(name)
     return coerce
 
+
 class ClearanceExpirationForm(FlaskForm):
     clearance_expiration = StringField(
         'Clearace Expiration Date', validators=[Length(1, 64)])
@@ -143,7 +145,8 @@ class Clearance1StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_1 = TextAreaField(validators=[Length(1, 512)])
+    form1_file_urls = MultipleFileUploadField()
+    comment_1 = TextAreaField()
     submit_clearance_1 = SubmitField()
 
 
@@ -153,7 +156,8 @@ class Clearance2StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_2 = TextAreaField(validators=[Length(1, 512)])
+    form2_file_urls = MultipleFileUploadField()
+    comment_2 = TextAreaField()
     submit_clearance_2 = SubmitField()
 
 
@@ -163,7 +167,8 @@ class Clearance3StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_3 = TextAreaField(validators=[Length(1, 512)])
+    form3_file_urls = MultipleFileUploadField()
+    comment_3 = TextAreaField()
     submit_clearance_3 = SubmitField()
 
 
@@ -173,8 +178,10 @@ class Clearance4StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_4 = TextAreaField(validators=[Length(1, 512)])
+    form4_file_urls = MultipleFileUploadField()
+    comment_4 = TextAreaField()
     submit_clearance_4 = SubmitField()
+
 
 class DownloadCSVForm(FlaskForm):
     download_csv = SubmitField("Download CSV")

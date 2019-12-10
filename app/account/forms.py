@@ -21,10 +21,16 @@ class LoginForm(FlaskForm):
     email = EmailField(
         'Email', validators=[InputRequired(),
                              Length(1, 64),
-                             Email()])
+                             Email()],
+    )
     password = PasswordField('Password', validators=[InputRequired()])
-    remember_me = BooleanField('Keep me logged in')
-    submit = SubmitField('Log in')
+
+    remember_me = BooleanField()
+
+    button_login_style = {'style': 'width:100%; background-color:#007CFF; color:white;'}
+    button_register_style = {'style': 'width:100%; background-color:#EC6D25; color:white;'}
+    submit = SubmitField('Log in', render_kw=button_login_style)
+    register = SubmitField('Sign up', render_kw=button_register_style)
 
 
 class RegistrationForm(FlaskForm):
@@ -172,6 +178,8 @@ class EditAccountInfoForm(FlaskForm):
         'Organization/Corporation', validators=[Length(1, 64)])
     password = PasswordField('Password', validators=[InputRequired()])
     submit = SubmitField('Update account information')
+
+
 class ChangeEmailForm(FlaskForm):
     email = EmailField(
         'New email', validators=[InputRequired(),

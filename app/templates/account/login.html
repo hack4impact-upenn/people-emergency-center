@@ -2,34 +2,48 @@
 {% import 'macros/form_macros.html' as f %}
 
 {% block content %}
-    <div class="ui grid container">
-        <div class="eight wide computer sixteen wide mobile centered column">
-            <h2 class="ui dividing header">Log in</h2>
+    <div class="ui center grid ui-corner-rounded">
+        <div class="column" style="width: 35%; position: absolute; left: 250px; top: 180px">
+            <h1 style="font-size:50px; color:#263056">PEC</h1>
+            <p style="font-size:20px; color:#EC6D25">People's Emergency Center</p>
+            <p style="padding: 10px 30px; font-size:15px; text-align: justify;">
+                People’s Emergency Center (PEC) is located in West Philadelphia. PEC’s mission is to nurture families,
+                strengthen neighborhoods and drive change.  For families, children, and youth experiencing homelessness,
+                PEC offers more than 235 affordable housing units, job training, parenting and early childhood education,
+                financial education and planning, life skills and technology classes. PEC seeks to change the life trajectory
+                for the families who seek its services and inspire them to achieve housing security and financial stability.
+            </p>
+        </div>
+        <div class="column" style="background-color: #ECECEE; border-radius: 10px; width: 25%; padding: 0px 20px 20px; position: absolute; right: 300px; top: 200px">
+            <h2 class="ui image header">
+            </h2>
+               {% set flashes = {
+                    'error':   get_flashed_messages(category_filter=['form-error']),
+                    'warning': get_flashed_messages(category_filter=['form-check-email']),
+                    'info':    get_flashed_messages(category_filter=['form-info']),
+                    'success': get_flashed_messages(category_filter=['form-success'])
+                } %}
 
-            {% set flashes = {
-                'error':   get_flashed_messages(category_filter=['form-error']),
-                'warning': get_flashed_messages(category_filter=['form-check-email']),
-                'info':    get_flashed_messages(category_filter=['form-info']),
-                'success': get_flashed_messages(category_filter=['form-success'])
-            } %}
-
-            {{ f.begin_form(form, flashes) }}
-                {{ f.render_form_field(form.email) }}
-                {{ f.render_form_field(form.password) }}
-                <div class="ui two column grid">
-                    {{ f.render_form_field(form.remember_me, extra_classes='column') }}
-                    <div class="right aligned column">
-                        <a href="{{ url_for('account.reset_password_request') }}">Forgot password?</a>
+                {{ f.begin_form(form, flashes) }}
+                    {{ f.render_form_field(form.email) }}
+                    {{ f.render_form_field(form.password) }}
+                    <div class="ui two column grid">
+                        {{ f.render_form_field(form.remember_me, extra_classes='column') }}
+                        <div class="right aligned column">
+                            <a href="{{ url_for('account.reset_password_request') }}">Forgot password?</a>
+                        </div>
                     </div>
-                </div>
 
-                {{ f.form_message(flashes['error'], header='Something went wrong.', class='error') }}
-                {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
-                {{ f.form_message(flashes['info'], header='Information', class='info') }}
-                {{ f.form_message(flashes['success'], header='Success!', class='success') }}
-
-                {{ f.render_form_field(form.submit) }}
-            {{ f.end_form(form) }}
+                    {{ f.form_message(flashes['error'], header='Something went wrong.', class='error') }}
+                    {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
+                    {{ f.form_message(flashes['info'], header='Information', class='info') }}
+                    {{ f.form_message(flashes['success'], header='Success!', class='success') }}
+                    <div align="center">
+                    {{ f.render_form_field(form.submit) }}
+                    <hr />
+                    {{ f.render_form_field(form.register) }}
+                    </div>
+                {{ f.end_form(form) }}
         </div>
     </div>
 {% endblock %}
