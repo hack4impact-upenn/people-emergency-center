@@ -84,7 +84,8 @@ class RegistrationForm(FlaskForm):
             EqualTo('password2', 'Passwords must match')
         ])
     password2 = PasswordField('Confirm password', validators=[InputRequired()])
-    submit = SubmitField('Register')
+    button_style = {'style': 'width:20%; background-color:#007CFF; color:white;'}
+    submit = SubmitField('Submit', render_kw=button_style)
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
