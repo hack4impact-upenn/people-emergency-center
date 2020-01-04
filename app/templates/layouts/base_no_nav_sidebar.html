@@ -1,4 +1,6 @@
 {% import 'macros/nav_macros.html' as nav %}
+{% import 'macros/side_nav_macros.html' as side %}
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,20 +14,11 @@
       {{ nav.render_nav(current_user) }}
     {% endblock %}
 
+    {% block side %}
+      {{ side.render_nav(current_user) }}
+    {% endblock %}
+
     <body>
-        <div id="rectangle" style="width: 20%; height: 100%; position: absolute; top: 0%; left: 0%; background-color:#263056;
-                                    padding: 1em 0 0 0">
-          <div class="column" style="padding: 1em 0 0 1em; position: absolute">
-            <h2 style = "font-weight: 400; font-size: 60px; line-height: 80%;
-                          letter-spacing: 0.02em; color: #FFFFFF">
-              PEC
-            </h2>
-            <h2 style="font-style: normal; font-weight: 150; font-size: 17px; line-height: 1px;
-                          letter-spacing: 0.02em; color: #FFFFFF">
-              People's Emergency Center
-            </h2>
-          </div>
-        </div>
 
       {# Example dropdown menu setup. Uncomment lines to view
         {% set dropdown =

@@ -1,0 +1,39 @@
+{# This macro is called on the user dashboards. In this case the administrator dashboard
+   at the route admin.index
+#}
+
+{% macro render_menu_items(endpoints) %}
+    {% for endpoint, name, icon in endpoints %}
+        <a class="item side {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+            {{ name | safe }}
+        </a>
+    {% endfor %}
+{% endmacro %}
+
+{% macro desktop_nav(current_user, dropdown=None) %}
+    <div class="computer tablet only row">
+        <div class="ui inverted left vertical fixed menu" style="background-color: #263056; width: 20%; height: 100%;">
+          <div class="ui container" style="padding: 2em 3em 2em; position: absolute">
+              <h2 style = "font-weight: 400; font-size: 60px; letter-spacing: 0.02em; color: #FFFFFF">
+                  PEC
+              </h2>
+              <h2 style="font-style: normal; font-weight: 150; font-size: 17px; letter-spacing: 0.02em; color: #FFFFFF; position: absolute; top: 60%">
+                People's Emergency Center
+              </h2>
+          </div>
+          <div class="ui container" style="padding: 12em 2em 10em; position: absolute">
+              {% set endpoints = [
+                ('account.manage', 'Your Account', 'settings')
+              ]
+              %}
+              {{ render_menu_items(endpoints) }}
+          </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_nav(current_user, dropdown=[]) %}
+    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}">
+        {{ desktop_nav(current_user, dropdown=dropdown) }}
+    </nav>
+{% endmacro %}

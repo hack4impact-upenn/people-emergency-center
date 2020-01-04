@@ -82,32 +82,18 @@
 {% endmacro %}
 
 {% macro desktop_nav(current_user, dropdown=None) %}
-    {% if current_user.is_authenticated %}
-        <div class="computer tablet only row">
-            <div class="ui fixed inverted main menu">
-                <div class="ui container">
-                    {{ header_items(current_user) }}
-                    {{ create_dropdown(dropdown) }}
-                    <div class="right menu">
-                        {{ account_items(current_user) }}
-                    </div>
+    <div class="computer tablet only row">
+        <div class="ui fixed inverted main menu" style="width: 80%; background-color:#F7F8FA; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
+            position=relative; left: 20%">
+            <div class="ui container">
+                {{ header_items(current_user) }}
+                {{ create_dropdown(dropdown) }}
+                <div class="right menu">
+                    {{ account_items(current_user) }}
                 </div>
             </div>
         </div>
-    {% else %}
-        <div class="computer tablet only row">
-            <div class="ui fixed inverted main menu" style="width: 80%; background-color:#F7F8FA; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05);
-                position=relative; left: 20%">
-                <div class="ui container">
-                    {{ header_items(current_user) }}
-                    {{ create_dropdown(dropdown) }}
-                    <div class="right menu">
-                        {{ account_items(current_user) }}
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
+    </div>
 {% endmacro %}
 
 {% macro render_nav(current_user, dropdown=[]) %}
