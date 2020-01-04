@@ -1,22 +1,20 @@
 {% extends 'layouts/base_no_nav.html' %}
 {% import 'macros/form_macros.html' as f %}
-
 {% block content %}
-    <body style="background-image: linear-gradient(180deg, #FFFFFF, #D0D0D0)">    
+<body style="background-color: #FFFFFF">
     <div class="column" style="width: 50%; height: 20%; top: 5%; left: 5%; position: absolute">
-        <h2 style = "font-family: Helvetica; font-style: bold; font-weight: 750; font-size: 60px; line-height: 80%; 
+        <h2 style = "font-style: bold; font-weight: 750; font-size: 60px; line-height: 80%;
                         letter-spacing: 0.02em; color: #263056">
             PEC
         </h2>
-        <h2 style="font-family: Helvetica; font-style: normal; font-weight: 150; font-size: 25px; line-height: 1px; 
+        <h2 style="font-style: normal; font-weight: 150; font-size: 25px; line-height: 1px;
                     letter-spacing: 0.02em; color: ORANGE">
             People's Emergency Center
         </h2>
     </div>
 
     <div class="column" style="width: 45%; height: 40%; top: 25%; left: 10%; position: absolute;">
-        <h2 style = "font-family: Roboto; font-style: normal; font-size: 120%; line-height: 100%; 
-                        letter-spacing: 0.05em; color: #000000">
+        <p style="font-style: normal; font-size: 120%; line-height: 100%; letter-spacing: 0.05em">
             <a href="https://www.pec-cares.org">People’s Emergency Center (PEC)</a> is located in West Philadelphia.
             PEC’s mission is to nurture families, strengthen neighborhoods and drive change.
             For families, children, and youth experiencing homelessness, 
@@ -29,7 +27,7 @@
             programs respond to community needs and build on neighborhood assets to help bridge the digital divide, 
             expand mixed-income housing opportunities, stimulate economic growth, create wealth, 
             and improve the quality of life for all West Philadelphia residents.
-        </h2>
+        </p>
     </div>
 
     <div class="column vertical-center" style="border-radius: 15px; width: 25%; padding: 0px 20px 20px; position: absolute; 
@@ -58,22 +56,16 @@
                 {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
                 {{ f.form_message(flashes['info'], header='Information', class='info') }}
                 {{ f.form_message(flashes['success'], header='Success!', class='success') }}
-                <div>
-                    <div style="padding: 1em 0 1em 0">
-                        {{ f.render_form_field(form.submit) }}
-                    </div>
-                <hr />
-                    <div style="padding: 1em 0 0 0">
-                        {{ f.render_form_field(form.register) }}
-                    </div>
+
+                <div style="padding: 1em 0 1em 0">
+                    {{ f.render_form_field(form.submit) }}
+                </div>
+                <div style="padding: 1em 0 0 0">
+                    {{ f.render_form_field(form.register) }}
                 </div>
             {{ f.end_form(form) }}
     </div>
-
-        
-    <div id="rectangle" style="width: 100%; position: absolute; bottom: 0%; height: 10%; background-color:rgba(38, 48, 86, 0.8)">
+    <div id="rectangle" style="width: 100%; position: absolute; bottom: 0%; height: 10%; background-color:#263056">
     </div>
-
-    </body>
-
+</body>
 {% endblock %}

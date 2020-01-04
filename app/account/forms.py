@@ -31,8 +31,8 @@ class LoginForm(FlaskForm):
 
     button_login_style = {'style': 'width:100%; background-color:#007CFF; color:white;'}
     button_register_style = {'style': 'width:100%; background-color:#EC6D25; color:white;'}
-    submit = SubmitField('Log in', render_kw=button_login_style)
-    register = SubmitField('Sign up', render_kw=button_register_style)
+    submit = SubmitField('Log In', render_kw=button_login_style)
+    register = SubmitField('Register', render_kw=button_register_style)
 
 
 class RegistrationForm(FlaskForm):

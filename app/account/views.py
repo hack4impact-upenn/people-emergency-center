@@ -35,7 +35,7 @@ account = Blueprint('account', __name__)
 def login():
     """Log in an existing user."""
     form = LoginForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.submit.data:
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.password_hash is not None and \
                 user.verify_password(form.password.data):
@@ -44,6 +44,8 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         else:
             flash('Invalid email or password.', 'form-error')
+    elif form.validate_on_submit() and form.register.data:
+        return redirect(url_for('account.register'))
     return render_template('account/login.html', form=form)
 
 
