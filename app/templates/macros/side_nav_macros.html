@@ -1,10 +1,11 @@
-{# This macro is called on the user dashboards. In this case the administrator dashboard
-   at the route admin.index
-#}
+{# This macro is called on the volunteer pages. #}
 
 {% macro render_menu_items(endpoints) %}
     {% for endpoint, name, icon in endpoints %}
         <a class="item side {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+            {% if icon %}
+                <i class="{{ icon }} icon"></i>
+            {% endif %}
             {{ name | safe }}
         </a>
     {% endfor %}
@@ -22,11 +23,26 @@
               </h2>
           </div>
           <div class="ui container" style="padding: 12em 2em 10em; position: absolute">
-              {% set endpoints = [
-                ('account.manage', 'Your Account', 'settings')
-              ]
-              %}
-              {{ render_menu_items(endpoints) }}
+              {% if current_user.is_authenticated %}
+                  {% if current_user.is_admin() %}
+                      {% set endpoints = [
+                        ('admin.index', 'Dashboard', 'dashboard'),
+                        ('account.manage', 'Your Account', 'settings'),
+                        ('account.manage', 'Events', 'calendar'),
+                      ]
+                      %}
+                      {{ render_menu_items(endpoints) }}
+                  {% else %}
+                        {% set endpoints = [
+                        ('volunteer.index', 'Dashboard', 'dashboard'),
+                        ('account.manage', 'Your Account', 'settings'),
+                        ('volunteer.upload_clearances', 'Clearances', 'check'),
+                        ('account.manage', 'Events', 'calendar'),
+                      ]
+                      %}
+                      {{ render_menu_items(endpoints) }}
+                  {% endif %}
+              {% endif %}
           </div>
         </div>
     </div>

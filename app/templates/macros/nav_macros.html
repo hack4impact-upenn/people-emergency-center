@@ -25,9 +25,6 @@
       ('main.about', 'About', 'info')
     ]%}
     {% set user = [] %}
-    {% if current_user.is_authenticated %}
-      {% set user = ([(current_user.role.index + '.index', current_user.role.name + ' Dashboard', 'user')]) %}
-    {% endif %} 
     {{ render_menu_items( endpoints +  user ) }}
 {% endmacro %}
 
@@ -37,7 +34,6 @@
 {% macro account_items(current_user) %}
     {% if current_user.is_authenticated %}
       {% set endpoints = [
-        ('account.manage', 'Your Account', 'settings'),
         ('account.logout', 'Log out', 'sign out')
       ] %}
       {{ render_menu_items(endpoints) }}
