@@ -27,10 +27,15 @@
     Clearances
 </h2>
 
-<div class="ui four column grid container" 
-                style="position: absolute; width: 10%; height: 80%; top: 15%; left: 23%; padding: 1em 1em 1em 1em">
+<div class="ui four column grid container" style="position: absolute; width: 10%; height: 80%; top: 15%; left: 23%; padding: 1em 1em 1em 1em">
+        {% set flashes = {
+        'error':   get_flashed_messages(category_filter=['form-error']),
+        'success': get_flashed_messages(category_filter=['form-success'])
+        } %}
+
         <div class="column">
           <div id="rectangle-card">
+               {{ f.begin_form(form1, flashes) }}
                 <h3> Clearance 1 </h3>
                 <hr>
                 <p id="clearance-description">
@@ -57,7 +62,7 @@
                             {{ volunteer.status1 }}
                         </br>
                     {% endif %}
-                    Uploaded file: <a href = "{{ volunteer.link1 }}">{{ volunteer.link1 }}</a>
+                    Uploaded file: <a href = "{{ volunteer.link1 }}">click here</a>
                     <br>
                     {{ f.render_form_input(form1.form1_file_urls) }}
                     {{ upload.file_upload('form1_file_urls') }}
@@ -67,8 +72,8 @@
                     </br>
                     <br>
                     {{ f.render_form_field(form1.submit) }}
-                    {{ f.end_form(form1) }}
                 </div>
+                {{ f.end_form(form1) }}
           </div>
         </div>
 
@@ -128,7 +133,7 @@
                 </p>
                 <hr>
                 <div id="clearance-body">
-                    Status: 
+                    Status:
                     {% if volunteer.status3 == "Cleared" %}
                         <br style="color: #00DF52;">
                             {{ volunteer.status3 }}
