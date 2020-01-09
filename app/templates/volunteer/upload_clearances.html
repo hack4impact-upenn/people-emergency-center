@@ -28,22 +28,17 @@
 </h2>
 
 <div class="ui four column grid container" 
-                style="position: absolute; width: 10%; height: 80%; top: 15%; left: 20%; padding: 1em 1em 1em 1em">
+                style="position: absolute; width: 10%; height: 80%; top: 15%; left: 23%; padding: 1em 1em 1em 1em">
         <div class="column">
-          <div id="rectangle" style="height: 100%; background-color: #FFFFFF; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); 
-                                        border-radius: 15px; padding: 1em 1em 1em 1em">
-                <div style="font-family: Helvetica; font-weight: 600; font-size: 1.5em; color: #36454F">
-                    Clearance 1
-                </div>
+          <div id="rectangle-card">
+                <h3> Clearance 1 </h3>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                                padding: 0 0 1em 0">
+                <p id="clearance-description">
                     This is for child abuse history clearance: <a href="https://www.keepkidssafe.pa.gov">keepkidssafe.pa.gov</a>.
                     Turnaround is faster for email than mail.
-                </div>
+                </p>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
+                <div id="clearance-body">
                     Status: 
                     {% if volunteer.status1 == "Cleared" %}
                         <br style="color: #00DF52;">
@@ -62,40 +57,35 @@
                             {{ volunteer.status1 }}
                         </br>
                     {% endif %}
-                </div>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
                     Uploaded file: <a href = "{{ volunteer.link1 }}">{{ volunteer.link1 }}</a>
-                </div>
-                {{ f.render_form_input(form1.form1_file_urls) }}
-                {{ upload.file_upload('form1_file_urls') }}
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 1em 0 1em 0">
+                    <br>
+                    {{ f.render_form_input(form1.form1_file_urls) }}
+                    {{ upload.file_upload('form1_file_urls') }}
                     Comment:
                     <br style="color: #C6C6C6">
                         {{ volunteer.comment1 }}
                     </br>
+                    <br>
+                    {{ f.render_form_field(form1.submit) }}
+                    {{ f.end_form(form1) }}
                 </div>
-                {{ f.render_form_field(form1.submit) }}
-                {{ f.end_form(form1) }}
           </div>
         </div>
+
+
         <div class="column">
-          <div id="rectangle" style="height: 100%; background-color: #FFFFFF; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); 
-                                        border-radius: 15px; padding: 1em 1em 1em 1em">
-                <div style="font-family: Helvetica; font-weight: 600; font-size: 1.5em; color: #36454F">
-                    Clearance 2
-                </div>
+          <div id="rectangle-card">
+                <h3> Clearance 2 </h3>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                                padding: 0 0 1em 0">
+                <p id="clearance-description">
                     This is for criminal record check. Go To: <a href = "https://www.epatch.state.pa.us">
-                    epatch.state.pa.us/</a>. Print your result from the computer
-                </div>
+                    epatch.state.pa.us/</a>. Print your result from the computer.
+                    <br>
+                    <br>
+                </p>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
-                    Status: 
+                <div id="clearance-body">
+                    Status:
                     {% if volunteer.status2 == "Cleared" %}
                         <br style="color: #00DF52;">
                             {{ volunteer.status2 }}
@@ -113,38 +103,31 @@
                             {{ volunteer.status2 }}
                         </br>
                     {% endif %}
-                </div>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
                     Uploaded file: <a href = "{{ volunteer.link2 }}">{{ volunteer.link2 }}</a>
-                </div>
-                {{ f.render_form_input(form2.form2_file_urls) }}
-                {{ upload.file_upload('form2_file_urls') }}
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 1em 0 1em 0">
+                    <br>
+                    {{ f.render_form_input(form2.form2_file_urls) }}
+                    {{ upload.file_upload('form2_file_urls') }}
                     Comment:
                     <br style="color: #C6C6C6">
                         {{ volunteer.comment2 }}
                     </br>
+                    <br>
+                    {{ f.render_form_field(form2.submit) }}
+                    {{ f.end_form(form2) }}
                 </div>
-                {{ f.render_form_field(form2.submit) }}
-                {{ f.end_form(form2) }}
-          </div>
+            </div>
         </div>
+
+
         <div class="column">
-          <div id="rectangle" style="height: 100%; background-color: #FFFFFF; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); 
-                                        border-radius: 15px; padding: 1em 1em 1em 1em">
-                <div style="font-family: Helvetica; font-weight: 600; font-size: 1.5em; color: #36454F">
-                    Clearance 3
-                </div>
+          <div id="rectangle-card">
+                <h3> Clearance 3 </h3>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                                padding: 0 0 1em 0">
+                <p id="clearance-description">
                     FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.
-                </div>
+                </p>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
+                <div id="clearance-body">
                     Status: 
                     {% if volunteer.status3 == "Cleared" %}
                         <br style="color: #00DF52;">
@@ -163,38 +146,34 @@
                             {{ volunteer.status3 }}
                         </br>
                     {% endif %}
-                </div>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
                     Uploaded file: <a href = "{{ volunteer.link3 }}">{{ volunteer.link3 }}</a>
-                </div>
-                {{ f.render_form_input(form3.form3_file_urls) }}
-                {{ upload.file_upload('form3_file_urls') }}
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 1em 0 1em 0">
+                    <br>
+                    {{ f.render_form_input(form3.form3_file_urls) }}
+                    {{ upload.file_upload('form3_file_urls') }}
                     Comment:
                     <br style="color: #C6C6C6">
                         {{ volunteer.comment3 }}
                     </br>
-                </div>
-                {{ f.render_form_field(form3.submit) }}
-                {{ f.end_form(form3) }}
+                    <br>
+                    {{ f.render_form_field(form3.submit) }}
+                    {{ f.end_form(form3) }}
+            </div>
           </div>
         </div>
+
+
         <div class="column">
-          <div id="rectangle" style="height: 100%; background-color: #FFFFFF; box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1); 
-                                        border-radius: 15px; padding: 1em 1em 1em 1em">
-                <div style="font-family: Helvetica; font-weight: 600; font-size: 1.5em; color: #36454F">
-                    Clearance 4
-                </div>
+          <div id="rectangle-card">
+                <h3> Clearance 4 </h3>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                                padding: 0 0 1em 0">
+                <p id="clearance-description">
                     Volunteer conflict of interest form.
-                </div>
+                    <br>
+                    <br>
+                    <br>
+                </p>
                 <hr>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
+                <div id="clearance-body">
                     Status: 
                     {% if volunteer.status4 == "Cleared" %}
                         <br style="color: #00DF52;">
@@ -213,22 +192,18 @@
                             {{ volunteer.status4 }}
                         </br>
                     {% endif %}
-                </div>
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 0 0 1em 0">
                     Uploaded file: <a href = "{{ volunteer.link4 }}">{{ volunteer.link4 }}</a>
-                </div>
-                {{ f.render_form_input(form4.form4_file_urls) }}
-                {{ upload.file_upload('form4_file_urls') }}
-                <div style="font-family: Roboto; font-weight: 600; font-size: 1em; line-height: 1em; color: #36454F;
-                            padding: 1em 0 1em 0">
+                    <br>
+                    {{ f.render_form_input(form4.form4_file_urls) }}
+                    {{ upload.file_upload('form4_file_urls') }}
                     Comment:
                     <br style="color: #646B72">
                         {{ volunteer.comment4 }}
                     </br>
-                </div>
-                {{ f.render_form_field(form4.submit) }}
-                {{ f.end_form(form4) }}
+                    <br>
+                    {{ f.render_form_field(form4.submit) }}
+                    {{ f.end_form(form4) }}
+            </div>
           </div>
         </div>
       </div>
