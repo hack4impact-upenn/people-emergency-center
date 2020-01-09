@@ -35,7 +35,6 @@
 
         <div class="column">
           <div id="rectangle-card">
-               {{ f.begin_form(form1, flashes) }}
                 <h3> Clearance 1 </h3>
                 <hr>
                 <p id="clearance-description">
@@ -44,6 +43,7 @@
                 </p>
                 <hr>
                 <div id="clearance-body">
+                    {{ f.begin_form(form1, flashes) }}
                     Status: 
                     {% if volunteer.status1 == "Cleared" %}
                         <br style="color: #00DF52;">
@@ -72,8 +72,8 @@
                     </br>
                     <br>
                     {{ f.render_form_field(form1.submit) }}
+                    {{ f.end_form(form1) }}
                 </div>
-                {{ f.end_form(form1) }}
           </div>
         </div>
 
@@ -90,6 +90,7 @@
                 </p>
                 <hr>
                 <div id="clearance-body">
+                    {{ f.begin_form(form2, flashes) }}
                     Status:
                     {% if volunteer.status2 == "Cleared" %}
                         <br style="color: #00DF52;">
@@ -123,7 +124,7 @@
             </div>
         </div>
 
-
+        {% if volunteer.year_pa == "No" %}
         <div class="column">
           <div id="rectangle-card">
                 <h3> Clearance 3 </h3>
@@ -133,6 +134,7 @@
                 </p>
                 <hr>
                 <div id="clearance-body">
+                    {{ f.begin_form(form3, flashes) }}
                     Status:
                     {% if volunteer.status3 == "Cleared" %}
                         <br style="color: #00DF52;">
@@ -165,7 +167,7 @@
             </div>
           </div>
         </div>
-
+        {% endif %}
 
         <div class="column">
           <div id="rectangle-card">
@@ -179,6 +181,7 @@
                 </p>
                 <hr>
                 <div id="clearance-body">
+                    {{ f.begin_form(form4, flashes) }}
                     Status: 
                     {% if volunteer.status4 == "Cleared" %}
                         <br style="color: #00DF52;">
