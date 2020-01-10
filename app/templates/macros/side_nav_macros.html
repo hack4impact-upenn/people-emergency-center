@@ -27,6 +27,11 @@
                   {% if current_user.is_admin() %}
                       {% set endpoints = [
                         ('admin.index', 'Dashboard', 'dashboard'),
+                        ('admin.registered_users', 'Registered Users', 'users icon'),
+                        ('admin.new_volunteer', 'Add New Volunteer', 'add user icon'),
+                        ('admin.new_user', 'Add New Admin/Staff', 'add user icon'),
+                        ('admin.invite_user', 'Invite New Volunteer', 'add user icon'),
+                        ('admin.view_clearances', 'View Clearances', 'edit icon'),
                         ('account.manage', 'Your Account', 'settings'),
                         ('account.manage', 'Events', 'calendar'),
                       ]
