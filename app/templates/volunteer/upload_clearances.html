@@ -96,44 +96,47 @@
 
         {{ f.end_form(form2) }}
 
-        <!--                Clearance 3-->
-        {{ f.begin_form(form3, flashes) }}
-        <h2 class="ui header">
-            Clearance 3
-        </h2>
-        <p>
-            FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.</br>
-                    1. Go to: https://www.identogo.com/.</br>
-                    2. Click on “Get Fingerprinted.”</br>
-                    3. Select “Pennsylvania.”</br>
-                    4. Select “Digital Fingerprinting.”</br>
-                    5. Enter Service Code “1KG6ZJ.”</br>
-                    6. Select “Schedule or Manage Appointment.”</br>
-                    7. Fill out the form</br>
-                    8. Choose the Identogo site you would like to go to.</br>
-                    9. Select date and time or check “Walk In.”</br>
-                    10. Click “Done.”</br>
-                    11. Go to the Identogo site. Be sure to bring proper documentation (specified on website).</br>
-            </br>
-            <b>Status</b>: {{ volunteer.status3 }}
-        </p>
-        {% if volunteer.link3 %}
-        <b>Uploaded File:</b> <a href = "{{ volunteer.link3 }}">Click here</a>
-        <br />
-        <br />
-        {% endif %}
-        {{ f.render_form_input(form3.form3_file_urls) }}
-        {{ upload.file_upload('form3_file_urls') }}
-        <br />
-        <b>Comment: </b>{{ volunteer.comment3 }}
-        <br />
-        <br />
-        {{ f.render_form_field(form3.submit) }}
+        {% if volunteer.year_pa == "No" %}
+            <!--                Clearance 3-->
+            {{ f.begin_form(form3, flashes) }}
+            <h2 class="ui header">
+                Clearance 3
+            </h2>
+            <p>
+                FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.</br>
+                        1. Go to: https://www.identogo.com/.</br>
+                        2. Click on “Get Fingerprinted.”</br>
+                        3. Select “Pennsylvania.”</br>
+                        4. Select “Digital Fingerprinting.”</br>
+                        5. Enter Service Code “1KG6ZJ.”</br>
+                        6. Select “Schedule or Manage Appointment.”</br>
+                        7. Fill out the form</br>
+                        8. Choose the Identogo site you would like to go to.</br>
+                        9. Select date and time or check “Walk In.”</br>
+                        10. Click “Done.”</br>
+                        11. Go to the Identogo site. Be sure to bring proper documentation (specified on website).</br>
+                </br>
+                <b>Status</b>: {{ volunteer.status3 }}
+            </p>
+            {% if volunteer.link3 %}
+                <b>Uploaded File:</b> <a href = "{{ volunteer.link3 }}">Click here</a>
+                <br />
+                <br />
+            {% endif %}
+            {{ f.render_form_input(form3.form3_file_urls) }}
+            {{ upload.file_upload('form3_file_urls') }}
+            <br />
+            <b>Comment: </b>{{ volunteer.comment3 }}
+            <br />
+            <br />
+            {{ f.render_form_field(form3.submit) }}
 
-        {{ f.end_form(form3) }}
+            {{ f.end_form(form3) }}
+        {% endif %}
 
         <!--                Clearance 4 -->
         {{ f.begin_form(form4, flashes) }}
+       
         <h2 class="ui header">
             Clearance 4
         </h2>
