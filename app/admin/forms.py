@@ -80,6 +80,7 @@ class NewUserForm(InviteUserForm):
 
     submit = SubmitField('Create')
 
+
 class NewVolunteerForm(InviteUserForm):
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
       , choices=[('Yes','Yes'), ('No', 'No')],

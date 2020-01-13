@@ -111,7 +111,8 @@ def new_volunteer():
         flash('Volunteer {} successfully created'.format(user.full_name()),
               'form-success')
         return redirect(url_for('main.index'))
-    return render_template('admin/new_volunteer.html', form=form)
+    return render_template('admin/new_volunteer.html', form=form, is_volunteer=True)
+
 
 @admin.route('/new-user', methods=['GET', 'POST'])
 @login_required
@@ -139,7 +140,8 @@ def new_user():
         flash('User {} successfully created'.format(user.full_name()),
               'form-success')
         return redirect(url_for('main.index'))
-    return render_template('admin/new_user.html', form=form)
+    return render_template('admin/new_user.html', form=form, is_volunteer=False)
+
 
 @admin.route('/invite-user', methods=['GET', 'POST'])
 @login_required
