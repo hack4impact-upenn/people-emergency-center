@@ -1,18 +1,11 @@
 from flask import (
     Blueprint,
-    abort,
-    flash,
-    redirect,
     render_template,
-    request,
-    url_for,
 )
-from flask_login import current_user, login_required
-from flask_rq import get_queue
+from flask_login import login_required
 
-from app import db
 from app.decorators import staff_required
-from app.models import EditableHTML, Role, User, Volunteer, Status
+from app.models import Volunteer, Status
 
 staff = Blueprint('staff', __name__)
 

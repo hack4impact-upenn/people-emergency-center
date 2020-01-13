@@ -133,6 +133,7 @@ def coerce_for_enum(enum):
             raise ValueError(name)
     return coerce
 
+
 class ClearanceExpirationForm(FlaskForm):
     clearance_expiration = StringField(
         'Clearace Expiration Date', validators=[Length(1, 64)])
@@ -145,9 +146,9 @@ class Clearance1StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_1 = TextAreaField(validators=[Length(1, 512)])
-    submit_clearance_1 = SubmitField()
     form1_file_urls = MultipleFileUploadField()
+    comment_1 = TextAreaField()
+    submit_clearance_1 = SubmitField()
 
 
 class Clearance2StatusForm(FlaskForm):
@@ -156,9 +157,9 @@ class Clearance2StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_2 = TextAreaField(validators=[Length(1, 512)])
-    submit_clearance_2 = SubmitField()
     form2_file_urls = MultipleFileUploadField()
+    comment_2 = TextAreaField()
+    submit_clearance_2 = SubmitField()
 
 
 class Clearance3StatusForm(FlaskForm):
@@ -167,9 +168,9 @@ class Clearance3StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_3 = TextAreaField(validators=[Length(1, 512)])
-    submit_clearance_3 = SubmitField()
     form3_file_urls = MultipleFileUploadField()
+    comment_3 = TextAreaField()
+    submit_clearance_3 = SubmitField()
 
 
 class Clearance4StatusForm(FlaskForm):
@@ -178,9 +179,9 @@ class Clearance4StatusForm(FlaskForm):
         choices=[(v, escape(v)) for v in Status],
         coerce=coerce_for_enum(Status)
     )
-    comment_4 = TextAreaField(validators=[Length(1, 512)])
-    submit_clearance_4 = SubmitField()
     form4_file_urls = MultipleFileUploadField()
+    comment_4 = TextAreaField()
+    submit_clearance_4 = SubmitField()
 
 
 class DownloadCSVForm(FlaskForm):
