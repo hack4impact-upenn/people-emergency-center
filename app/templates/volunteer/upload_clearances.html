@@ -46,21 +46,21 @@
                     {{ f.begin_form(form1, flashes) }}
                     Status: 
                     {% if volunteer.status1 == "Cleared" %}
-                        <br style="color: #00DF52;">
+                        <p style="color: #00DF52;">
                             {{ volunteer.status1 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status1 == "Pending PEC Review" %}
-                        <br style="color: #FFBD22;">
+                        <p style="color: #FFBD22;">
                             {{ volunteer.status1 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status1 == "Declined" %}
-                        <br style="color: #BF1E1E;">
+                        <p style="color: #BF1E1E;">
                             {{ volunteer.status1 }}
-                        </br>
+                        </p>
                     {% else %}
-                        <br style="color: #646B72">
+                        <p style="color: #646B72">
                             {{ volunteer.status1 }}
-                        </br>
+                        </p>
                     {% endif %}
                     Uploaded file: <a href = "{{ volunteer.link1 }}">click here</a>
                     <br>
@@ -93,23 +93,23 @@
                     {{ f.begin_form(form2, flashes) }}
                     Status:
                     {% if volunteer.status2 == "Cleared" %}
-                        <br style="color: #00DF52;">
+                        <p style="color: #00DF52;">
                             {{ volunteer.status2 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status2 == "Pending PEC Review" %}
-                        <br style="color: #FFBD22;">
+                        <p style="color: #FFBD22;">
                             {{ volunteer.status2 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status2 == "Declined" %}
-                        <br style="color: #BF1E1E;">
+                        <p style="color: #BF1E1E;">
                             {{ volunteer.status2 }}
-                        </br>
+                        </p>
                     {% else %}
-                        <br style="color: #646B72">
+                        <p style="color: #646B72">
                             {{ volunteer.status2 }}
-                        </br>
+                        </p>
                     {% endif %}
-                    Uploaded file: <a href = "{{ volunteer.link2 }}">{{ volunteer.link2 }}</a>
+                    Uploaded file: <a href = "{{ volunteer.link2 }}">click here</a>
                     <br>
                     {{ f.render_form_input(form2.form2_file_urls) }}
                     {{ upload.file_upload('form2_file_urls') }}
@@ -137,23 +137,23 @@
                     {{ f.begin_form(form3, flashes) }}
                     Status:
                     {% if volunteer.status3 == "Cleared" %}
-                        <br style="color: #00DF52;">
+                        <p style="color: #00DF52;">
                             {{ volunteer.status3 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status3 == "Pending PEC Review" %}
-                        <br style="color: #FFBD22;">
+                        <p style="color: #FFBD22;">
                             {{ volunteer.status3 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status3 == "Declined" %}
-                        <br style="color: #BF1E1E;">
+                        <p style="color: #BF1E1E;">
                             {{ volunteer.status3 }}
-                        </br>
+                        </p>
                     {% else %}
-                        <br style="color: #646B72">
+                        <p style="color: #646B72">
                             {{ volunteer.status3 }}
-                        </br>
+                        </p>
                     {% endif %}
-                    Uploaded file: <a href = "{{ volunteer.link3 }}">{{ volunteer.link3 }}</a>
+                    Uploaded file: <a href = "{{ volunteer.link3 }}">click here</a>
                     <br>
                     {{ f.render_form_input(form3.form3_file_urls) }}
                     {{ upload.file_upload('form3_file_urls') }}
@@ -184,23 +184,23 @@
                     {{ f.begin_form(form4, flashes) }}
                     Status: 
                     {% if volunteer.status4 == "Cleared" %}
-                        <br style="color: #00DF52;">
+                        <p style="color: #00DF52;">
                             {{ volunteer.status4 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status4 == "Pending PEC Review" %}
-                        <br style="color: #FFBD22;">
+                        <p style="color: #FFBD22;">
                             {{ volunteer.status4 }}
-                        </br>
+                        </p>
                     {% elif volunteer.status4 == "Declined" %}
-                        <br style="color: #BF1E1E;">
+                        <p style="color: #BF1E1E;">
                             {{ volunteer.status4 }}
-                        </br>
+                        </p>
                     {% else %}
-                        <br style="color: #646B72">
+                        <p style="color: #646B72">
                             {{ volunteer.status4 }}
-                        </br>
+                        </p>
                     {% endif %}
-                    Uploaded file: <a href = "{{ volunteer.link4 }}">{{ volunteer.link4 }}</a>
+                    Uploaded file: <a href = "{{ volunteer.link4 }}">click here</a>
                     <br>
                     {{ f.render_form_input(form4.form4_file_urls) }}
                     {{ upload.file_upload('form4_file_urls') }}
@@ -215,7 +215,6 @@
           </div>
         </div>
       </div>
-
 
 
 {% endblock %}

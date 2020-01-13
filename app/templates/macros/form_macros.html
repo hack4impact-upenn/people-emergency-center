@@ -117,7 +117,7 @@
             </div>
         {% endif %}
     </div>
-        
+
 {% endmacro %}
 
 {% macro render_form_input(field) %}
@@ -129,14 +129,14 @@
     {% elif field.type == 'RadioField' %}
         {{ field.label }}
         {% for item in field %}
-            <div class="ui radio checkbox"  style="background-color: #444">
+            <div class="ui radio checkbox">
                 {{ item }}
                 {{ item.label }}
             </div>
         {% endfor %}
     {% elif field.type == 'MultipleFileUploadField' %}
             <strong>Upload File</strong>
-            <input type="file" id="file-{{field.id}}"><br>
+            <input type="file" id="file-{{field.id}}" style=""><br>
             <div style="display:none">{{ field }}</div>
             <div id="{{ field.id }}_list">
               {% if field.data %}
@@ -151,7 +151,7 @@
     {% elif field.type == 'CustomSelectField' %}
         {{ render_custom_select(field) }}
     {% else %}
-        <!-- {{ field.label }} -->
+        {{ field.label }}
         {% if field.description %}
             <div class="ui pointing below label">
                 {{ field.description }}
@@ -160,5 +160,3 @@
         {{ field(placeholder=field.label.text) }}
     {% endif %}
 {% endmacro %}
-
-

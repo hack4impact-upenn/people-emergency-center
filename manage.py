@@ -119,7 +119,7 @@ def format():
 def run_setup():
     recreate_db()
     setup_dev()
-    add_fake_data(30)
+    # add_fake_data(30)
 
 if __name__ == '__main__':
     manager.run()

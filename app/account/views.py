@@ -74,9 +74,7 @@ def register():
             pa_residency =form.pa_residency.data,
             confirmed=True,
             role_id=1)
-        print(user)
         db.session.add(user)
-        print("Residency Data" + form.pa_residency.data)
         if form.pa_residency.data == "Yes":
             volunteer = Volunteer(
                 first_name=form.first_name.data,
