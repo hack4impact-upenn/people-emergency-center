@@ -18,7 +18,7 @@ from app.models import User
 
 
 class LoginForm(FlaskForm):
-    email_style = {'style': 'color: white;'}
+    email_style = {'style': 'color: black;'}
     email = EmailField(
         'Email', validators=[InputRequired(),
                              Length(1, 64),
