@@ -59,20 +59,30 @@
                     <th>Status of Clearance 1</th>
                     <th>Status of Clearance 2</th>
                     <th>Status of Clearance 3</th>
-                       <th>Status of Clearance 4</th>
+                    <th>Status of Clearance 4</th>
+                    <th>Admin Attention Required</th>
                    </tr>
                 </thead>
                 <tbody>
                    {% for volunteer in volunteers %}
                       <tr onclick="window.location.href = '{{ url_for('admin.view_one', id=volunteer.id) }}';">
-                        <td>{{ volunteer.first_name }}</td>
+                           <td>{{ volunteer.first_name }}</td>
                            <td>{{ volunteer.last_name }}</td>
                            <td>{{ volunteer.email }}</td>
                            <td>{{ volunteer.status1.value }}</td>
                            <td>{{ volunteer.status2.value }}</td>
                            <td>{{ volunteer.status3.value }}</td>
                            <td>{{ volunteer.status4.value }}</td>
-
+                           <td>
+                               {% if volunteer.status1.value == "Submitted" or volunteer.status1.value == "Pending (state review)" or volunteer.status1.value == "Pending (pec review)" or volunteer.status1.value == "Expired"
+                                  or volunteer.status2.value == "Submitted" or volunteer.status2.value == "Pending (state review)" or volunteer.status2.value == "Pending (pec review)" or volunteer.status2.value == "Expired"
+                                  or volunteer.status3.value == "Submitted" or volunteer.status3.value == "Pending (state review)" or volunteer.status3.value == "Pending (pec review)" or volunteer.status3.value == "Expired"
+                                  or volunteer.status4.value == "Submitted" or volunteer.status4.value == "Pending (state review)" or volunteer.status4.value == "Pending (pec review)" or volunteer.status4.value == "Expired" %}
+                                    yes
+                               {% else %}
+                                    no
+                               {% endif %}
+                           </td>
                    {% endfor %}
                </tbody>
             </table>
