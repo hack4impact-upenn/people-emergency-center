@@ -44,7 +44,7 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         else:
             flash('Invalid email or password.', 'form-error')
-    elif form.validate_on_submit() and form.register.data:
+    elif form.register.data:
         return redirect(url_for('account.register'))
     return render_template('account/login.html', form=form)
 

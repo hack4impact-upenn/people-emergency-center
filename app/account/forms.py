@@ -20,12 +20,10 @@ from app.models import User
 class LoginForm(FlaskForm):
     email_style = {'style': 'color: black;'}
     email = EmailField(
-        'Email', validators=[InputRequired(),
-                             Length(1, 64),
-                             Email()],
+        'Email', validators=[Email()],
         render_kw=email_style,
     )
-    password = PasswordField('Password', validators=[InputRequired()])
+    password = PasswordField('Password')
 
     remember_me = BooleanField()
 
