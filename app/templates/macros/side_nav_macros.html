@@ -1,0 +1,68 @@
+{# This macro is called on the volunteer pages. #}
+
+{% macro render_menu_items(endpoints) %}
+    {% for endpoint, name, icon in endpoints %}
+        <a class="item side {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
+            {% if icon %}
+                <i class="{{ icon }} icon"></i>
+            {% endif %}
+            {{ name | safe }}
+        </a>
+    {% endfor %}
+{% endmacro %}
+
+{% macro desktop_nav(current_user, dropdown=None) %}
+    <div class="computer tablet only row">
+        <div class="ui inverted left vertical fixed menu" style="background-color: #263056; width: 20%; height: 100%;">
+          <div class="ui container" style="padding: 2em 3em 2em; position: absolute">
+              <h2 style = "font-weight: 400; font-size: 60px; letter-spacing: 0.02em; color: #FFFFFF">
+                  PEC
+              </h2>
+              <h2 style="font-style: normal; font-weight: 150; font-size: 17px; letter-spacing: 0.02em; color: #FFFFFF; position: absolute; top: 60%">
+                People's Emergency Center
+              </h2>
+          </div>
+          <div class="ui container" style="padding: 12em 2em 10em; position: absolute">
+              {% if current_user.is_authenticated %}
+                  {% if current_user.is_admin() %}
+                      {% set endpoints = [
+                        ('admin.index', 'Dashboard', 'dashboard'),
+                        ('admin.registered_users', 'Registered Users', 'users icon'),
+                        ('admin.new_volunteer', 'Add New Volunteer', 'add user icon'),
+                        ('admin.new_user', 'Add New Admin/Staff', 'add user icon'),
+                        ('admin.invite_user', 'Invite New Volunteer', 'add user icon'),
+                        ('admin.view_clearances', 'View Clearances', 'edit icon'),
+                        ('account.manage', 'Your Account', 'settings'),
+                        ('account.manage', 'Events', 'calendar'),
+                      ]
+                      %}
+                      {{ render_menu_items(endpoints) }}
+                  {% elif current_user.role_id == 1 %}
+                      {% set endpoints = [
+                        ('volunteer.index', 'Dashboard', 'dashboard'),
+                        ('account.manage', 'Your Account', 'settings'),
+                        ('volunteer.upload_clearances', 'Clearances', 'check'),
+                        ('account.manage', 'Events', 'calendar'),
+                        ]
+                      %}
+                      {{ render_menu_items(endpoints) }}
+                  {% else %}
+                      {% set endpoints = [
+                        ('staff.index', 'Dashboard', 'dashboard'),
+                        ('staff.view_volunteers', 'View Volunteers', 'users icon'),
+                        ('account.manage', 'Events', 'calendar'),
+                      ]
+                      %}
+                      {{ render_menu_items(endpoints) }}
+                  {% endif %}
+              {% endif %}
+          </div>
+        </div>
+    </div>
+{% endmacro %}
+
+{% macro render_nav(current_user, dropdown=[]) %}
+    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}">
+        {{ desktop_nav(current_user, dropdown=dropdown) }}
+    </nav>
+{% endmacro %}

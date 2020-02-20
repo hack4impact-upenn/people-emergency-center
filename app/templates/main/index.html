@@ -1,8 +1,9 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base_no_nav_sidebar.html' %}
 
 {% block content %}
     <div class="ui text container">
-      <h1>Hello {% if not (current_user.is_authenticated) %}{% else %} {{ current_user.full_name() }} {% endif %},</h1>
+      <h1 >Hello {% if not (current_user.is_authenticated) %}{% else %}
+         {{ current_user.full_name() }} {% endif %},</font></h1>
 
         <p>Pennsylvania law requires individuals interested in volunteering at the People's Emergency Center (PEC) to have up to three clearances, depending on recidency. PEC requires clearances must be completed before the volunteer's start at PEC, and not be more than 30 days old.</p>
 

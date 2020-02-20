@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base_no_nav_sidebar.html' %}
 {% import 'macros/form_macros.html' as f %}
 {% import 'macros/check_password.html' as check %}
 
@@ -30,6 +30,9 @@
                     {{ f.render_form_field(form.last_name) }}
                 </div>
               {{ f.render_form_field(form.email) }}
+              {% if is_volunteer == False %}
+                {{ f.render_form_field(form.role) }}
+              {% endif %}
                 {% if form.password %}
                     <div class="two fields">
                         {{ f.render_form_field(form.password) }}

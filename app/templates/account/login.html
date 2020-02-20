@@ -1,49 +1,69 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base_no_nav.html' %}
 {% import 'macros/form_macros.html' as f %}
-
 {% block content %}
-    <div class="ui center grid ui-corner-rounded">
-        <div class="column" style="width: 35%; position: absolute; left: 250px; top: 180px">
-            <h1 style="font-size:50px; color:#263056">PEC</h1>
-            <p style="font-size:20px; color:#EC6D25">People's Emergency Center</p>
-            <p style="padding: 10px 30px; font-size:15px; text-align: justify;">
-                People’s Emergency Center (PEC) is located in West Philadelphia. PEC’s mission is to nurture families,
-                strengthen neighborhoods and drive change.  For families, children, and youth experiencing homelessness,
-                PEC offers more than 235 affordable housing units, job training, parenting and early childhood education,
-                financial education and planning, life skills and technology classes. PEC seeks to change the life trajectory
-                for the families who seek its services and inspire them to achieve housing security and financial stability.
-            </p>
-        </div>
-        <div class="column" style="background-color: #ECECEE; border-radius: 10px; width: 25%; padding: 0px 20px 20px; position: absolute; right: 300px; top: 200px">
-            <h2 class="ui image header">
-            </h2>
-               {% set flashes = {
-                    'error':   get_flashed_messages(category_filter=['form-error']),
-                    'warning': get_flashed_messages(category_filter=['form-check-email']),
-                    'info':    get_flashed_messages(category_filter=['form-info']),
-                    'success': get_flashed_messages(category_filter=['form-success'])
-                } %}
-
-                {{ f.begin_form(form, flashes) }}
-                    {{ f.render_form_field(form.email) }}
-                    {{ f.render_form_field(form.password) }}
-                    <div class="ui two column grid">
-                        {{ f.render_form_field(form.remember_me, extra_classes='column') }}
-                        <div class="right aligned column">
-                            <a href="{{ url_for('account.reset_password_request') }}">Forgot password?</a>
-                        </div>
-                    </div>
-
-                    {{ f.form_message(flashes['error'], header='Something went wrong.', class='error') }}
-                    {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
-                    {{ f.form_message(flashes['info'], header='Information', class='info') }}
-                    {{ f.form_message(flashes['success'], header='Success!', class='success') }}
-                    <div align="center">
-                    {{ f.render_form_field(form.submit) }}
-                    <hr />
-                    {{ f.render_form_field(form.register) }}
-                    </div>
-                {{ f.end_form(form) }}
-        </div>
+<body style="background-color: #FFFFFF">
+    <div class="column" style="width: 50%; height: 20%; top: 5%; left: 5%; position: absolute">
+        <h2 style = "font-style: bold; font-weight: 750; font-size: 60px; line-height: 80%;
+                        letter-spacing: 0.02em; color: #263056">
+            PEC
+        </h2>
+        <h2 style="font-style: normal; font-weight: 150; font-size: 25px; line-height: 1px;
+                    letter-spacing: 0.02em; color: ORANGE">
+            People's Emergency Center
+        </h2>
     </div>
+
+    <div class="column" style="width: 45%; height: 40%; top: 25%; left: 10%; position: absolute;">
+        <p style="font-style: normal; font-size: 120%; line-height: 100%; letter-spacing: 0.05em">
+            <a href="https://www.pec-cares.org">People’s Emergency Center (PEC)</a> is located in West Philadelphia.
+            PEC’s mission is to nurture families, strengthen neighborhoods and drive change.
+            For families, children, and youth experiencing homelessness, 
+            PEC offers more than 235 affordable housing units, job training, parenting and early childhood education, 
+            financial education and planning, life skills and technology classes. 
+            PEC seeks to change the life trajectory for the families who seek its services and inspire them to achieve 
+            housing security and financial stability.
+            <br><br><br>
+            The PEC Community Development Corporation (<a href="https://www.lancasteravephilly.com">lancasteravephilly.com</a>) 
+            programs respond to community needs and build on neighborhood assets to help bridge the digital divide, 
+            expand mixed-income housing opportunities, stimulate economic growth, create wealth, 
+            and improve the quality of life for all West Philadelphia residents.
+        </p>
+    </div>
+
+    <div class="column vertical-center" style="border-radius: 15px; width: 25%; padding: 0px 20px 20px; position: absolute; 
+                                right: 15%; top: 20%; background: #ECECEE; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+                                backdrop-filter: blur(4px);">
+        <h2 class="ui image header">
+        </h2>
+            {% set flashes = {
+                'warning': get_flashed_messages(category_filter=['form-check-email']),
+                'info':    get_flashed_messages(category_filter=['form-info']),
+                'success': get_flashed_messages(category_filter=['form-success'])
+            } %}
+
+            {{ f.begin_form(form, flashes) }}
+                {{ f.render_form_field(form.email) }}
+                {{ f.render_form_field(form.password) }}
+                <div class="ui two column grid">
+                    {{ f.render_form_field(form.remember_me, extra_classes='column') }}
+                    <div class="right aligned column">
+                        <a href="{{ url_for('account.reset_password_request') }}">Forgot password?</a>
+                    </div>
+                </div>
+
+                {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
+                {{ f.form_message(flashes['info'], header='Information', class='info') }}
+                {{ f.form_message(flashes['success'], header='Success!', class='success') }}
+
+                <div style="padding: 1em 0 1em 0">
+                    {{ f.render_form_field(form.submit) }}
+                </div>
+                <div style="padding: 1em 0 0 0">
+                    {{ f.render_form_field(form.register) }}
+                </div>
+            {{ f.end_form(form) }}
+    </div>
+    <div id="rectangle" style="width: 100%; position: absolute; bottom: 0%; height: 10%; background-color:#263056">
+    </div>
+</body>
 {% endblock %}

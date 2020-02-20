@@ -41,21 +41,29 @@ def upload_clearances():
         if form1.form1_file_urls.data != '':
             current_volunteer.link1 = form1.form1_file_urls.data
             current_volunteer.status1 = Status.SUBMITTED
+        else:
+            current_volunteer.status1 = Status.NOT_SUBMITTED
 
-    if form2.validate_on_submit() and form2.submit.data:
+    elif form2.validate_on_submit() and form2.submit.data:
         if form2.form2_file_urls.data != '':
             current_volunteer.link2 = form2.form2_file_urls.data
             current_volunteer.status2 = Status.SUBMITTED
+        else:
+            current_volunteer.status2 = Status.NOT_SUBMITTED
 
-    if form3.validate_on_submit() and form3.submit.data:
+    elif form3.validate_on_submit() and form3.submit.data:
         if form3.form3_file_urls.data != '':
             current_volunteer.link3 = form3.form3_file_urls.data
             current_volunteer.status3 = Status.SUBMITTED
+        else:
+            current_volunteer.status3 = Status.NOT_SUBMITTED
 
-    if form4.validate_on_submit() and form4.submit.data:
+    elif form4.validate_on_submit() and form4.submit.data:
         if form4.form4_file_urls.data != '':
             current_volunteer.link4 = form4.form4_file_urls.data
             current_volunteer.status4 = Status.SUBMITTED
+        else:
+            current_volunteer.status4 = Status.NOT_SUBMITTED
 
     db.session.commit()
 
@@ -66,7 +74,6 @@ def upload_clearances():
         form3=form3,
         form4=form4
     )
-
 
 # May not need this
 @volunteer.route('/view_status')

@@ -18,19 +18,19 @@ from app.models import User
 
 
 class LoginForm(FlaskForm):
+    email_style = {'style': 'color: black;'}
     email = EmailField(
-        'Email', validators=[InputRequired(),
-                             Length(1, 64),
-                             Email()],
+        'Email', validators=[Email()],
+        render_kw=email_style,
     )
-    password = PasswordField('Password', validators=[InputRequired()])
+    password = PasswordField('Password')
 
     remember_me = BooleanField()
 
     button_login_style = {'style': 'width:100%; background-color:#007CFF; color:white;'}
     button_register_style = {'style': 'width:100%; background-color:#EC6D25; color:white;'}
-    submit = SubmitField('Log in', render_kw=button_login_style)
-    register = SubmitField('Sign up', render_kw=button_register_style)
+    submit = SubmitField('Log In', render_kw=button_login_style)
+    register = SubmitField('Register', render_kw=button_register_style)
 
 
 class RegistrationForm(FlaskForm):
@@ -82,7 +82,8 @@ class RegistrationForm(FlaskForm):
             EqualTo('password2', 'Passwords must match')
         ])
     password2 = PasswordField('Confirm password', validators=[InputRequired()])
-    submit = SubmitField('Register')
+    button_style = {'style': 'width:20%; background-color:#007CFF; color:white;'}
+    submit = SubmitField('Submit', render_kw=button_style)
 
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():

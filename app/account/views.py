@@ -35,7 +35,7 @@ account = Blueprint('account', __name__)
 def login():
     """Log in an existing user."""
     form = LoginForm()
-    if form.validate_on_submit():
+    if form.validate_on_submit() and form.submit.data:
         user = User.query.filter_by(email=form.email.data).first()
         if user is not None and user.password_hash is not None and \
                 user.verify_password(form.password.data):
@@ -44,6 +44,8 @@ def login():
             return redirect(request.args.get('next') or url_for('main.index'))
         else:
             flash('Invalid email or password.', 'form-error')
+    elif form.register.data:
+        return redirect(url_for('account.register'))
     return render_template('account/login.html', form=form)
 
 
@@ -72,9 +74,7 @@ def register():
             pa_residency =form.pa_residency.data,
             confirmed=True,
             role_id=1)
-        print(user)
         db.session.add(user)
-        print("Residency Data" + form.pa_residency.data)
         if form.pa_residency.data == "Yes":
             volunteer = Volunteer(
                 first_name=form.first_name.data,
@@ -131,7 +131,7 @@ def register():
 def logout():
     logout_user()
     flash('You have been logged out.', 'info')
-    return redirect(url_for('main.index'))
+    return redirect(url_for('account.login'))
 
 
 @account.route('/manage', methods=['GET', 'POST'])
@@ -384,3 +384,5 @@ def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
     return render_template('account/unconfirmed.html')
+
+

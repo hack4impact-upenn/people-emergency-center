@@ -1,4 +1,4 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base_no_nav_sidebar.html' %}
 {% import 'macros/form_macros.html' as f %}
 {% import 'macros/file_upload.html' as upload %}
 
@@ -23,143 +23,198 @@
 {% endmacro %}
 
 {% block content %}
-<div class="ui stackable centered grid container">
-    <div class="twelve wide column">
-        <h2 class="ui header">
-            Upload Clearances
-        </h2>
-        <p>
-            Pennsylvania law requires volunteers at People’s Emergency Center (PEC)
-            to have up to (3) child clearances, depending on residency. PEC requires
-            clearances must be completed before volunteer’s start date at PEC, and
-            be no more than 30 days old.
-            Questions about the law can be directed to the State of PA by
-            calling 1-888-783-7972.
-            Trish Downey (tdowney@pec-cares.org or 267-777-5811) must receive the
-            results before volunteer can begin.
-        </p>
+<h2 class="ui header" style="color: #36454F; font-weight: bold; position: absolute; top: 7%; left: 23%;">
+    Clearances
+</h2>
 
+<div class="ui four column grid container" style="position: absolute; width: 10%; height: 80%; top: 15%; left: 20%; padding: 1em 1em 1em 1em">
         {% set flashes = {
         'error':   get_flashed_messages(category_filter=['form-error']),
         'success': get_flashed_messages(category_filter=['form-success'])
         } %}
 
-        <!--                Clearance 1-->
-        {{ f.begin_form(form1, flashes) }}
-        <h2 class="ui header">
-            Clearance 1
-        </h2>
-        <p>
-            This is for child abuse history clearance: keepkidssafe.pa.gov.
-            Turnaround is faster for email than mail.</br>
-            </br>
-            <b>Status</b>: {{ volunteer.status1 }}
-        </p>
-        {% if volunteer.link1 %}
-        <b>Uploaded File:</b> <a href = "{{ volunteer.link1 }}">Click here</a>
-        <br />
-        <br />
-        {% endif %}
-        {{ f.render_form_input(form1.form1_file_urls) }}
-        {{ upload.file_upload('form1_file_urls') }}
-        <br />
-        <b>Comment: </b>{{ volunteer.comment1 }}
-        <br />
-        <br />
-        {{ f.render_form_field(form1.submit) }}
+        <div class="column">
+          <div id="rectangle-card">
+                <h3> Clearance 1 </h3>
+                <hr>
+                <p id="clearance-description">
+                    This is for child abuse history clearance: <a href="https://www.keepkidssafe.pa.gov">keepkidssafe.pa.gov</a>.
+                    Turnaround is faster for email than mail.
+                </p>
+                <hr>
+                <div id="clearance-body">
+                    {{ f.begin_form(form1, flashes) }}
+                    Status: 
+                    {% if volunteer.status1 == "Cleared" %}
+                        <p style="color: #00DF52;">
+                            {{ volunteer.status1 }}
+                        </p>
+                    {% elif volunteer.status1 == "Pending PEC Review" %}
+                        <p style="color: #FFBD22;">
+                            {{ volunteer.status1 }}
+                        </p>
+                    {% elif volunteer.status1 == "Declined" %}
+                        <p style="color: #BF1E1E;">
+                            {{ volunteer.status1 }}
+                        </p>
+                    {% else %}
+                        <p style="color: #646B72">
+                            {{ volunteer.status1 }}
+                        </p>
+                    {% endif %}
+                    Uploaded file: <a href = "{{ volunteer.link1 }}">click here</a>
+                    <br>
+                    {{ f.render_form_input(form1.form1_file_urls) }}
+                    {{ upload.file_upload('form1_file_urls') }}
+                    Comment:
+                    <br style="color: #C6C6C6">
+                        {{ volunteer.comment1 }}
+                    </br>
+                    <br>
+                    {{ f.render_form_field(form1.submit) }}
+                    {{ f.end_form(form1) }}
+                </div>
+          </div>
+        </div>
 
-        {{ f.end_form(form1) }}
 
-        <!--                Clearance 2-->
-        {{ f.begin_form(form2, flashes) }}
-        <h2 class="ui header">
-            Clearance 2
-        </h2>
-        <p>
-            This is for criminal record check. Go To: https://epatch.state.pa.us/.
-            Print your result from the computer. </br>
-            </br>
-            <b>Status</b>: {{ volunteer.status2 }}
-        </p>
-        {% if volunteer.link2 %}
-        <b>Uploaded File:</b> <a href = "{{ volunteer.link2 }}">Click here</a>
-        <br />
-        <br />
-        {% endif %}
-        {{ f.render_form_input(form2.form2_file_urls) }}
-        {{ upload.file_upload('form2_file_urls') }}
-        <br />
-        <b>Comment: </b>{{ volunteer.comment2 }}
-        <br />
-        <br />
-        {{ f.render_form_field(form2.submit) }}
-
-        {{ f.end_form(form2) }}
+        <div class="column">
+          <div id="rectangle-card">
+                <h3> Clearance 2 </h3>
+                <hr>
+                <p id="clearance-description">
+                    This is for criminal record check. Go To: <a href = "https://www.epatch.state.pa.us">
+                    epatch.state.pa.us/</a>. Print your result from the computer.
+                    <br>
+                    <br>
+                </p>
+                <hr>
+                <div id="clearance-body">
+                    {{ f.begin_form(form2, flashes) }}
+                    Status:
+                    {% if volunteer.status2 == "Cleared" %}
+                        <p style="color: #00DF52;">
+                            {{ volunteer.status2 }}
+                        </p>
+                    {% elif volunteer.status2 == "Pending PEC Review" %}
+                        <p style="color: #FFBD22;">
+                            {{ volunteer.status2 }}
+                        </p>
+                    {% elif volunteer.status2 == "Declined" %}
+                        <p style="color: #BF1E1E;">
+                            {{ volunteer.status2 }}
+                        </p>
+                    {% else %}
+                        <p style="color: #646B72">
+                            {{ volunteer.status2 }}
+                        </p>
+                    {% endif %}
+                    Uploaded file: <a href = "{{ volunteer.link2 }}">click here</a>
+                    <br>
+                    {{ f.render_form_input(form2.form2_file_urls) }}
+                    {{ upload.file_upload('form2_file_urls') }}
+                    Comment:
+                    <br style="color: #C6C6C6">
+                        {{ volunteer.comment2 }}
+                    </br>
+                    <br>
+                    {{ f.render_form_field(form2.submit) }}
+                    {{ f.end_form(form2) }}
+                </div>
+            </div>
+        </div>
 
         {% if volunteer.year_pa == "No" %}
-            <!--                Clearance 3-->
-            {{ f.begin_form(form3, flashes) }}
-            <h2 class="ui header">
-                Clearance 3
-            </h2>
-            <p>
-                FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.</br>
-                        1. Go to: https://www.identogo.com/.</br>
-                        2. Click on “Get Fingerprinted.”</br>
-                        3. Select “Pennsylvania.”</br>
-                        4. Select “Digital Fingerprinting.”</br>
-                        5. Enter Service Code “1KG6ZJ.”</br>
-                        6. Select “Schedule or Manage Appointment.”</br>
-                        7. Fill out the form</br>
-                        8. Choose the Identogo site you would like to go to.</br>
-                        9. Select date and time or check “Walk In.”</br>
-                        10. Click “Done.”</br>
-                        11. Go to the Identogo site. Be sure to bring proper documentation (specified on website).</br>
-                </br>
-                <b>Status</b>: {{ volunteer.status3 }}
-            </p>
-            {% if volunteer.link3 %}
-                <b>Uploaded File:</b> <a href = "{{ volunteer.link3 }}">Click here</a>
-                <br />
-                <br />
-            {% endif %}
-            {{ f.render_form_input(form3.form3_file_urls) }}
-            {{ upload.file_upload('form3_file_urls') }}
-            <br />
-            <b>Comment: </b>{{ volunteer.comment3 }}
-            <br />
-            <br />
-            {{ f.render_form_field(form3.submit) }}
-
-            {{ f.end_form(form3) }}
+        <div class="column">
+          <div id="rectangle-card">
+                <h3> Clearance 3 </h3>
+                <hr>
+                <p id="clearance-description">
+                    FBI Background Check if volunteer has lived in PA for less than the last 10 consecutive years.
+                </p>
+                <hr>
+                <div id="clearance-body">
+                    {{ f.begin_form(form3, flashes) }}
+                    Status:
+                    {% if volunteer.status3 == "Cleared" %}
+                        <p style="color: #00DF52;">
+                            {{ volunteer.status3 }}
+                        </p>
+                    {% elif volunteer.status3 == "Pending PEC Review" %}
+                        <p style="color: #FFBD22;">
+                            {{ volunteer.status3 }}
+                        </p>
+                    {% elif volunteer.status3 == "Declined" %}
+                        <p style="color: #BF1E1E;">
+                            {{ volunteer.status3 }}
+                        </p>
+                    {% else %}
+                        <p style="color: #646B72">
+                            {{ volunteer.status3 }}
+                        </p>
+                    {% endif %}
+                    Uploaded file: <a href = "{{ volunteer.link3 }}">click here</a>
+                    <br>
+                    {{ f.render_form_input(form3.form3_file_urls) }}
+                    {{ upload.file_upload('form3_file_urls') }}
+                    Comment:
+                    <br style="color: #C6C6C6">
+                        {{ volunteer.comment3 }}
+                    </br>
+                    <br>
+                    {{ f.render_form_field(form3.submit) }}
+                    {{ f.end_form(form3) }}
+            </div>
+          </div>
+        </div>
         {% endif %}
 
-        <!--                Clearance 4 -->
-        {{ f.begin_form(form4, flashes) }}
-       
-        <h2 class="ui header">
-            Clearance 4
-        </h2>
-        <p>
-            Conflict of interest form.</br>
-            </br>
-            <b>Status</b>: {{ volunteer.status4 }}
-        </p>
-        {% if volunteer.link4 %}
-        <b>Uploaded File:</b> <a href = "{{ volunteer.link4 }}">Click here</a>
-        <br />
-        <br />
-        {% endif %}
-        {{ f.render_form_input(form4.form4_file_urls) }}
-        {{ upload.file_upload('form4_file_urls') }}
-        <br />
-        <b>Comment: </b>{{ volunteer.comment4 }}
-        <br />
-        <br />
-        {{ f.render_form_field(form4.submit) }}
+        <div class="column">
+          <div id="rectangle-card">
+                <h3> Clearance 4 </h3>
+                <hr>
+                <p id="clearance-description">
+                    Volunteer conflict of interest form.
+                    <br>
+                    <br>
+                    <br>
+                </p>
+                <hr>
+                <div id="clearance-body">
+                    {{ f.begin_form(form4, flashes) }}
+                    Status: 
+                    {% if volunteer.status4 == "Cleared" %}
+                        <p style="color: #00DF52;">
+                            {{ volunteer.status4 }}
+                        </p>
+                    {% elif volunteer.status4 == "Pending PEC Review" %}
+                        <p style="color: #FFBD22;">
+                            {{ volunteer.status4 }}
+                        </p>
+                    {% elif volunteer.status4 == "Declined" %}
+                        <p style="color: #BF1E1E;">
+                            {{ volunteer.status4 }}
+                        </p>
+                    {% else %}
+                        <p style="color: #646B72">
+                            {{ volunteer.status4 }}
+                        </p>
+                    {% endif %}
+                    Uploaded file: <a href = "{{ volunteer.link4 }}">click here</a>
+                    <br>
+                    {{ f.render_form_input(form4.form4_file_urls) }}
+                    {{ upload.file_upload('form4_file_urls') }}
+                    Comment:
+                    <br style="color: #646B72">
+                        {{ volunteer.comment4 }}
+                    </br>
+                    <br>
+                    {{ f.render_form_field(form4.submit) }}
+                    {{ f.end_form(form4) }}
+            </div>
+          </div>
+        </div>
+      </div>
 
-        {{ f.end_form(form4) }}
 
-    </div>
-</div>
 {% endblock %}

@@ -1,12 +1,13 @@
-{% extends 'layouts/base.html' %}
+{% extends 'layouts/base_no_nav_sidebar.html' %}
 {% import 'macros/form_macros.html' as f %}
 {% import 'macros/check_password.html' as check %}
 
 {% block content %}
 
     <div class="ui grid container">
-        <div class="eight wide computer sixteen wide mobile centered column">
-            <h2 class="ui dividing header">Create an account</h2>
+        <div class="eight wide computer sixteen wide mobile centered column"
+                style="position: absolute; top: 0%; left: 25%; padding: 0 0 0 0">
+            <h2 class="ui dividing header" style="padding-top: 10%">Volunteer Sign Up</h2>
             {{  form.csrf_token }}
             {% set flashes = {
                 'error':   get_flashed_messages(category_filter=['form-error']),
@@ -17,19 +18,21 @@
 
             {{ f.begin_form(form, flashes) }}
 
-
             <div class="two fields">
                 {{ f.render_form_field(form.first_name) }}
                 {{ f.render_form_field(form.last_name) }}
             </div>
-            {{ f.render_form_field(form.phone_number) }}
             {{ f.render_form_field(form.email) }}
+            {{ f.render_form_field(form.phone_number) }}
             {{ f.render_form_field(form.street) }}
             <div class="two fields">
                 {{ f.render_form_field(form.city) }}
                 {{ f.render_form_field(form.state) }}
             </div>
             {{ f.render_form_field(form.organization_corporation) }}
+            <div style="font-family: Helvetica; font-size: 1.2em; color: #565656; padding: 0 0 0.5em 0">
+                Have you lived in Pennsylvania for more than 10 years?
+            </div>
             {{ f.render_form_field(form.pa_residency) }}
 
             <div class="two fields">
