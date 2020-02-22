@@ -23,15 +23,15 @@
 {% endmacro %}
 
 {% block content %}
-<h2 class="ui header" style="color: #36454F; font-weight: bold; position: absolute; top: 7%; left: 23%;">
-    Clearances
-</h2>
 
-<div class="ui four column grid container" style="position: absolute; width: 10%; height: 80%; top: 15%; left: 20%; padding: 1em 1em 1em 1em">
+<div class="ui four column grid container" style="position: relative; width: 10%; height: 80%; top: 15%; left: 7%; padding: 1em 1em 1em 1em">
         {% set flashes = {
         'error':   get_flashed_messages(category_filter=['form-error']),
         'success': get_flashed_messages(category_filter=['form-success'])
         } %}
+        <div class="row" style="color: #36454F; font-weight: bold; font-size: 170%">
+            Clearances
+        </div>
 
         <div class="column">
           <div id="rectangle-card">
@@ -74,7 +74,7 @@
                     {{ f.render_form_field(form1.submit) }}
                     {{ f.end_form(form1) }}
                 </div>
-          </div>
+           </div>
         </div>
 
 
