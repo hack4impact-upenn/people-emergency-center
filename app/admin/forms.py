@@ -140,7 +140,7 @@ def coerce_for_enum(enum):
 
 class ClearanceExpirationForm(FlaskForm):
     clearance_expiration = StringField(
-        'Clearace Expiration Date', validators=[Length(1, 64)])
+        'Clearance Expiration Date', validators=[Length(1, 64)])
     submit_expiration_date = SubmitField()
 
 

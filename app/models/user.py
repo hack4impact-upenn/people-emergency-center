@@ -198,7 +198,7 @@ class User(UserMixin, db.Model):
             fake_state = fake.state_abbr(include_territories=True)
             fake_zip_code = fake.zipcode()
             fake_organization = fake.company()
-            fake_clearance_exp = fake.month_name() + " " + fake.day_of_month() + " " + fake.year()
+            fake_clearance_exp = fake.date(pattern='%Y-%m-%d', end_datetime=None)
             fake_residency = random.choice(["Yes", "No"])
             user_role = choice(roles)
 

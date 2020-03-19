@@ -297,6 +297,17 @@ def update_editor_contents():
 def view_clearances():
     """View all volunteer clearances."""
     volunteers = Volunteer.query.all()
+    now = datetime.now()
+    exp_arr = []
+    for v in volunteers:
+        split_arr = v.clearance_expiration.split('-')
+        exp = datetime(int(split_arr[0]), int(split_arr[1]), int(split_arr[2]))
+        delta = now - exp
+        if delta.days > -60:
+            exp_arr.append("Yes")
+        else:
+            exp_arr.append("No")
+
 
     """Download CSV with all volunteer information"""
     download_csv_form = DownloadCSVForm()
@@ -356,7 +367,7 @@ def view_clearances():
                     v.comment4,
                     v.link4,])
 
-    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
+    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form, exp_arr = exp_arr)
 
 
 @admin.route('/view_one/<int:id>', methods=['GET', 'POST'])

@@ -64,25 +64,27 @@
                    </tr>
                 </thead>
                 <tbody>
-                   {% for volunteer in volunteers %}
-                      <tr onclick="window.location.href = '{{ url_for('admin.view_one', id=volunteer.id) }}';">
-                           <td>{{ volunteer.first_name }} {{ volunteer.last_name }}</td>
-                           <td>{{ volunteer.email }}</td>
-                           <td>{{ volunteer.status1.value }}</td>
-                           <td>{{ volunteer.status2.value }}</td>
-                           <td>{{ volunteer.status3.value }}</td>
-                           <td>{{ volunteer.status4.value }}</td>
+                   {% for i in range(volunteers | length) %}
+                      <tr onclick="window.location.href = '{{ url_for('admin.view_one', id=volunteers[i].id) }}';">
+                           <td>{{ volunteers[i].first_name }} {{ volunteers[i].last_name }}</td>
+                           <td>{{ volunteers[i].email }}</td>
+                           <td>{{ volunteers[i].status1.value }}</td>
+                           <td>{{ volunteers[i].status2.value }}</td>
+                           <td>{{ volunteers[i].status3.value }}</td>
+                           <td>{{ volunteers[i].status4.value }}</td>
                            <td>
-                               {% if volunteer.status1.value == "Submitted" or volunteer.status1.value == "Pending (state review)" or volunteer.status1.value == "Pending (pec review)" or volunteer.status1.value == "Expired"
-                                  or volunteer.status2.value == "Submitted" or volunteer.status2.value == "Pending (state review)" or volunteer.status2.value == "Pending (pec review)" or volunteer.status2.value == "Expired"
-                                  or volunteer.status3.value == "Submitted" or volunteer.status3.value == "Pending (state review)" or volunteer.status3.value == "Pending (pec review)" or volunteer.status3.value == "Expired"
-                                  or volunteer.status4.value == "Submitted" or volunteer.status4.value == "Pending (state review)" or volunteer.status4.value == "Pending (pec review)" or volunteer.status4.value == "Expired" %}
+                               {% if volunteers[i].status1.value == "Submitted" or volunteers[i].status1.value == "Pending (state review)" or volunteers[i].status1.value == "Pending (pec review)" or volunteers[i].status1.value == "Expired"
+                                  or volunteers[i].status2.value == "Submitted" or volunteers[i].status2.value == "Pending (state review)" or volunteers[i].status2.value == "Pending (pec review)" or volunteers[i].status2.value == "Expired"
+                                  or volunteers[i].status3.value == "Submitted" or volunteers[i].status3.value == "Pending (state review)" or volunteers[i].status3.value == "Pending (pec review)" or volunteers[i].status3.value == "Expired"
+                                  or volunteers[i].status4.value == "Submitted" or volunteers[i].status4.value == "Pending (state review)" or volunteers[i].status4.value == "Pending (pec review)" or volunteers[i].status4.value == "Expired" %}
                                     Yes
                                {% else %}
                                     No
                                {% endif %}
                            </td>
-                           <td></td>
+                           <td>
+                            {{ exp_arr[i] }}
+                           </td>
                    {% endfor %}
                </tbody>
             </table>
