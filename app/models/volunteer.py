@@ -37,6 +37,7 @@ class Volunteer(db.Model):
     address_street = db.Column(db.String(64))
     address_city = db.Column(db.String(64))
     address_state = db.Column(db.String(2))
+    address_zip_code = db.Column(db.Integer)
     organization = db.Column(db.String(128))
     year_pa = db.Column(db.String(4))
     clearance_expiration = db.Column(db.String(64))
@@ -69,7 +70,7 @@ class Volunteer(db.Model):
              f'Last Name: {self.last_name}\n'
              f'Email Address: {self.email}\n'
              f'Phone Number: {self.phone_number}\n'
-             f'Address: {self.address_street}, {self.address_city}, {self.address_state}\n'
+             f'Address: {self.address_street}, {self.address_city}, {self.address_state} {self.address_zip_code}\n'
              f'Organization: {self.organization}\n'
              f'Year Moved to PA: {self.year_pa}\n'
              f'Clearance Expiration: {self.clearance_expiration}\n'
@@ -110,6 +111,7 @@ class Volunteer(db.Model):
                 address_street=fake.street_address(),
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
+                address_zip_code = fake.zipcode(),
                 organization=fake.company(),
                 year_pa=fake.year(),
                 status1=Status.CLEARED,
@@ -140,6 +142,7 @@ class Volunteer(db.Model):
                 address_street=fake.street_address(),
                 address_city=fake.city(),
                 address_state=fake.state_abbr(include_territories=True),
+                address_zip_code = fake.zipcode(),
                 organization=fake.company(),
                 year_pa=fake.year(),
                 status1=random.choice(list(Status)),

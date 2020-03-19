@@ -71,6 +71,9 @@ class RegistrationForm(FlaskForm):
         ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
         ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')],
         validators=[InputRequired()])
+
+    zip_code = IntegerField(
+        'Zip Code', validators=[InputRequired()])
     
     phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
@@ -172,7 +175,8 @@ class EditAccountInfoForm(FlaskForm):
         ('RI', 'RI'), ('SC', 'SC'), ('SD', 'SD'), ('TN', 'TN'),
         ('TA', 'TA'), ('UT', 'UT'), ('VT', 'VT'), ('VA', 'VA'),
         ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')])
-
+    zip_code = IntegerField(
+        'Zip Code')
     pa_residency = SelectField('Have you lived in PA for 10 consecutive years or more?'
       , choices=[('Yes','Yes'), ('No', 'No')])
     organization_corporation = StringField(

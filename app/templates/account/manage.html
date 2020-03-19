@@ -21,6 +21,7 @@
       {%  if user.street %}<tr><td>Street</td><td>{{ user.street }}</td></tr>{% endif %}
       {%  if user.city %}<tr><td>City</td><td>{{ user.city }}</td></tr>{% endif %}
       {%  if user.state %}<tr><td>State</td><td>{{ user.state }}</td></tr>{% endif %}
+      {%  if user.zip_code %}<tr><td>Zip Code</td><td>{{ user.zip_code }}</td></tr>{% endif %}
       {%  if user.organization_corporation %}<tr><td>Organization/Corporation</td><td>{{ user.phone_number }}</td></tr>{% endif %}
       {%  if user.organization_corporation %}<tr><td>Lived in PA for 10 or more years?</td><td>{{ user.pa_residency }}</td></tr>{% endif %}
       <tr><td>Account type</td><td>{{ user.role.name }}</td></tr>

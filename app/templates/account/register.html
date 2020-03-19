@@ -25,13 +25,13 @@
             {{ f.render_form_field(form.email) }}
             {{ f.render_form_field(form.phone_number) }}
             {{ f.render_form_field(form.street) }}
-            <div class="two fields">
+            <div class="three fields">
                 {{ f.render_form_field(form.city) }}
                 {{ f.render_form_field(form.state) }}
+                {{ f.render_form_field(form.zip_code) }}
             </div>
             {{ f.render_form_field(form.organization_corporation) }}
             <div style="font-family: Helvetica; font-size: 1.2em; color: #565656; padding: 0 0 0.5em 0">
-                Have you lived in Pennsylvania for more than 10 years?
             </div>
             {{ f.render_form_field(form.pa_residency) }}
 

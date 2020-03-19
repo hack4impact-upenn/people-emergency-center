@@ -70,6 +70,7 @@ def new_volunteer():
             street=form.street.data,
             city=form.city.data,
             state=form.state.data,
+            zip_code = form.zip_code.data,
             organization_corporation=form.organization_corporation.data,
             pa_residency=form.pa_residency.data,
             confirmed = True)
@@ -83,6 +84,7 @@ def new_volunteer():
                 address_street=form.street.data,
                 address_city=form.city.data,
                 address_state=form.state.data,
+                address_zip_code = form.zip_code.data,
                 organization = form.organization_corporation.data,
                 year_pa = form.pa_residency.data,
                 status1=Status.NOT_SUBMITTED,
@@ -99,6 +101,7 @@ def new_volunteer():
                 address_street=form.street.data,
                 address_city=form.city.data,
                 address_state=form.state.data,
+                address_zip_code = form.zip_code.data,
                 organization = form.organization_corporation.data,
                 year_pa = form.pa_residency.data,
                 status1=Status.NOT_SUBMITTED,
@@ -315,13 +318,13 @@ def view_clearances():
             csv_writer = csv.writer(csvfile)
 
             csv_writer.writerow(['First Name', 'Last Name', 'Email',
-                                 'Phone Number', 'Address Street', 'City', 'State', 'Organization',
-                                 'Over 10 years in PA', 'Clearance Expiration Date', 'Child Abuse Clearance Status', 'Comment 1',
-                                 '(Link) Child Abuse Clearance',
-                                 'Criminal Record Clearance','Comment 2','(Link) Criminal Record Clearance',
-                                  'FBI Background Check', 'Comment 3',
-                                 '(Link) FBI Background Check',
-                                 'Volunteer Conflict of Interest','Comment 4', '(Link) Volunteer Conflict of Interest'])
+                                 'Phone Number', 'Address Street', 'City', 'State', 'Zip Code', 'Organization',
+                                 'Over 10 years in PA', 'Clearance Expiration Date', 'PA State Police Check Status', 'Comment 1',
+                                 '(Link) PA State Police Check',
+                                 'PA Childlink','Comment 2','(Link) PA Childlink',
+                                  'FBI Clearance', 'Comment 3',
+                                 '(Link) FBI Clearance',
+                                 'Conflict of Interest','Comment 4', '(Link) Conflict of Interest'])
 
             for v in volunteers:
                 csv_writer.writerow([
@@ -332,6 +335,7 @@ def view_clearances():
                     v.address_street,
                     v.address_city,
                     v.address_state,
+                    v.address_zip_code,
                     v.organization,
                     v.year_pa,
                     v.clearance_expiration,

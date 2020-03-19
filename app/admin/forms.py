@@ -110,8 +110,12 @@ class NewVolunteerForm(InviteUserForm):
         ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')],
         validators=[InputRequired()])
 
+    zip_code = IntegerField(
+        'Zip Code', validators=[InputRequired()])
+
     phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
+
     password = PasswordField(
         'Password',
         validators=[
