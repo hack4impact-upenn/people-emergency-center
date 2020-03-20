@@ -73,7 +73,7 @@ def register():
             zip_code = form.zip_code.data,
             organization_corporation=form.organization_corporation.data,
             pa_residency =form.pa_residency.data,
-            confirmed=True,
+            confirmed=False,
             role_id=1)
         db.session.add(user)
         if form.pa_residency.data == "Yes":
@@ -114,7 +114,7 @@ def register():
         # db.session.query(user)
         db.session.commit()
 
-        """token = user.generate_confirmation_token()
+        token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
             send_email,
@@ -122,7 +122,7 @@ def register():
             subject='Confirm Your Account',
             template='account/email/confirm',
             user=user,
-            confirm_link=confirm_link)"""
+            confirm_link=confirm_link)
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))
