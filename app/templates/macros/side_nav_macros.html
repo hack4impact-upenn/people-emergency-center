@@ -32,8 +32,7 @@
                         ('admin.new_user', 'Add New Admin/Staff', 'add user icon'),
                         ('admin.invite_user', 'Invite New Volunteer', 'add user icon'),
                         ('admin.view_clearances', 'View Clearances', 'edit icon'),
-                        ('account.manage', 'Your Account', 'settings'),
-                        ('account.manage', 'Events', 'calendar'),
+                        ('account.manage', 'Your Account', 'settings')
                       ]
                       %}
                       {{ render_menu_items(endpoints) }}
@@ -41,16 +40,14 @@
                       {% set endpoints = [
                         ('volunteer.index', 'Dashboard', 'dashboard'),
                         ('account.manage', 'Your Account', 'settings'),
-                        ('volunteer.upload_clearances', 'Clearances', 'check'),
-                        ('account.manage', 'Events', 'calendar'),
+                        ('volunteer.upload_clearances', 'Clearances', 'check')
                         ]
                       %}
                       {{ render_menu_items(endpoints) }}
                   {% else %}
                       {% set endpoints = [
                         ('staff.index', 'Dashboard', 'dashboard'),
-                        ('staff.view_volunteers', 'View Volunteers', 'users icon'),
-                        ('account.manage', 'Events', 'calendar'),
+                        ('staff.view_volunteers', 'View Volunteers', 'users icon')
                       ]
                       %}
                       {{ render_menu_items(endpoints) }}

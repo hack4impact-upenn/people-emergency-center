@@ -25,9 +25,8 @@ def view_volunteers():
     """View all volunteers."""
     volunteers = Volunteer.query.filter(Volunteer.status1 == Status.CLEARED,
                                         Volunteer.status2 == Status.CLEARED,
-                                        Volunteer.status3 == Status.CLEARED,
-                                        Volunteer.status3 == Status.NOT_NEEDED,
-                                        Volunteer.status4 == Status.CLEARED,)
+                                        Volunteer.status3.in_([Status.CLEARED, Status.NOT_NEEDED]),
+                                        Volunteer.status4 == Status.CLEARED)
     return render_template('staff/view_volunteers.html', volunteers=volunteers)
 
 

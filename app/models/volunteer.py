@@ -37,6 +37,7 @@ class Volunteer(db.Model):
     address_street = db.Column(db.String(64))
     address_city = db.Column(db.String(64))
     address_state = db.Column(db.String(2))
+    address_zip_code = db.Column(db.Integer)
     organization = db.Column(db.String(128))
     year_pa = db.Column(db.String(4))
     clearance_expiration = db.Column(db.String(64))
@@ -69,7 +70,7 @@ class Volunteer(db.Model):
              f'Last Name: {self.last_name}\n'
              f'Email Address: {self.email}\n'
              f'Phone Number: {self.phone_number}\n'
-             f'Address: {self.address_street}, {self.address_city}, {self.address_state}\n'
+             f'Address: {self.address_street}, {self.address_city}, {self.address_state} {self.address_zip_code}\n'
              f'Organization: {self.organization}\n'
              f'Year Moved to PA: {self.year_pa}\n'
              f'Clearance Expiration: {self.clearance_expiration}\n'
@@ -88,75 +89,3 @@ class Volunteer(db.Model):
 
     def __str__(self):
       return self.__repr__()
-
-
-    # Note: This generate_fake() is no longer used. The generation of fake data of both users and volunteers is left
-    # to generate_fake() in user.py
-    @staticmethod
-    def generate_fake(count=10, **kwargs):
-        from sqlalchemy.exc import IntegrityError
-        import datetime
-
-        now = datetime.datetime.now()
-
-        fake = Faker()
-
-        for i in range(5):
-            v = Volunteer(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                email=fake.email(),
-                phone_number=fake.phone_number(),
-                address_street=fake.street_address(),
-                address_city=fake.city(),
-                address_state=fake.state_abbr(include_territories=True),
-                organization=fake.company(),
-                year_pa=fake.year(),
-                status1=Status.CLEARED,
-                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
-                link1=fake.uri(),
-                status2=Status.CLEARED,
-                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
-                link2=fake.uri(),
-                status3=Status.CLEARED,
-                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
-                link3=fake.uri(),
-                status4=Status.CLEARED,
-                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
-                link4=fake.uri(),
-                **kwargs)
-            db.session.add(v)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()
-
-        for i in range(count):
-            v = Volunteer(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                email=fake.email(),
-                phone_number=fake.phone_number(),
-                address_street=fake.street_address(),
-                address_city=fake.city(),
-                address_state=fake.state_abbr(include_territories=True),
-                organization=fake.company(),
-                year_pa=fake.year(),
-                status1=random.choice(list(Status)),
-                comment1=fake.text(max_nb_chars=100, ext_word_list=None),
-                link1=fake.uri(),
-                status2=random.choice(list(Status)),
-                comment2=fake.text(max_nb_chars=100, ext_word_list=None),
-                link2=fake.uri(),
-                status3=random.choice(list(Status)),
-                comment3=fake.text(max_nb_chars=100, ext_word_list=None),
-                link3=fake.uri(),
-                status4=random.choice(list(Status)),
-                comment4=fake.text(max_nb_chars=100, ext_word_list=None),
-                link4=fake.uri(),
-                **kwargs)
-            db.session.add(v)
-            try:
-                db.session.commit()
-            except IntegrityError:
-                db.session.rollback()

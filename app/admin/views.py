@@ -22,7 +22,8 @@ from app.admin.forms import (
     NewUserForm,
     ClearanceExpirationForm,
     NewVolunteerForm,
-    DownloadCSVForm
+    DownloadCSVForm,
+    UploadCSVForm
 )
 
 from app.decorators import admin_required
@@ -70,6 +71,7 @@ def new_volunteer():
             street=form.street.data,
             city=form.city.data,
             state=form.state.data,
+            zip_code = form.zip_code.data,
             organization_corporation=form.organization_corporation.data,
             pa_residency=form.pa_residency.data,
             confirmed = True)
@@ -83,6 +85,7 @@ def new_volunteer():
                 address_street=form.street.data,
                 address_city=form.city.data,
                 address_state=form.state.data,
+                address_zip_code = form.zip_code.data,
                 organization = form.organization_corporation.data,
                 year_pa = form.pa_residency.data,
                 status1=Status.NOT_SUBMITTED,
@@ -99,6 +102,7 @@ def new_volunteer():
                 address_street=form.street.data,
                 address_city=form.city.data,
                 address_state=form.state.data,
+                address_zip_code = form.zip_code.data,
                 organization = form.organization_corporation.data,
                 year_pa = form.pa_residency.data,
                 status1=Status.NOT_SUBMITTED,
@@ -294,65 +298,150 @@ def update_editor_contents():
 def view_clearances():
     """View all volunteer clearances."""
     volunteers = Volunteer.query.all()
+    now = datetime.now()
+    exp_arr = []
+    for v in volunteers:
+        if v.clearance_expiration:
+            split_arr = v.clearance_expiration.split('-')
+            if len(split_arr) != 3:
+                exp_arr.append("NA")
+            else:
+                exp = datetime(int(split_arr[0]), int(split_arr[1]), int(split_arr[2]))
+                delta = now - exp
+                if delta.days > -60:
+                    exp_arr.append("Yes")
+                else:
+                    exp_arr.append("No")
+        else:
+            exp_arr.append("NA")
+
 
     """Download CSV with all volunteer information"""
     download_csv_form = DownloadCSVForm()
+    upload_csv_form = UploadCSVForm()
 
     if request.method == 'POST':
+        if request.form.get('download_csv'):
 
-        """This should automatically set the filepath to your downloads folder.
-        Just hardcode a file path for now if it doesn't work though."""
-        file_path = file_path = os.path.expanduser('~') + "/Downloads/"
+            """This should automatically set the filepath to your downloads folder.
+            Just hardcode a file path for now if it doesn't work though."""
+            file_path = file_path = os.path.expanduser('~') + "/Downloads/"
 
-        print("CSV download code here")
-        volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
-        today = datetime.now()
-        timestr = today.strftime("%Y%m%d-%H%M%S")
-        file_name = "volunteers" + timestr + ".csv"
+            print("CSV download code here")
+            volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
+            today = datetime.now()
+            timestr = today.strftime("%Y%m%d-%H%M%S")
+            file_name = "volunteers" + timestr + ".csv"
 
-        with io.open(file_path + file_name, 'w', newline='') as csvfile:
+            with io.open(file_path + file_name, 'w', newline='') as csvfile:
 
-            csv_writer = csv.writer(csvfile)
+                csv_writer = csv.writer(csvfile)
 
-            csv_writer.writerow(['First Name', 'Last Name', 'Email',
-                                 'Phone Number', 'Address Street', 'City', 'State', 'Organization',
-                                 'Over 10 years in PA', 'Clearance Expiration Date', 'Child Abuse Clearance Status', 'Comment 1',
-                                 '(Link) Child Abuse Clearance',
-                                 'Criminal Record Clearance','Comment 2','(Link) Criminal Record Clearance',
-                                  'FBI Background Check', 'Comment 3',
-                                 '(Link) FBI Background Check',
-                                 'Volunteer Conflict of Interest','Comment 4', '(Link) Volunteer Conflict of Interest'])
+                csv_writer.writerow(['First Name', 'Last Name', 'Email',
+                                     'Phone Number', 'Address Street', 'City', 'State', 'Zip Code', 'Organization',
+                                     'Over 10 years in PA', 'Clearance Expiration Date', 'PA State Police Check Status', 'Comment 1',
+                                     '(Link) PA State Police Check',
+                                     'PA Childlink','Comment 2','(Link) PA Childlink',
+                                      'FBI Clearance', 'Comment 3',
+                                     '(Link) FBI Clearance',
+                                     'Conflict of Interest','Comment 4', '(Link) Conflict of Interest'])
 
-            for v in volunteers:
-                csv_writer.writerow([
-                    v.first_name,
-                    v.last_name,
-                    v.email,
-                    v.phone_number,
-                    v.address_street,
-                    v.address_city,
-                    v.address_state,
-                    v.organization,
-                    v.year_pa,
-                    v.clearance_expiration,
+                for v in volunteers:
+                    csv_writer.writerow([
+                        v.first_name,
+                        v.last_name,
+                        v.email,
+                        v.phone_number,
+                        v.address_street,
+                        v.address_city,
+                        v.address_state,
+                        v.address_zip_code,
+                        v.organization,
+                        v.year_pa,
+                        v.clearance_expiration,
 
-                    str(v.status1),
-                    v.comment1,
-                    v.link1,
+                        str(v.status1),
+                        v.comment1,
+                        v.link1,
 
-                    str(v.status2),
-                    v.comment2,
-                    v.link2,
+                        str(v.status2),
+                        v.comment2,
+                        v.link2,
 
-                    str(v.status3),
-                    v.comment3,
-                    v.link3,
+                        str(v.status3),
+                        v.comment3,
+                        v.link3,
 
-                    str(v.status4),
-                    v.comment4,
-                    v.link4,])
+                        str(v.status4),
+                        v.comment4,
+                        v.link4,])
+                    
+        if request.form.get('upload_csv'):
+            file_path = os.path.expanduser('~') + "/Downloads/volunteers.csv"
+            with open(file_path, mode = 'r') as csv_file:
+                csv_reader = csv.reader(csv_file, delimiter=',')
+                header_row = True
+                for row in csv_reader:
+                    if header_row:
+                        header_row = False
+                        continue
 
-    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form)
+                    u = User(
+                        first_name = row[0],
+                        last_name = row[1],
+                        email = row[2],
+                        phone_number = row[3],
+                        street = row[4],
+                        city = row[5],
+                        state = row[6],
+                        zip_code = row[7],
+                        organization_corporation = row[8],
+                        pa_residency = row[9],
+                        password = 'password',
+                        confirmed = True,
+                        role_id = 1)
+
+                    db.session.add(u)
+
+                    if 'Y' in row[9]:
+                        status3 = Status.NOT_NEEDED
+                    else:
+                        status3 = Status.NOT_SUBMITTED
+
+                    v = Volunteer(
+                        first_name=row[0],
+                        last_name=row[1],
+                        email=row[2],
+                        phone_number=row[3],
+                        address_street=row[4],
+                        address_city=row[5],
+                        address_state=row[6],
+                        address_zip_code = row[7],
+                        organization=row[8],
+                        year_pa=row[9],
+                        clearance_expiration = row[10],
+                        status1=Status.NOT_SUBMITTED,
+                        comment1='',
+                        link1='',
+                        status2=Status.NOT_SUBMITTED,
+                        comment2='',
+                        link2='',
+                        status3=status3,
+                        comment3='',
+                        link3='',
+                        status4=Status.CLEARED,
+                        comment4='',
+                        link4='')
+
+                    db.session.add(v)
+
+                    try:
+                        db.session.commit()
+                    except IntegrityError:
+                        db.session.rollback()
+        
+
+    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form, upload_csv_form = upload_csv_form, exp_arr = exp_arr)
 
 
 @admin.route('/view_one/<int:id>', methods=['GET', 'POST'])

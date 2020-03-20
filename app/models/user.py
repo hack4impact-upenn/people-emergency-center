@@ -65,6 +65,7 @@ class User(UserMixin, db.Model):
     street = db.Column(db.String(64))
     city = db.Column(db.String(64))
     state = db.Column(db.String(2))
+    zip_code = db.Column(db.Integer)
     organization_corporation = db.Column(db.String(64))
     volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.id'))
 
@@ -191,12 +192,13 @@ class User(UserMixin, db.Model):
             fake_first_name = fake.first_name()
             fake_last_name = fake.last_name()
             fake_email = fake.email()
-            fake_phone_number = fake.phone_number()
+            fake_phone_number = fake.phone_number().replace('-', '')
             fake_street = fake.street_address()
             fake_city = fake.city()
             fake_state = fake.state_abbr(include_territories=True)
+            fake_zip_code = fake.zipcode()
             fake_organization = fake.company()
-            fake_clearance_exp = fake.month_name() + " " + fake.day_of_month() + " " + fake.year()
+            fake_clearance_exp = fake.date(pattern='%Y-%m-%d', end_datetime=None)
             fake_residency = random.choice(["Yes", "No"])
             user_role = choice(roles)
 
@@ -208,6 +210,7 @@ class User(UserMixin, db.Model):
                 street=fake_street,
                 city=fake_city,
                 state=fake_state,
+                zip_code = fake_zip_code,
                 organization_corporation=fake_organization,
                 pa_residency = fake_residency,
                 password='password',
@@ -226,6 +229,7 @@ class User(UserMixin, db.Model):
                         address_street=fake_street,
                         address_city=fake_city,
                         address_state=fake_state,
+                        address_zip_code = fake_zip_code,
                         organization=fake_organization,
                         year_pa=fake_residency,
                         clearance_expiration = fake_clearance_exp,
@@ -251,6 +255,7 @@ class User(UserMixin, db.Model):
                         address_street=fake_street,
                         address_city=fake_city,
                         address_state=fake_state,
+                        address_zip_code = fake_zip_code,
                         organization=fake_organization,
                         year_pa=fake_residency,
                         clearance_expiration = fake_clearance_exp,

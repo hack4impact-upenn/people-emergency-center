@@ -34,7 +34,7 @@
                         </tr>
                         <tr>
                             <td><b>Address</b></td>
-                            <td>{{ v_entry.address_number }} {{ v_entry.address_street }}, {{ v_entry.address_city }}, {{ v_entry.address_state }}</td>
+                            <td>{{ v_entry.address_number }} {{ v_entry.address_street }}, {{ v_entry.address_city }}, {{ v_entry.address_state }} {{v_entry.address_zip_code}}</td>
                         </tr>
                         <tr>
                             <td><b>Organization</b></td>
@@ -47,7 +47,7 @@
                         </tbody>
                     </table>
 
-                    <b>Clearance Expiration</b>
+                    <b>Clearance Expiration (YYYY-MM-DD)</b>
                     <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
                         <tbody>
                         <tr>
@@ -168,7 +168,7 @@
                         </tbody>
                     </table>
 
-                    <b>Conflict of Interest Form</b>
+                    <b>Conflict of Interest</b>
                     <table class="ui searchable sortable unstackable selectable celled table" style="overflow-x: scroll;">
                         <tbody>
                         <tr>

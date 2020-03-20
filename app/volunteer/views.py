@@ -38,7 +38,9 @@ def upload_clearances():
     current_volunteer = Volunteer.query.filter_by(email=current_user.email).first()
 
     if form1.validate_on_submit() and form1.submit.data:
+        print('hi')
         if form1.form1_file_urls.data != '':
+            print('here')
             current_volunteer.link1 = form1.form1_file_urls.data
             current_volunteer.status1 = Status.SUBMITTED
         else:
@@ -74,11 +76,3 @@ def upload_clearances():
         form3=form3,
         form4=form4
     )
-
-# May not need this
-@volunteer.route('/view_status')
-@login_required
-@volunteer_required
-def view_status():
-    volunteer = Volunteer.query.filter_by(id=current_user.id).first()
-    return render_template('volunteer/view_status.html', volunteer=volunteer)

@@ -70,9 +70,10 @@ def register():
             street=form.street.data,
             city=form.city.data,
             state=form.state.data,
+            zip_code = form.zip_code.data,
             organization_corporation=form.organization_corporation.data,
             pa_residency =form.pa_residency.data,
-            confirmed=True,
+            confirmed=False,
             role_id=1)
         db.session.add(user)
         if form.pa_residency.data == "Yes":
@@ -84,6 +85,7 @@ def register():
                 address_street=form.street.data,
                 address_city=form.city.data,
                 address_state=form.state.data,
+                address_zip_code = form.zip_code.data,
                 organization = form.organization_corporation.data,
                 year_pa = form.pa_residency.data,
                 status1=Status.NOT_SUBMITTED,
@@ -100,6 +102,7 @@ def register():
                 address_street=form.street.data,
                 address_city=form.city.data,
                 address_state=form.state.data,
+                address_zip_code = form.zip_code.data,
                 organization = form.organization_corporation.data,
                 year_pa = form.pa_residency.data,
                 status1=Status.NOT_SUBMITTED,
@@ -111,7 +114,7 @@ def register():
         # db.session.query(user)
         db.session.commit()
 
-        """token = user.generate_confirmation_token()
+        token = user.generate_confirmation_token()
         confirm_link = url_for('account.confirm', token=token, _external=True)
         get_queue().enqueue(
             send_email,
@@ -119,7 +122,7 @@ def register():
             subject='Confirm Your Account',
             template='account/email/confirm',
             user=user,
-            confirm_link=confirm_link)"""
+            confirm_link=confirm_link)
         flash('A confirmation link has been sent to {}.'.format(user.email),
               'warning')
         return redirect(url_for('main.index'))
@@ -199,6 +202,7 @@ def edit_account_information():
                                street = u_entry.street,
                                city = u_entry.city,
                                state = u_entry.state,
+                               zip_code = u_entry.zip_code,
                                pa_residency = u_entry.pa_residency,
                                organization_corporation = u_entry.organization_corporation)
     #form.phone_number = u_entry.phone_number;
@@ -209,6 +213,7 @@ def edit_account_information():
             current_user.street = form.street.data
             current_user.city = form.city.data
             current_user.state = form.state.data
+            current_user.zip_code = form.zip_code.data
             current_user.pa_residency = form.pa_residency.data
             current_user.organization_corporation = form.organization_corporation.data
 

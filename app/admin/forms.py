@@ -110,8 +110,12 @@ class NewVolunteerForm(InviteUserForm):
         ('WA', 'WA'), ('WV', 'WV'), ('WI', 'WI'), ('WY', 'WY')],
         validators=[InputRequired()])
 
+    zip_code = IntegerField(
+        'Zip Code', validators=[InputRequired()])
+
     phone_number = IntegerField(
         'Phone Number', validators=[InputRequired()])
+
     password = PasswordField(
         'Password',
         validators=[
@@ -136,7 +140,7 @@ def coerce_for_enum(enum):
 
 class ClearanceExpirationForm(FlaskForm):
     clearance_expiration = StringField(
-        'Clearace Expiration Date', validators=[Length(1, 64)])
+        'Clearance Expiration Date', validators=[Length(1, 64)])
     submit_expiration_date = SubmitField()
 
 
@@ -186,3 +190,6 @@ class Clearance4StatusForm(FlaskForm):
 
 class DownloadCSVForm(FlaskForm):
     download_csv = SubmitField("Download CSV")
+
+class UploadCSVForm(FlaskForm):
+    upload_csv = SubmitField("Upload CSV")
