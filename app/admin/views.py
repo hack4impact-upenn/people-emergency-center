@@ -22,7 +22,8 @@ from app.admin.forms import (
     NewUserForm,
     ClearanceExpirationForm,
     NewVolunteerForm,
-    DownloadCSVForm
+    DownloadCSVForm,
+    UploadCSVForm
 )
 
 from app.decorators import admin_required
@@ -301,73 +302,86 @@ def view_clearances():
     exp_arr = []
     for v in volunteers:
         split_arr = v.clearance_expiration.split('-')
-        exp = datetime(int(split_arr[0]), int(split_arr[1]), int(split_arr[2]))
-        delta = now - exp
-        if delta.days > -60:
-            exp_arr.append("Yes")
+        if len(split_arr) != 3:
+            exp_arr.append("NA")
         else:
-            exp_arr.append("No")
+            exp = datetime(int(split_arr[0]), int(split_arr[1]), int(split_arr[2]))
+            delta = now - exp
+            if delta.days > -60:
+                exp_arr.append("Yes")
+            else:
+                exp_arr.append("No")
 
 
     """Download CSV with all volunteer information"""
     download_csv_form = DownloadCSVForm()
+    upload_csv_form = UploadCSVForm()
 
     if request.method == 'POST':
+        if request.form.get('download_csv'):
 
-        """This should automatically set the filepath to your downloads folder.
-        Just hardcode a file path for now if it doesn't work though."""
-        file_path = file_path = os.path.expanduser('~') + "/Downloads/"
+            """This should automatically set the filepath to your downloads folder.
+            Just hardcode a file path for now if it doesn't work though."""
+            file_path = file_path = os.path.expanduser('~') + "/Downloads/"
 
-        print("CSV download code here")
-        volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
-        today = datetime.now()
-        timestr = today.strftime("%Y%m%d-%H%M%S")
-        file_name = "volunteers" + timestr + ".csv"
+            print("CSV download code here")
+            volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
+            today = datetime.now()
+            timestr = today.strftime("%Y%m%d-%H%M%S")
+            file_name = "volunteers" + timestr + ".csv"
 
-        with io.open(file_path + file_name, 'w', newline='') as csvfile:
+            with io.open(file_path + file_name, 'w', newline='') as csvfile:
 
-            csv_writer = csv.writer(csvfile)
+                csv_writer = csv.writer(csvfile)
 
-            csv_writer.writerow(['First Name', 'Last Name', 'Email',
-                                 'Phone Number', 'Address Street', 'City', 'State', 'Zip Code', 'Organization',
-                                 'Over 10 years in PA', 'Clearance Expiration Date', 'PA State Police Check Status', 'Comment 1',
-                                 '(Link) PA State Police Check',
-                                 'PA Childlink','Comment 2','(Link) PA Childlink',
-                                  'FBI Clearance', 'Comment 3',
-                                 '(Link) FBI Clearance',
-                                 'Conflict of Interest','Comment 4', '(Link) Conflict of Interest'])
+                csv_writer.writerow(['First Name', 'Last Name', 'Email',
+                                     'Phone Number', 'Address Street', 'City', 'State', 'Zip Code', 'Organization',
+                                     'Over 10 years in PA', 'Clearance Expiration Date', 'PA State Police Check Status', 'Comment 1',
+                                     '(Link) PA State Police Check',
+                                     'PA Childlink','Comment 2','(Link) PA Childlink',
+                                      'FBI Clearance', 'Comment 3',
+                                     '(Link) FBI Clearance',
+                                     'Conflict of Interest','Comment 4', '(Link) Conflict of Interest'])
 
-            for v in volunteers:
-                csv_writer.writerow([
-                    v.first_name,
-                    v.last_name,
-                    v.email,
-                    v.phone_number,
-                    v.address_street,
-                    v.address_city,
-                    v.address_state,
-                    v.address_zip_code,
-                    v.organization,
-                    v.year_pa,
-                    v.clearance_expiration,
+                for v in volunteers:
+                    csv_writer.writerow([
+                        v.first_name,
+                        v.last_name,
+                        v.email,
+                        v.phone_number,
+                        v.address_street,
+                        v.address_city,
+                        v.address_state,
+                        v.address_zip_code,
+                        v.organization,
+                        v.year_pa,
+                        v.clearance_expiration,
 
-                    str(v.status1),
-                    v.comment1,
-                    v.link1,
+                        str(v.status1),
+                        v.comment1,
+                        v.link1,
 
-                    str(v.status2),
-                    v.comment2,
-                    v.link2,
+                        str(v.status2),
+                        v.comment2,
+                        v.link2,
 
-                    str(v.status3),
-                    v.comment3,
-                    v.link3,
+                        str(v.status3),
+                        v.comment3,
+                        v.link3,
 
-                    str(v.status4),
-                    v.comment4,
-                    v.link4,])
+                        str(v.status4),
+                        v.comment4,
+                        v.link4,])
+                    
+        if request.form.get('upload_csv'):
+            file_path = os.path.expanduser('~') + "/Downloads/volunteers.csv"
+            with open(file_path, mode = 'r') as csv_file:
+                csv_reader = csv.reader(csv_file, delimiter=',')
+                for row in csv_reader:
+                    print(row)
+        
 
-    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form, exp_arr = exp_arr)
+    return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form, upload_csv_form = upload_csv_form, exp_arr = exp_arr)
 
 
 @admin.route('/view_one/<int:id>', methods=['GET', 'POST'])

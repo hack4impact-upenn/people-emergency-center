@@ -192,7 +192,7 @@ class User(UserMixin, db.Model):
             fake_first_name = fake.first_name()
             fake_last_name = fake.last_name()
             fake_email = fake.email()
-            fake_phone_number = fake.phone_number()
+            fake_phone_number = fake.phone_number().replace('-', '')
             fake_street = fake.street_address()
             fake_city = fake.city()
             fake_state = fake.state_abbr(include_territories=True)

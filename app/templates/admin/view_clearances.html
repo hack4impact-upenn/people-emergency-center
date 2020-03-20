@@ -39,9 +39,21 @@
 
 
         <div class="twelve wide column">
-          {{ f.begin_form(download_csv_form, flashes) }}
-          {{ f.render_form(download_csv_form) }}
-          {{ f.end_form(download_csv_form) }}
+          <table>
+            <tr>
+              <td>
+                {{ f.begin_form(download_csv_form, flashes) }}
+                {{ f.render_form(download_csv_form) }}
+                {{ f.end_form(download_csv_form) }}
+              </td>
+              <td>
+                {{ f.begin_form(upload_csv_form, flashes) }}
+                {{ f.render_form(upload_csv_form) }}
+                {{ f.end_form(upload_csv_form) }}
+              </td>
+            </tr>
+          </table>
+          
           <br/>
           <br/>
             <div class="ui right search item">

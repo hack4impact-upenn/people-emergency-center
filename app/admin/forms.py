@@ -190,3 +190,6 @@ class Clearance4StatusForm(FlaskForm):
 
 class DownloadCSVForm(FlaskForm):
     download_csv = SubmitField("Download CSV")
+
+class UploadCSVForm(FlaskForm):
+    upload_csv = SubmitField("Upload CSV")
