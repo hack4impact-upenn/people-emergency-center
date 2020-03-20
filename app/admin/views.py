@@ -301,16 +301,19 @@ def view_clearances():
     now = datetime.now()
     exp_arr = []
     for v in volunteers:
-        split_arr = v.clearance_expiration.split('-')
-        if len(split_arr) != 3:
-            exp_arr.append("NA")
-        else:
-            exp = datetime(int(split_arr[0]), int(split_arr[1]), int(split_arr[2]))
-            delta = now - exp
-            if delta.days > -60:
-                exp_arr.append("Yes")
+        if v.clearance_expiration:
+            split_arr = v.clearance_expiration.split('-')
+            if len(split_arr) != 3:
+                exp_arr.append("NA")
             else:
-                exp_arr.append("No")
+                exp = datetime(int(split_arr[0]), int(split_arr[1]), int(split_arr[2]))
+                delta = now - exp
+                if delta.days > -60:
+                    exp_arr.append("Yes")
+                else:
+                    exp_arr.append("No")
+        else:
+            exp_arr.append("NA")
 
 
     """Download CSV with all volunteer information"""
