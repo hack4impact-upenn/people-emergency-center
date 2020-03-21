@@ -65,7 +65,7 @@ class User(UserMixin, db.Model):
     street = db.Column(db.String(64))
     city = db.Column(db.String(64))
     state = db.Column(db.String(2))
-    zip_code = db.Column(db.Integer)
+    zip_code = db.Column(db.String(16))
     organization_corporation = db.Column(db.String(64))
     volunteer_id = db.Column(db.Integer, db.ForeignKey('volunteers.id'))
 
