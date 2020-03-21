@@ -47,9 +47,15 @@
                 {{ f.end_form(download_csv_form) }}
               </td>
               <td>
-                {{ f.begin_form(upload_csv_form, flashes) }}
+                <!--{{ f.begin_form(upload_csv_form, flashes) }}
                 {{ f.render_form(upload_csv_form) }}
-                {{ f.end_form(upload_csv_form) }}
+                {{ f.end_form(upload_csv_form) }}-->
+              <form class="ui form" method="POST" enctype="multipart/form-data">
+                <label id="volunteer-file-label" for="volunteer-file" class="ui icon button">
+                  <i class="upload icon"></i>
+                    Upload File</label>
+                  <input type="file" accept=".csv" id="volunteer-file" name="volunteer-file" style="display:none"> <input class="ui submit primary button" type="submit"/>
+              </form>
               </td>
             </tr>
           </table>
