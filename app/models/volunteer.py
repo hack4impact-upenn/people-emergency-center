@@ -37,7 +37,7 @@ class Volunteer(db.Model):
     address_street = db.Column(db.String(64))
     address_city = db.Column(db.String(64))
     address_state = db.Column(db.String(2))
-    address_zip_code = db.Column(db.Integer)
+    address_zip_code = db.Column(db.String(16))
     organization = db.Column(db.String(128))
     year_pa = db.Column(db.String(4))
     clearance_expiration = db.Column(db.String(64))
