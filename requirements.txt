@@ -43,5 +43,6 @@ urllib3==1.25.3
 webassets==0.12.1
 Werkzeug==0.15.5
 WTForms==2.2.1
-boto3==0.0.1
+boto3==1.5.36
+botocore==1.8.50
 
