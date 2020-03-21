@@ -382,8 +382,13 @@ def view_clearances():
             name = f.filename
             stream = io.StringIO(f.stream.read().decode("UTF8"), newline=None)
             csv_input = csv.reader(stream)
+            header_row = True
 
             for row in csv_input:
+                if header_row:
+                    header_row = False
+                    continue
+                    
                 u = User(
                         first_name = row[0],
                         last_name = row[1],
@@ -439,69 +444,6 @@ def view_clearances():
                     db.session.rollback()
 
 
-            # file_path = os.path.expanduser('~') + "/Downloads/volunteers.csv"
-            # with open(file_path, mode = 'r') as csv_file:
-            #     csv_reader = csv.reader(csv_file, delimiter=',')
-            #     header_row = True
-            #     for row in csv_reader:
-            #         if header_row:
-            #             header_row = False
-            #             continue
-
-            #         u = User(
-            #             first_name = row[0],
-            #             last_name = row[1],
-            #             email = row[2],
-            #             phone_number = row[3],
-            #             street = row[4],
-            #             city = row[5],
-            #             state = row[6],
-            #             zip_code = row[7],
-            #             organization_corporation = row[8],
-            #             pa_residency = row[9],
-            #             password = 'password',
-            #             confirmed = True,
-            #             role_id = 1)
-
-            #         db.session.add(u)
-
-            #         if 'Y' in row[9]:
-            #             status3 = Status.NOT_NEEDED
-            #         else:
-            #             status3 = Status.NOT_SUBMITTED
-
-            #         v = Volunteer(
-            #             first_name=row[0],
-            #             last_name=row[1],
-            #             email=row[2],
-            #             phone_number=row[3],
-            #             address_street=row[4],
-            #             address_city=row[5],
-            #             address_state=row[6],
-            #             address_zip_code = row[7],
-            #             organization=row[8],
-            #             year_pa=row[9],
-            #             clearance_expiration = row[10],
-            #             status1=Status.NOT_SUBMITTED,
-            #             comment1='',
-            #             link1='',
-            #             status2=Status.NOT_SUBMITTED,
-            #             comment2='',
-            #             link2='',
-            #             status3=status3,
-            #             comment3='',
-            #             link3='',
-            #             status4=Status.CLEARED,
-            #             comment4='',
-            #             link4='')
-
-            #         db.session.add(v)
-
-            #         try:
-            #             db.session.commit()
-            #         except IntegrityError:
-            #             db.session.rollback()
-        
 
     return render_template('admin/view_clearances.html', volunteers = volunteers, download_csv_form = download_csv_form, upload_csv_form = upload_csv_form, exp_arr = exp_arr)
 
