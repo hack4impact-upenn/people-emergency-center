@@ -6,6 +6,7 @@ from flask import (
     render_template,
     request,
     url_for,
+    send_file
 )
 from flask_login import current_user, login_required
 from flask_rq import get_queue
@@ -323,59 +324,75 @@ def view_clearances():
     if request.method == 'POST':
         if request.form.get('download_csv'):
 
+            csv_file = io.StringIO()
+            csv_writer = csv.writer(csv_file)
+            filename = 'volunteers' + datetime.now().strftime("%Y%m%d-%H%M%S") + '.csv'
+
+
             """This should automatically set the filepath to your downloads folder.
             Just hardcode a file path for now if it doesn't work though."""
-            file_path = file_path = os.path.expanduser('~') + "/Downloads/"
+            
+            # file_path = file_path = os.path.expanduser('~') + "/Downloads/"
 
-            print("CSV download code here")
-            volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
-            today = datetime.now()
-            timestr = today.strftime("%Y%m%d-%H%M%S")
-            file_name = "volunteers" + timestr + ".csv"
+            # print("CSV download code here")
+            # volunteers = Volunteer.query.order_by(Volunteer.id.desc()).all()
+            # today = datetime.now()
+            # timestr = today.strftime("%Y%m%d-%H%M%S")
+            # file_name = "volunteers" + timestr + ".csv"
 
-            with io.open(file_path + file_name, 'w', newline='') as csvfile:
+            # with io.open(file_path + file_name, 'w', newline='') as csvfile:
 
-                csv_writer = csv.writer(csvfile)
+            #     csv_writer = csv.writer(csvfile)
 
-                csv_writer.writerow(['First Name', 'Last Name', 'Email',
-                                     'Phone Number', 'Address Street', 'City', 'State', 'Zip Code', 'Organization',
-                                     'Over 10 years in PA', 'Clearance Expiration Date', 'PA State Police Check Status', 'Comment 1',
-                                     '(Link) PA State Police Check',
-                                     'PA Childlink','Comment 2','(Link) PA Childlink',
-                                      'FBI Clearance', 'Comment 3',
-                                     '(Link) FBI Clearance',
-                                     'Conflict of Interest','Comment 4', '(Link) Conflict of Interest'])
+            csv_writer.writerow(['First Name', 'Last Name', 'Email',
+                                 'Phone Number', 'Address Street', 'City', 'State', 'Zip Code', 'Organization',
+                                 'Over 10 years in PA', 'Clearance Expiration Date', 'PA State Police Check Status', 'Comment 1',
+                                 '(Link) PA State Police Check',
+                                 'PA Childlink','Comment 2','(Link) PA Childlink',
+                                  'FBI Clearance', 'Comment 3',
+                                 '(Link) FBI Clearance',
+                                 'Conflict of Interest','Comment 4', '(Link) Conflict of Interest'])
 
-                for v in volunteers:
-                    csv_writer.writerow([
-                        v.first_name,
-                        v.last_name,
-                        v.email,
-                        v.phone_number,
-                        v.address_street,
-                        v.address_city,
-                        v.address_state,
-                        v.address_zip_code,
-                        v.organization,
-                        v.year_pa,
-                        v.clearance_expiration,
+            for v in volunteers:
+                csv_writer.writerow([
+                    v.first_name,
+                    v.last_name,
+                    v.email,
+                    v.phone_number,
+                    v.address_street,
+                    v.address_city,
+                    v.address_state,
+                    v.address_zip_code,
+                    v.organization,
+                    v.year_pa,
+                    v.clearance_expiration,
 
-                        str(v.status1),
-                        v.comment1,
-                        v.link1,
+                    str(v.status1),
+                    v.comment1,
+                    v.link1,
 
-                        str(v.status2),
-                        v.comment2,
-                        v.link2,
+                    str(v.status2),
+                    v.comment2,
+                    v.link2,
 
-                        str(v.status3),
-                        v.comment3,
-                        v.link3,
+                    str(v.status3),
+                    v.comment3,
+                    v.link3,
 
-                        str(v.status4),
-                        v.comment4,
-                        v.link4,])
-                    
+                    str(v.status4),
+                    v.comment4,
+                    v.link4,])
+
+            csv_bytes = io.BytesIO()
+            csv_bytes.write(csv_file.getvalue().encode('utf-8'))
+            csv_bytes.seek(0)
+
+            # Send file for download.
+            return send_file(csv_bytes,
+                             as_attachment=True,
+                             attachment_filename=filename,
+                             mimetype='text/csv')
+                
         if request.form.get('upload_csv'):
             file_path = os.path.expanduser('~') + "/Downloads/volunteers.csv"
             with open(file_path, mode = 'r') as csv_file:
