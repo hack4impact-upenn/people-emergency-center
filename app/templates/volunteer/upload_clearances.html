@@ -62,7 +62,11 @@
                             {{ volunteer.status1 }}
                         </p>
                     {% endif %}
+                    {% if volunteer.link1 %}
                     Uploaded file: <a href = "{{ volunteer.link1 }}">click here</a>
+                    {% else %}
+                    Uploaded file: None
+                    {% endif %}
                     <br>
                     {{ f.render_form_input(form1.form1_file_urls) }}
                     {{ upload.file_upload('form1_file_urls') }}
@@ -109,7 +113,11 @@
                             {{ volunteer.status2 }}
                         </p>
                     {% endif %}
+                    {% if volunteer.link2 %}
                     Uploaded file: <a href = "{{ volunteer.link2 }}">click here</a>
+                    {% else %}
+                    Uploaded file: None
+                    {% endif %}
                     <br>
                     {{ f.render_form_input(form2.form2_file_urls) }}
                     {{ upload.file_upload('form2_file_urls') }}
@@ -153,7 +161,11 @@
                             {{ volunteer.status3 }}
                         </p>
                     {% endif %}
+                    {% if volunteer.link3 %}
                     Uploaded file: <a href = "{{ volunteer.link3 }}">click here</a>
+                    {% else %}
+                    Uploaded file: None
+                    {% endif %}
                     <br>
                     {{ f.render_form_input(form3.form3_file_urls) }}
                     {{ upload.file_upload('form3_file_urls') }}
@@ -200,7 +212,11 @@
                             {{ volunteer.status4 }}
                         </p>
                     {% endif %}
+                    {% if volunteer.link4 %}
                     Uploaded file: <a href = "{{ volunteer.link4 }}">click here</a>
+                    {% else %}
+                    Uploaded file: None
+                    {% endif %}
                     <br>
                     {{ f.render_form_input(form4.form4_file_urls) }}
                     {{ upload.file_upload('form4_file_urls') }}
